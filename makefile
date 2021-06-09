@@ -3,6 +3,8 @@ CPPFLAGS += -Wno-unused-parameter
 
 LDLIBS += -ljpeg
 
+all: reference_tools user_simulator
+
 bin/% : src/%.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $< -o $@ $(LDFLAGS) $(LDLIBS)
