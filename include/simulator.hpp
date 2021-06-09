@@ -202,7 +202,8 @@ private:
     {
         log(2, "stepping edges");
         bool active=false;
-        for(unsigned i=0; i<m_edges.size(); i++){
+       
+       /* for(unsigned i=0; i<m_edges.size(); i++){
             active = step_edge(i ,&m_edges[i]) || active;
         }        
         log(2, "stepping nodes");
@@ -210,6 +211,31 @@ private:
             active = step_node(i, &m_nodes[i]) || active;
         }
         return active;
+        */
+        // Edge statistics
+        for (const edge &e: m_edges)
+            active |= stats_edge(&e);
+        // Step edges
+
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+            unsigned s = range.begin(), e = range.end();
+            for (unsigned i = s; i != e; i++)
+                update_node(i, &m_nodes[i]);
+        }, tbb::simple_partitioner());
+
+
+        log(2, "stepping nodes");
+        // Node statistics
+        active |= stats_nodes();
+
+        // Node output
+        for (node &n: m_nodes)
+            if (n.output) {   
+                m_supervisor.onDeviceOutput(&(n.properties), &n.outgoing[0]->messageData);
+                n.output = false;
+            }
+        return active;
+    
     }
     
     void reset()
