@@ -348,7 +348,7 @@ private:
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
-                update_node(i, &m_nodes[i]);
+                step_node(i, &m_nodes[i]);
         }, tbb::simple_partitioner());
 #else
         tbb::parallel_for(0u, (unsigned)m_nodes.size(), [&](unsigned i) {
