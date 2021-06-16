@@ -7,8 +7,6 @@
 #include "graphs/user_heat.hpp"
 #include "graphs/user_ring.hpp"
 
-
-
 #include <cstdio>
 #include <unistd.h>
 #include <random>
