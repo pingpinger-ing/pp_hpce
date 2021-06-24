@@ -45,8 +45,4 @@ results/%.pass: w/%.ref.mjpeg w/%.user.mjpeg | results
 	-diff -q $^
 	-diff -q w/$*.ref.stats w/$*.user.stats
 
-%.gprof: %
-	gprof $* > $@
-	gvim $@
-
 test:	results/heat128_rect.pass \
