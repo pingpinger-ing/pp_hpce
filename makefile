@@ -16,4 +16,4 @@ bin/user/simulator: include/user_simulator.hpp include/graphs/user_heat.hpp
 
 reference_tools : bin/ref/simulator bin/tools/generate_heat_rect
 
-user_simulator : bin/user/simulator
+user_simulator : bin/user/user_simulator
