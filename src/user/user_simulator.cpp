@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+//jjjj
 template<class TGraph>
 void simulate(int logLevel, unsigned &lineNumber, std::istream &src, std::ostream &stats, FILE *dst)
 {
