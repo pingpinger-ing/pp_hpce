@@ -345,7 +345,7 @@ private:
             active |= stats_edge(&e);
         // Step edges
 #if 1
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 4), [&](const tbb::blocked_range<unsigned>& range) {
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 2), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
                 step_node(i, &m_nodes[i]);
@@ -360,7 +360,7 @@ private:
         active |= stats_nodes();
 #if 0
 #if 1
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 4), [&](const tbb::blocked_range<unsigned>& range) {
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 2), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
                 step_node(i, &m_nodes[i]);
