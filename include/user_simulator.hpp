@@ -170,8 +170,8 @@ private:
         return true; 
         */
         bool act = false;
-        tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
-       // for (unsigned i = 0; i != n->incoming.size(); i++) {
+       // tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
+        for (unsigned i = 0; i != n->incoming.size(); i++) {
             edge *e = n->incoming[i];
             switch (e->messageStatus) {
             case 0:
@@ -190,7 +190,7 @@ private:
                 act = true;
                 continue;
             }
-        });
+        }
         return act;
 
     }
