@@ -170,8 +170,8 @@ private:
         return true; 
         */
         bool act = false;
-        tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
-      //  for (unsigned i = 0; i != n->incoming.size(); i++) {
+       // tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
+        for (unsigned i = 0; i != n->incoming.size(); i++) {
             edge *e = n->incoming[i];
             switch (e->messageStatus) {
             case 0:
@@ -190,7 +190,7 @@ private:
                 act = true;
                 continue;
             }
-        });
+        }
         return act;
 
     }
@@ -251,14 +251,14 @@ private:
             return false; // Device doesn't want to send
         }
         
-        tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
-        //for(unsigned i=0; i < n->outgoing.size(); i++){
+        //tbb::parallel_for(0u, (unsigned)n->incoming.size(), [&](unsigned i) {
+        for(unsigned i=0; i < n->outgoing.size(); i++){
             if( n->outgoing[i]->messageStatus>0 ){
                 return 0x0100;
                 m_stats.nodeBlockedSteps++;
                 return true; // One of the outputs is full, so we are blocked
             }
-        });
+        }
         
         message_type message;
         
@@ -344,10 +344,10 @@ private:
         */
    // Edge statistics
         
-       // for (const edge &e: m_edges)
-        tbb::parallel_for(0u, (const edge)e->m_edges, [&]const edge e) {
+        for (const edge &e: m_edges)
+       // tbb::parallel_for(0u, (const edge)e->m_edges, [&]const edge e) {
             active |= stats_edge(&e);
-        });
+       
         // Step edges
 #if 1
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
