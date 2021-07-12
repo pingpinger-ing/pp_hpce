@@ -342,8 +342,11 @@ private:
         return active;
         */
    // Edge statistics
-        for (const edge &e: m_edges)
+        
+        //for (const edge &e: m_edges)
+        tbb::parallel_for(0u, (const edge)e->m_edges, [&]const edge e) {
             active |= stats_edge(&e);
+        });
         // Step edges
 #if 1
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
