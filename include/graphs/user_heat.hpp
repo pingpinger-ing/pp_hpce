@@ -224,15 +224,16 @@ struct heat
         void renderSlice(
             const time_slice &slice
         ){
-            unsigned scanWidth=3*m_graph->width;
+            //unsigned scanWidth=3*m_graph->width;
+	    std::atomic<unsigned> scanWidth=3*m_graph->width;
             scanWidth= (scanWidth+3)&0xFFFFFFFCul; // pad up to a multiple of four
             
             std::vector<uint8_t> pixels(scanWidth*m_graph->height);
             
-	       // tbb::parallel_for(0u, (unsigned)m_graph->height, [&](unsigned y) {
+	        tbb::parallel_for(0u, (unsigned)m_graph->height, [&](unsigned y) {
            for(unsigned y=0; y<m_graph->height; y++){
-                tbb::parallel_for(0u, (unsigned)m_graph->width, [&](unsigned x) {
-               // for(unsigned x=0; x<m_graph->width; x++){
+               // tbb::parallel_for(0u, (unsigned)m_graph->width, [&](unsigned x) {
+                for(unsigned x=0; x<m_graph->width; x++){
                     unsigned deviceIndex = find_closest_device(x,y);
                     
                     const properties_type *device = m_indexToDevice[deviceIndex];
@@ -244,11 +245,11 @@ struct heat
                     pixels[ y*scanWidth + x*3 + 2 ] = colour[2];
                     
                     //fprintf(stderr, " %4.2f (%x%x%x)", heat/65536.0, colour[0]>>4, colour[1]>>4,colour[2]>>4);
-               // }
-                });
+                }
+               // });
                 //fprintf(stderr, "\n");
-            }
-           //});
+           // }
+           });
             //fprintf(stderr, "\n\n");
 
             
