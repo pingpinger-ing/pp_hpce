@@ -224,8 +224,7 @@ struct heat
         void renderSlice(
             const time_slice &slice
         ){
-            //unsigned scanWidth=3*m_graph->width;
-	    std::atomic<unsigned> scanWidth(3*m_graph->width);
+            unsigned scanWidth=3*m_graph->width;
             scanWidth= (scanWidth+3)&0xFFFFFFFCul; // pad up to a multiple of four
             
             std::vector<uint8_t> pixels(scanWidth*m_graph->height);
