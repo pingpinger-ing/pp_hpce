@@ -118,21 +118,21 @@ private:
     std::ostream &m_statsDst;
     stats m_stats;
     
-    std::vector<std:vector<Edge *>> batches;
+    std::vector<std::vector<Edge *> batches;
     
-    std::vector<std:vector<Edge *>> create_batches{
+    std::vector<std::vector<Edge *> create_batches(){
     
-    std::vector<std:vector<Edge *>> batches;
-    std::vector<std:vector<Edge*> todo;
+    std::vector<std::vector<Edge *> batches
+    std::vector<std::vector<Edge*> todo
         
    for(e : m_edge){
             todo.push_back( &e );
         }
    while(!todo.empty()){
-   std::vector<std:vector<Edge*> batch;
+   std::vector<std::vector<Edge*> batch;
         std:set<Node*> seen;
         
-        for(e : todo){
+    for(e : todo){
     if( seen.contain( e->target )){
     //skip
     }
