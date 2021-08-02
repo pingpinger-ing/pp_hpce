@@ -13,6 +13,9 @@
 
 #include "util.hpp"
 
+#include <tbb/parallel_for.h>
+#include <ppl.h>
+
 template<class TGraph>
 class Simulator
 {
@@ -206,10 +209,19 @@ private:
         for(unsigned i=0; i<m_edges.size(); i++){
             active = step_edge(i ,&m_edges[i]) || active;
         }        
-        log(2, "stepping nodes");
+       /* log(2, "stepping nodes");
         for(unsigned i=0; i<m_nodes.size(); i++){
             active = step_node(i, &m_nodes[i]) || active;
         }
+        */
+        
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+            unsigned s = range.begin(), e = range.end();
+            for (unsigned i = s; i != e; i++)
+                step_node(i, &m_nodes[i]);
+        }, tbb::simple_partitioner());
+        
+        
         return active;
     }
     
