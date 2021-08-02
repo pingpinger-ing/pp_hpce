@@ -1,5 +1,3 @@
-
-
 #ifndef simulator_hpp
 #define simulator_hpp
 
@@ -13,6 +11,8 @@
 #include <stdarg.h>
 
 #include "util.hpp"
+
+#include <tbb/parallel_for.h>
 
 template<class TGraph>
 class Simulator
@@ -35,6 +35,7 @@ private:
         device_type state;
         std::vector<edge*> incoming;
         std::vector<edge*> outgoing;
+        bool output;
     };
     
     struct edge
@@ -116,32 +117,103 @@ private:
     std::ostream &m_statsDst;
     stats m_stats;
     
+    
+    
+   /* 
+   std::vector<std::vector<edge*> batches;
+    
+    std::vector<std::vector<edge*> create_batches()
+    {
+    
+    std::vector<std::vector<edge*> batches
+    std::vector<std::vector<edge*> todo
+        
+   for(e : m_edge){
+            todo.push_back( &e );
+        }
+
+        while(!todo.empty()){
+        std::vector<std::vector<Edge*> batch;
+        std:set<Node*> seen;
+        
+        for(e : todo){
+        if( seen.contain( e->target )){
+    //skip
+    }
+        else{
+        seen.insert( e->target );
+        batch.push_back( &e );
+        todo.remove(e);
+        } 
+        
+        }
+        batches.push_back(batch);
+    }
+    return batches;
+    
+    }
+    
+    for(batch : batches){
+    parallel_for( e : batch){
+    do_edge(e);
+    }
+    }
+    
+    for( e : edges){
+    do_edge(e);
+    }
+    */
+    
+    
     // Give a single node (i.e. a device) the chance to
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
-    bool step_node(unsigned index, node *n)
-    {       
+  
+     bool update_node(unsigned index, node *n)
+    {
+        bool act = false;
+        for (unsigned i = 0; i != n->incoming.size(); i++) {
+            edge *e = n->incoming[i];
+            switch (e->messageStatus) {
+            case 0:
+                continue;
+            case 1:                // Deliver the message to the device                
+                TGraph::on_recv(
+                    &m_graph,
+                    &(e->channel),
+                    &(e->messageData),
+                    &(n->properties),
+                    &(n->state)
+                );
+            default:
+                e->messageStatus--;
+                act = true;
+                continue;
+            }
+        }
+        return act;
+    }
+    
+    
+    uint32_t stats_node(node *n)  // unsigned int 
+    {
         if(!TGraph::ready_to_send(&m_graph, &(n->properties), &(n->state)) ){
-            log(4, "  node %u : idle", index);
+            return 0x01;
             m_stats.nodeIdleSteps++;
             return false; // Device doesn't want to send
         }
         
-        for(unsigned i=0; i < n->outgoing.size(); i++){
+    for(unsigned i=0; i < n->outgoing.size(); i++){
             if( n->outgoing[i]->messageStatus>0 ){
-                log(3, "  node %u : blocked on %u->%u", index, n->outgoing[i]->src->properties.id, n->outgoing[i]->src->properties.id);
+                return 0x0100;
                 m_stats.nodeBlockedSteps++;
                 return true; // One of the outputs is full, so we are blocked
             }
         }
-        
-        log(3, "  node %u : send", index);
-        m_stats.nodeSendSteps++;
-        
-        message_type message;
-        
-        // Get the device to send the message
-        bool doOutput = TGraph::on_send(
+     message_type message;
+    
+    // Get the device to send the message
+        n->output = TGraph::on_send(
             &m_graph,
             &message,
             &(n->properties),
@@ -153,66 +225,99 @@ private:
             n->outgoing[i]->messageData = message; // Copy message into channel
             n->outgoing[i]->messageStatus = 1 + n->outgoing[i]->delay; // How long until it is ready?
         }
-        
-        if(doOutput){
-            log(3, "  node %u : output", index);    
-
-            m_outputs.push_back( output{
-                &(n->properties),
-                message,
-                m_step
-            } );
-            
-        }
-        
+        return 0x010000;
+        m_stats.nodeSendSteps++;
         return true;
     }
     
-    bool step_edge(unsigned index, edge *e)
+    bool stats_edge(const edge *e)
     {
-        if(e->messageStatus == 0){
-            log(4, "  edge %u -> %u : empty", e->src->properties.id, e->dst->properties.id);
+        switch (e->messageStatus) {
+        case 0:
             m_stats.edgeIdleSteps++;
             return false;
-        }
-        
-        if(e->messageStatus > 1){
-            log(3, "  edge %u -> %u : delay (%u)", e->src->properties.id, e->dst->properties.id, e->messageStatus);
-            e->messageStatus--;
+        case 1:
+            m_stats.edgeDeliverSteps++;
+            return true;
+        default:
             m_stats.edgeTransitSteps++;
             return true;
         }
-       
-        log(3, "  edge %u -> %u : deliver", e->src->properties.id, e->dst->properties.id);
-        m_stats.edgeDeliverSteps++;
-            
-        
-        // Deliver the message to the device
-        TGraph::on_recv(
-            &m_graph,
-            &(e->channel),
-            &(e->messageData),
-            &(e->dst->properties),
-            &(e->dst->state)
-        );
-        e->messageStatus=0; // The edge is now idle
-        
-        return true;
     }
     
+#define SEQ_SIZE    64u
+#define MR_SIZE     64u
+
+    void stats_nodes(node *n, unsigned cnt, unsigned *idle, unsigned *blocked, unsigned *send)
+    {
+        if (cnt <= SEQ_SIZE) {
+            uint32_t stats = 0;
+            while (cnt--)
+                stats += stats_node(n++);
+            *idle = stats & 0xff;
+            *blocked = (stats >> 8) & 0xff;
+            *send = (stats >> 16) & 0xff;
+        } else {
+            const unsigned blocks = std::min((cnt + SEQ_SIZE - 1) / SEQ_SIZE, MR_SIZE);
+            const unsigned bsize = (cnt + blocks - 1) / blocks;
+            std::vector<unsigned> p_idle(blocks), p_blocked(blocks), p_send(blocks);
+            tbb::parallel_for(0u, blocks, [=, &p_idle, &p_blocked, &p_send](unsigned i) {
+                unsigned s = i * bsize;
+                unsigned e = std::min((i + 1) * bsize, cnt);
+                stats_nodes(n + i * bsize, e - s, &p_idle[i], &p_blocked[i], &p_send[i]);
+            });
+            unsigned v_idle = 0, v_blocked = 0, v_send = 0;
+            for (unsigned i = 0; i != blocks; i++) {
+                v_idle += p_idle[i];
+                v_blocked += p_blocked[i];
+                v_send += p_send[i];
+            }
+            *idle = v_idle;
+            *blocked = v_blocked;
+            *send = v_send;
+        }
+    }
+    
+     bool stats_nodes()
+    {
+        unsigned idle, blocked, send;
+        stats_nodes(m_nodes.data(), m_nodes.size(), &idle, &blocked, &send);
+        m_stats.nodeIdleSteps += idle;
+        m_stats.nodeBlockedSteps += blocked;
+        m_stats.nodeSendSteps += send;
+        return blocked || send;
+    }
+    
+      
     bool step_all()
     {
-        log(2, "stepping edges");
+          log(2, "stepping edges");
         bool active=false;
-        for(unsigned i=0; i<m_edges.size(); i++){
-            active = step_edge(i ,&m_edges[i]) || active;
-        }        
-        log(2, "stepping nodes");
-        for(unsigned i=0; i<m_nodes.size(); i++){
-            active = step_node(i, &m_nodes[i]) || active;
-        }
+        // Edge statistics
+        for (const edge &e: m_edges)
+            active |= stats_edge(&e);
+        
+        
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+            unsigned s = range.begin(), e = range.end();
+            for (unsigned i = s; i != e; i++)
+                update_node(i, &m_nodes[i]);
+        }, tbb::simple_partitioner());
+        
+      log(2, "stepping nodes");
+        // Node statistics
+        active |= stats_nodes();  
+        
+       for (node &n: m_nodes)
+            if (n.output) {  
+                m_supervisor.onDeviceOutput(&(n.properties), &n.outgoing[0]->messageData);
+                n.output = false;
+            }
+        
         return active;
     }
+    
+    
     
     void reset()
     {
