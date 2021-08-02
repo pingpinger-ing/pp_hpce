@@ -118,12 +118,12 @@ private:
     std::ostream &m_statsDst;
     stats m_stats;
     
-    std::vector<std::vector<edge *> batches;
+    std::vector<std::vector<edge*> batches;
     
-    std::vector<std::vector<edge *> create_batches()
+    std::vector<std::vector<edge*> create_batches()
     {
     
-    std::vector<std::vector<edge *> batches
+    std::vector<std::vector<edge*> batches
     std::vector<std::vector<edge*> todo
         
    for(e : m_edge){
