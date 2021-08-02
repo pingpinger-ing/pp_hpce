@@ -151,13 +151,14 @@ private:
     uint32_t stats_node(node *n)  // unsigned int 
     {
         if(!TGraph::ready_to_send(&m_graph, &(n->properties), &(n->state)) ){
-            log(4, "  node %u : idle", index);
+            return 0x01;
             m_stats.nodeIdleSteps++;
             return false; // Device doesn't want to send
         }
         
     for(unsigned i=0; i < n->outgoing.size(); i++){
             if( n->outgoing[i]->messageStatus>0 ){
+                return 0x0100;
                 m_stats.nodeBlockedSteps++;
                 return true; // One of the outputs is full, so we are blocked
             }
@@ -177,7 +178,7 @@ private:
             n->outgoing[i]->messageData = message; // Copy message into channel
             n->outgoing[i]->messageStatus = 1 + n->outgoing[i]->delay; // How long until it is ready?
         }
-
+        return 0x010000;
         m_stats.nodeSendSteps++;
         return true;
     }
@@ -197,13 +198,37 @@ private:
         }
     }
     
-     void stats_nodes(node *n, unsigned cnt, unsigned *idle, unsigned *blocked, unsigned *send)
+#define SEQ_SIZE    64u
+#define MR_SIZE     64u
+
+    void stats_nodes(node *n, unsigned cnt, unsigned *idle, unsigned *blocked, unsigned *send)
     {
-            std::vector<unsigned> p_idle(cnt), p_blocked(cnt), p_send(cnt);
-            tbb::parallel_for(0u, cnt, [=, &p_idle, &p_blocked, &p_send](unsigned i) {
-                stats_nodes(n, cnt, &p_idle[i], &p_blocked[i], &p_send[i]);
+        if (cnt <= SEQ_SIZE) {
+            uint32_t stats = 0;
+            while (cnt--)
+                stats += stats_node(n++);
+            *idle = stats & 0xff;
+            *blocked = (stats >> 8) & 0xff;
+            *send = (stats >> 16) & 0xff;
+        } else {
+            const unsigned blocks = std::min((cnt + SEQ_SIZE - 1) / SEQ_SIZE, MR_SIZE);
+            const unsigned bsize = (cnt + blocks - 1) / blocks;
+            std::vector<unsigned> p_idle(blocks), p_blocked(blocks), p_send(blocks);
+            tbb::parallel_for(0u, blocks, [=, &p_idle, &p_blocked, &p_send](unsigned i) {
+                unsigned s = i * bsize;
+                unsigned e = std::min((i + 1) * bsize, cnt);
+                stats_nodes(n + i * bsize, e - s, &p_idle[i], &p_blocked[i], &p_send[i]);
             });
- 
+            unsigned v_idle = 0, v_blocked = 0, v_send = 0;
+            for (unsigned i = 0; i != blocks; i++) {
+                v_idle += p_idle[i];
+                v_blocked += p_blocked[i];
+                v_send += p_send[i];
+            }
+            *idle = v_idle;
+            *blocked = v_blocked;
+            *send = v_send;
+        }
     }
     
      bool stats_nodes()
