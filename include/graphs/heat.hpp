@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "jpeg_helpers.hpp"
+#include <tbb/parallel_for.h>
 
 struct heat
 {
