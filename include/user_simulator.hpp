@@ -1,4 +1,5 @@
 
+/*
 #ifndef simulator_hpp
 #define simulator_hpp
 
@@ -168,7 +169,7 @@ private:
     // Give a single node (i.e. a device) the chance to
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
-    
+    /*
      bool update_node(unsigned index, node *n)
     {
         bool act = false;
@@ -420,5 +421,7 @@ public:
 };
 
 #endif
+*/
+
 
 
