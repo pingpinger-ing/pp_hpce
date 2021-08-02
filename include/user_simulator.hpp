@@ -120,7 +120,7 @@ private:
     
     
     
-    std::vector<std::vector<edge*> batches;
+   /* std::vector<std::vector<edge*> batches;
     
     std::vector<std::vector<edge*> create_batches()
     {
@@ -162,7 +162,7 @@ private:
     for( e : edges){
     do_edge(e);
     }
-    
+    */
     
     
     // Give a single node (i.e. a device) the chance to
