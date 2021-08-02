@@ -121,7 +121,8 @@ private:
     
     
     
-   /* std::vector<std::vector<edge*> batches;
+   /* 
+   std::vector<std::vector<edge*> batches;
     
     std::vector<std::vector<edge*> create_batches()
     {
