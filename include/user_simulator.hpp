@@ -14,7 +14,6 @@
 #include "util.hpp"
 
 #include <tbb/parallel_for.h>
-#include <ppl.h>
 
 template<class TGraph>
 class Simulator
