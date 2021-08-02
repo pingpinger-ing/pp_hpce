@@ -232,7 +232,7 @@ struct heat
 	        tbb::parallel_for(0u, (unsigned)m_graph->height, [&](unsigned y) {
             //for(unsigned y=0; y<m_graph->height; y++){
                 tbb::parallel_for(0u, (unsigned)m_graph->width, [&](unsigned x) {
-                for(unsigned x=0; x<m_graph->width; x++){
+               // for(unsigned x=0; x<m_graph->width; x++){
                     unsigned deviceIndex = find_closest_device(x,y);
                     
                     const properties_type *device = m_indexToDevice[deviceIndex];
