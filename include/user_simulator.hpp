@@ -118,6 +118,48 @@ private:
     std::ostream &m_statsDst;
     stats m_stats;
     
+    std::vector<std:vector<Edge *>> batches;
+    
+    std::vector<std:vector<Edge *>> create_batches{
+    
+    std::vector<std:vector<Edge *>> batches;
+    std::vector<std:vector<Edge*> todo;
+        
+   for(e : m_edge){
+            todo.push_back( &e );
+        }
+   while(!todo.empty()){
+   std::vector<std:vector<Edge*> batch;
+        std:set<Node*> seen;
+        
+        for(e : todo){
+    if( seen.contain( e->target )){
+    //skip
+    }
+        else{
+        seen.insert( e->target );
+        batch.push_back( &e );
+        todo.remove(e);
+        }  
+        }
+        batches.push_back(batch);
+    }
+    return batches;
+    
+    }
+    
+    for(batch : batches){
+    parallel_for( e : batch){
+    do_edge(e);
+    }
+    }
+    
+    for( e : edges){
+    do_edge(e);
+    }
+    
+    
+    
     // Give a single node (i.e. a device) the chance to
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
