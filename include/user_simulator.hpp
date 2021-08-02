@@ -344,36 +344,8 @@ private:
         */
    // Edge statistics
         
-
-        
     
-   //std::vector<uint8_t> process_frame(int n, int w=m_edges.size(), int h=m_edges.size(), std::vector<uint8_t> fIn){
-        std::vector<uint8_t> process_frame(int w=m_edges.size(), int h=m_edges.size()){
-         //std::vector<uint8_t> fOut = fIn;
-       
-   //     for(int i=0; i<n; i++){
-   //         fIn = fOut;
-            
-            tbb::blocked_range2d<int> r( 1,h-1, 1,w-1 );
-            
-            tbb::parallel_for( r, [&](const tbb::blocked_range2d<int> &xy) {
-            for(int y=xy.rows().begin(); y < xy.rows().end(); y++){
-            for(int x=xy.cols().begin(); x < xy.cols().end(); x++){
-                      step_edge(x ,&m_edges[x]);
-                          }
-            }
-       });
-            tbb::parallel_for( r, [&](const tbb::blocked_range2d<int> &xy) {
-            for(int y=xy.rows().end(); y > xy.rows().begin(); y--){
-            for(int x=xy.cols().end(); x > xy.cols().begin(); x--){
-                      step_edge(x ,&m_edges[x]);
-                          }
-            }
-       });
- }
- }
-    
-            //for (const edge &e: m_edges)
+            for (const edge &e: m_edges)
             active |= stats_edge(&e);
        
         // Step edges
