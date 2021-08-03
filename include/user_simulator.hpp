@@ -252,20 +252,20 @@ private:
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
-            // stats：从n开始的cnt个stats_node之和
+            // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
             while (cnt--)
                 stats += stats_node(n++);
-            // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send
+            // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
             *idle = stats & 0xff;
             *blocked = (stats >> 8) & 0xff;
             *send = (stats >> 16) & 0xff;
         } else {
-            // 若cnt大于SEQ_SIZE
-            // blocks的值为cnt / SEQ_SIZE（向上取整）与MR_SIZE中的较小值
+            // 若cnt大于SEQ_SIZE(If cnt is greater than SEQ_SIZE)
+            // blocks的值为cnt / SEQ_SIZE（向上取整）与MR_SIZE中的较小值(The value of blocks is the smaller of cnt / SEQ_SIZE (rounded up) and MR_SIZE)
             const unsigned blocks = std::min((cnt + SEQ_SIZE - 1) / SEQ_SIZE, MR_SIZE);
-            // bsize的值为cnt / blocks（向上取整）
+            // bsize的值为cnt / blocks（向上取整）(The value of bsize is cnt / blocks (rounded up))
             const unsigned bsize = (cnt + blocks - 1) / blocks;
-            // 初始化向量
+            // 初始化向量(Initialization vector)
             std::vector<unsigned> p_idle(blocks), p_blocked(blocks), p_send(blocks);
             tbb::parallel_for(0u, blocks, [=, &p_idle, &p_blocked, &p_send](unsigned i) {
                 unsigned s = i * bsize;
@@ -273,7 +273,7 @@ private:
                 stats_nodes(n + i * bsize, e - s, &p_idle[i], &p_blocked[i], &p_send[i]);
             });
             unsigned v_idle = 0, v_blocked = 0, v_send = 0;
-            // v的值为blocks个p相加
+            // v的值为blocks个p相加(The value of v is the sum of blocks and p)
             for (unsigned i = 0; i != blocks; i++) {
                 v_idle += p_idle[i];
                 v_blocked += p_blocked[i];
