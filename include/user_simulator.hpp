@@ -254,106 +254,38 @@ private:
 
     
     //Partition edge
-    std::vector<edge> batches;
-    std::vector<edge> todo
-    std::vector<edge> batch;
-    std::set<node> seen;
+    std::vector<edge*> batches;
+    std::vector<edge*> todo
+    std::vector<edge*> batch;
+    std::set<node*> seen;
     
     bool step_all()
     {
           log(2, "stepping edges");
           bool active=false;
         
-        for(const edge &e : m_edge){
+        for(const edge &e : m_edges){
                   todo.push_back( &e );
-        }
-        
+        }   
             while(!todo.empty()){
                             
                    for(const edge &e : todo)
                    {
-                    if(seen.contain( e->right ))
+                    if(seen.contain( e->src ))
                     {
                    //skip
                        }
                     else
                     {
-                   seen.insert( e->right );
+                   seen.insert( e->src);
                    batch.push_back( &e );
                    todo.remove(e);
                        } 
                     }
            batches.push_back(batch);
        }
-        while(!todo.empty()){
-
-                   for(const edge &e : todo)
-                   {
-                    if(seen.contain( e->right ))
-                    {
-                   //skip
-                       }
-                    else
-                    {
-                   seen.insert( e->right );
-                   batch.push_back( &e );
-                   todo.remove(e);
-                       } 
-                    }
-           batches.push_back(batch);
-       }
-        while(!todo.empty()){
-                
-                   for(const edge &e : todo)
-                   {
-                    if(seen.contain( e->left))
-                    {
-                   //skip
-                       }
-                    else
-                    {
-                   seen.insert( e->left );
-                   batch.push_back( &e );
-                   todo.remove(e);
-                       } 
-                    }
-           batches.push_back(batch);
-       }
-        while(!todo.empty()){
-                
-                   for(const edge &e : todo)
-                   {
-                    if(seen.contain( e->up ))
-                    {
-                   //skip
-                       }
-                    else
-                    {
-                   seen.insert( e->up );
-                   batch.push_back( &e );
-                   todo.remove(e);
-                       } 
-                    }
-           batches.push_back(batch);
-       }
-        
-         while(!todo.empty()){
-                
-                   for(const edge &e : todo)
-                   {
-                    if(seen.contain( e->down ))
-                    {
-                   //skip
-                       }
-                    else
-                    {
-                   seen.insert( e->down );
-                   batch.push_back( &e );
-                   todo.remove(e);
-                       } 
-                    }
-           batches.push_back(batch);
-       }
+   }
+      
     
     for(batch : batches){
         tbb::parallel_for(const edge &e : batch){
