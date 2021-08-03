@@ -116,55 +116,8 @@ private:
     
     std::ostream &m_statsDst;
     stats m_stats;
-    
-    
-    
-   /* 
-   std::vector<std::vector<edge*> batches;
-    
-    std::vector<std::vector<edge*> create_batches()
-    {
-    
-    std::vector<std::vector<edge*> batches
-    std::vector<std::vector<edge*> todo
+   
         
-   for(e : m_edge){
-            todo.push_back( &e );
-        }
-
-        while(!todo.empty()){
-        std::vector<std::vector<Edge*> batch;
-        std:set<Node*> seen;
-        
-        for(e : todo){
-        if( seen.contain( e->target )){
-    //skip
-    }
-        else{
-        seen.insert( e->target );
-        batch.push_back( &e );
-        todo.remove(e);
-        } 
-        
-        }
-        batches.push_back(batch);
-    }
-    return batches;
-    
-    }
-    
-    for(batch : batches){
-    parallel_for( e : batch){
-    do_edge(e);
-    }
-    }
-    
-    for( e : edges){
-    do_edge(e);
-    }
-    */
-    
-    
     // Give a single node (i.e. a device) the chance to
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
@@ -295,15 +248,130 @@ private:
         m_stats.nodeSendSteps += send;
         return blocked || send;
     }
+     
     
+      log(2, "stepping edges");
+      bool active=false;
+    
+    //Partition edge
+    std::vector<edge*> batches;
+    std::vector<edge*> todo
       
     bool step_all()
     {
-          log(2, "stepping edges");
-        bool active=false;
+        for(const edge &e : m_edge){
+                  todo.push_back( &e );
+        }
+        
+            while(!todo.empty()){
+                   std::vector<std::vector<edge*> batch;
+                   std::set<node*> seen;
+                
+                   for(const edge &e : todo)
+                   {
+                    if(seen.contain( e->right ))
+                    {
+                   //skip
+                       }
+                    else
+                    {
+                   seen.insert( e->right );
+                   batch.push_back( &e );
+                   todo.remove(e);
+                       } 
+                    }
+           batches.push_back(batch);
+       }
+        while(!todo.empty()){
+                   std::vector<std::vector<edge*> batch;
+                   std::set<node*> seen;
+                
+                   for(const edge &e : todo)
+                   {
+                    if(seen.contain( e->right ))
+                    {
+                   //skip
+                       }
+                    else
+                    {
+                   seen.insert( e->right );
+                   batch.push_back( &e );
+                   todo.remove(e);
+                       } 
+                    }
+           batches.push_back(batch);
+       }
+        while(!todo.empty()){
+                   std::vector<std::vector<edge*> batch;
+                   std::set<node*> seen;
+                
+                   for(const edge &e : todo)
+                   {
+                    if(seen.contain( e->left))
+                    {
+                   //skip
+                       }
+                    else
+                    {
+                   seen.insert( e->left );
+                   batch.push_back( &e );
+                   todo.remove(e);
+                       } 
+                    }
+           batches.push_back(batch);
+       }
+        while(!todo.empty()){
+                   std::vector<std::vector<edge*> batch;
+                   std::set<node*> seen;
+                
+                   for(const edge &e : todo)
+                   {
+                    if(seen.contain( e->up ))
+                    {
+                   //skip
+                       }
+                    else
+                    {
+                   seen.insert( e->up );
+                   batch.push_back( &e );
+                   todo.remove(e);
+                       } 
+                    }
+           batches.push_back(batch);
+       }
+        
+         while(!todo.empty()){
+                   std::vector<std::vector<edge*> batch;
+                   std::set<node*> seen;
+                
+                   for(const edge &e : todo)
+                   {
+                    if(seen.contain( e->down ))
+                    {
+                   //skip
+                       }
+                    else
+                    {
+                   seen.insert( e->down );
+                   batch.push_back( &e );
+                   todo.remove(e);
+                       } 
+                    }
+           batches.push_back(batch);
+       }
+    
+    for(batch : batches){
+        tbb::parallel_for(const edge &e : batch){
+               active |= stats_edge(&e);
+      }
+        
+ 
+    //std::vector<std::vector<edge*> create_batches(){ 
+           
+        
         // Edge statistics
-        for (const edge &e: m_edges)
-            active |= stats_edge(&e);
+        //for (const edge &e: m_edges)
+        //    active |= stats_edge(&e);
         
         
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
