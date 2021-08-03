@@ -259,6 +259,11 @@ private:
     std::vector<edge*> batch;
     std::set<node*> seen;
     
+    for(i=0;i<sqrt(m_node.size);i++) 
+        for(j=0;j<sqrt(m_node.size);j++) 
+            a[i][j]=0.0;
+    
+    
     bool step_all()
     {
           log(2, "stepping edges");
