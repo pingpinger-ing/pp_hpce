@@ -13,6 +13,7 @@
 #include "util.hpp"
 
 #include <tbb/parallel_for.h>
+#include <set>
 
 template<class TGraph>
 class Simulator
@@ -253,8 +254,10 @@ private:
 
     
     //Partition edge
-    std::vector<edge*> batches;
-    std::vector<edge*> todo
+    std::vector<edge> batches;
+    std::vector<edge> todo
+    std::vector<edge> batch;
+    std::set<node> seen;
     
     bool step_all()
     {
@@ -266,8 +269,7 @@ private:
         }
         
             while(!todo.empty()){
-                   std::vector<std::vector<edge*> batch;
-                   std::set<node*> seen;
+                   
                 
                    for(const edge &e : todo)
                    {
