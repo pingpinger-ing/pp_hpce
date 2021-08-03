@@ -269,8 +269,7 @@ private:
         }
         
             while(!todo.empty()){
-                   
-                
+                            
                    for(const edge &e : todo)
                    {
                     if(seen.contain( e->right ))
@@ -287,9 +286,7 @@ private:
            batches.push_back(batch);
        }
         while(!todo.empty()){
-                   std::vector<std::vector<edge*> batch;
-                   std::set<node*> seen;
-                
+
                    for(const edge &e : todo)
                    {
                     if(seen.contain( e->right ))
@@ -306,8 +303,6 @@ private:
            batches.push_back(batch);
        }
         while(!todo.empty()){
-                   std::vector<std::vector<edge*> batch;
-                   std::set<node*> seen;
                 
                    for(const edge &e : todo)
                    {
@@ -325,8 +320,6 @@ private:
            batches.push_back(batch);
        }
         while(!todo.empty()){
-                   std::vector<std::vector<edge*> batch;
-                   std::set<node*> seen;
                 
                    for(const edge &e : todo)
                    {
@@ -345,8 +338,6 @@ private:
        }
         
          while(!todo.empty()){
-                   std::vector<std::vector<edge*> batch;
-                   std::set<node*> seen;
                 
                    for(const edge &e : todo)
                    {
