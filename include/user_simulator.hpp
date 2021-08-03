@@ -250,15 +250,17 @@ private:
     }
      
     
-      log(2, "stepping edges");
-      bool active=false;
+
     
     //Partition edge
     std::vector<edge*> batches;
     std::vector<edge*> todo
-      
+    
     bool step_all()
     {
+          log(2, "stepping edges");
+          bool active=false;
+        
         for(const edge &e : m_edge){
                   todo.push_back( &e );
         }
