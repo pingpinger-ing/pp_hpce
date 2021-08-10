@@ -20,13 +20,13 @@ template<class TGraph> //模板类，TGraph==heat
 class Simulator
 {
 public:
-    typedef typename TGraph::graph_type graph_type; // heat.hpp下的graph_type类，给这个类定义一个对象
+    typedef typename TGraph::graph_type graph_type; 
     typedef typename TGraph::properties_type properties_type;
     typedef typename TGraph::device_type device_type;
     typedef typename TGraph::message_type message_type;
     typedef typename TGraph::channel_type channel_type;
     typedef typename TGraph::SupervisorDevice SupervisorDevice;
-    const graph_type m_graph
+    // const graph_type *m_graph
 private:    
     struct node;
     struct edge;
@@ -265,8 +265,8 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        int width = m_graph->width;
-        int height = m_graph->height;
+        int width = 127;
+        int height = 127;
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
 
