@@ -275,36 +275,37 @@ private:
         int height = sqrt(m_nodes.size());
         int xi = 0, yi = 0, drc = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
-            switch(drc) {
-                case 0:
-                    ++drc;
+       //     switch(drc) {
+              //  case 0:
+                    //++drc;
                     if (xi > 0) {
                         batches[0].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                    continue;  
-                case 1:
-                    ++drc;
+                    //continue;  
+              //  case 1:
+                    //++drc;
                     if (xi + 1 < width) {
                         batches[1].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                    continue;
-                case 2:
-                    ++drc;
+                   // continue;
+             //   case 2:
+                    //++drc;
                     if (yi > 0) {
                         batches[2].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                    continue;
-                case 3:
-                    drc = 0;
+                   // continue;
+             //   case 3:
+                    //drc = 0;
                     if (yi + 1 < height) {
                         batches[3].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                    break;
-            }
+                 //   break;
+          //  }
+           // drc = 0;
             if (xi + 1 < width) ++xi;
             else {
                 xi = 0;
