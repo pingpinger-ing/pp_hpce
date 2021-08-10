@@ -263,7 +263,7 @@ private:
         for(j=0;j<sqrt(m_node.size);j++) 
             a[i][j]=0.0;
     */
-    std::vector<std::vector<edge*>> batches;
+    std::vector<vector<edge*>> batches;
     
     bool step_all()
     {
@@ -273,7 +273,7 @@ private:
         int width = sqrt(m_nodes.size());
         int height = sqrt(m_nodes.size());
         int xi = 0, yi = 0, drc = 0;
-        for(i_edge = 0; i_edge < m_edges.size();){
+        for(int i_edge = 0; i_edge < m_edges.size();){
             switch(drc) {
                 case 0:
                     ++drc;
@@ -336,10 +336,10 @@ private:
    */    
     
     for(int i = 0; i != batches.size(); ++i){
-        tbb::parallel_for(const edge &e : batches[i]){
+        tbb::parallel_for(edge &e : batches[i]){
                active |= stats_edge(&e);
       }
-       
+    }
  
     //std::vector<std::vector<edge*> create_batches(){ 
            
