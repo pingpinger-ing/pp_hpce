@@ -263,11 +263,46 @@ private:
         for(j=0;j<sqrt(m_node.size);j++) 
             a[i][j]=0.0;
     */
+    std::vector<std::vector<edge*>> batches;
     
     bool step_all()
     {
           log(2, "stepping edges");
           bool active=false;
+          
+        int xi = 0, yi = 0;
+        for(const edge &e : m_edges){
+            switch(dct) {
+                case 0:
+                    ++dct;
+                    if (xi > 0) {
+                        batches[0].push_back(&e);
+                        continue;
+                    }     
+                case 1:
+                    ++dct;
+                    if (xi + 1 < graph_type.width) {
+                        batches[1].push_back(&e);
+                        continue;
+                    }
+                case 2:
+                    ++dct;
+                    if (yi > 0) {
+                        batches[2].push_back(&e);
+                        continue;
+                    }
+                case 3:
+                    dct = 0;
+                    if (yi + 1 < graph_type.height) {
+                        batches[3].push_back(&e);
+                    }
+            }
+            if (xi + 1 < width) ++xi;
+            else {
+                xi = 0;
+                ++yi;
+            }
+        }
         
       /*  for(const edge &e : m_edges){
                   todo.push_back( &e );
@@ -290,20 +325,21 @@ private:
            batches.push_back(batch);
        }
    }
-      
+   
+   */    
     
-    for(batch : batches){
-        tbb::parallel_for(const edge &e : batch){
+    for(i = 0; i != batches.size(); ++i){
+        tbb::parallel_for(const edge &e : batch[i]){
                active |= stats_edge(&e);
       }
-     */   
+       
  
     //std::vector<std::vector<edge*> create_batches(){ 
            
         
        //  Edge statistics
-        for (const edge &e: m_edges)
-            active |= stats_edge(&e);
+       // for (const edge &e: m_edges)
+          //  active |= stats_edge(&e);
         
         
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
