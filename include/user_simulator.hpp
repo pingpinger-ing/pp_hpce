@@ -312,7 +312,7 @@ private:
       }, tbb::simple_partitioner());
     }
  
-   */     
+       
        //  Edge statistics
        // for (const edge &e: m_edges)
           //  active |= stats_edge(&e);
