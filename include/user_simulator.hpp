@@ -264,8 +264,8 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        int width = heat::graph_type.width;
-        int height = heat::graph_type.height;
+        int width = graph_type.width;
+        int height = graph_type.height;
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
 
