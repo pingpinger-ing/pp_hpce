@@ -264,7 +264,8 @@ private:
         for(j=0;j<sqrt(m_node.size);j++) 
             a[i][j]=0.0;
     */
-    std::vector< std::vector<edge*> > batches(4);
+    std::vector< std::vector<edge*> > batches;
+    batches.resize(4);
     
     bool step_all()
     {
