@@ -17,14 +17,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-//jjjj
-template<class TGraph>
+
+template<class TGraph> //simulate函数模板
 void simulate(int logLevel, unsigned &lineNumber, std::istream &src, std::ostream &stats, FILE *dst)
 {
-    typename TGraph::graph_type graph;
-    unsigned numDevices, numChannels;
+    typename TGraph::graph_type graph; //定义一个TGraph类型的graph变量
+    unsigned numDevices, numChannels; // 定义两个无符号变量
     
-    graph_load_header<TGraph>(
+    graph_load_header<TGraph>(        
         lineNumber, src,
         graph, numDevices, numChannels
     );
@@ -44,7 +44,7 @@ void simulate(int logLevel, unsigned &lineNumber, std::istream &src, std::ostrea
         sim
     );
     
-    sim.run();
+    sim.run(); //sim是Simulator类的对象
 }
 
 void usage()
@@ -59,9 +59,9 @@ void usage()
 
 int main(int argc, char *argv[])
 {
-    try{        
+    try{                                      //可能抛出异常的语句
         // Try to fix stdin/stdout on windows
-        puzzler::WithBinaryIO binaryIO;
+        puzzler::WithBinaryIO binaryIO;   
         
         std::istream *src=&std::cin;
         std::ifstream srcFile;
