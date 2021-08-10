@@ -262,7 +262,7 @@ private:
     
     bool step_all()
     {
-        cout<<m_edges.size()<<endl;
+        std::cout<<m_edges.size()<<std::endl;
           log(2, "stepping edges");
           bool active=false;
          
