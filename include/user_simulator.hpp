@@ -339,7 +339,7 @@ private:
     for(int i = 0; i != batches.size(); ++i){
        // tbb::parallel_for(int j = 0; j < batches[i].size() ; ++j){
        tbb::parallel_for(0u, batches[i].size(), [&](int j) { 
-               active |= stats_edge(&batches[i][j]);
+               active |= stats_edge(batches[i][j]);
       }, tbb::simple_partitioner());
     }
  
