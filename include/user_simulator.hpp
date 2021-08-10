@@ -265,10 +265,10 @@ private:
             a[i][j]=0.0;
     */
     std::vector< std::vector<edge*> > batches;
-    std::vector< edge* > batch0
-    std::vector< edge* > batch1
-    std::vector< edge* > batch2
-    std::vector< edge* > batch3
+    std::vector< edge* > batch0;
+    std::vector< edge* > batch1;
+    std::vector< edge* > batch2;
+    std::vector< edge* > batch3;
     
     bool step_all()
     {
