@@ -26,6 +26,8 @@ public:
     typedef typename TGraph::message_type message_type;
     typedef typename TGraph::channel_type channel_type;
     typedef typename TGraph::SupervisorDevice SupervisorDevice;
+    
+    graph_type g;
 private:    
     struct node;
     struct edge;
@@ -264,8 +266,8 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        int width = graph_type.width;
-        int height = graph_type.height;
+        int width = g.width;
+        int height = g.height;
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
 
