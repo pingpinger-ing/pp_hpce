@@ -269,7 +269,9 @@ private:
     {
           log(2, "stepping edges");
           bool active=false;
-          
+         
+        int width = sqrt(m_nodes.size());
+        int height = sqrt(m_nodes.size());
         int xi = 0, yi = 0, drc = 0;
         for(i_edge = 0; i_edge < m_edges.size();){
             switch(drc) {
@@ -282,7 +284,7 @@ private:
                     continue;  
                 case 1:
                     ++drc;
-                    if (xi + 1 < graph_type.width) {
+                    if (xi + 1 < width) {
                         batches[1].push_back(m_edges[i_edge]);
                         ++i_edge;
                     }
@@ -296,7 +298,7 @@ private:
                     continue;
                 case 3:
                     drc = 0;
-                    if (yi + 1 < graph_type.height) {
+                    if (yi + 1 < height) {
                         batches[3].push_back(m_edges[i_edge]);
                         ++i_edge
                     }
@@ -333,8 +335,8 @@ private:
    
    */    
     
-    for(i = 0; i != batches.size(); ++i){
-        tbb::parallel_for(const edge &e : batch[i]){
+    for(int i = 0; i != batches.size(); ++i){
+        tbb::parallel_for(const edge &e : batches[i]){
                active |= stats_edge(&e);
       }
        
