@@ -265,30 +265,30 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        //int width = sqrt(m_nodes.size());
-       // int height = sqrt(m_nodes.size());
-          int width = 121;
-          int height = 121;
+        int width = sqrt(m_nodes.size());
+        int height = sqrt(m_nodes.size());
+        //  int width = 121;
+        //  int height = 121;
         
         int xi = 0, yi = 0;
-        for(int i_edge = 0; i_edge < m_edges.size();){
+        for(unsigned i_edge = 0; i_edge < m_edges.size();){
 
-                    if (xi > 0) {
+                    if (xi > 0 && i_edge < m_edges.size()) {
                         batch0.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
 
-                    if (xi + 1 < width) {
+                    if (xi + 1 < width && i_edge < m_edges.size()) {
                         batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
 
-                    if (yi > 0) {
+                    if (yi > 0 && i_edge < m_edges.size()) {
                         batch2.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
 
-                    if (yi + 1 < height) {
+                    if (yi + 1 < height && i_edge < m_edges.size()) {
                         batch3.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
