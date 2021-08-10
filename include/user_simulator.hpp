@@ -265,7 +265,10 @@ private:
             a[i][j]=0.0;
     */
     std::vector< std::vector<edge*> > batches;
-    batches.resize(4);
+    std::vector< edge* > batch0
+    std::vector< edge* > batch1
+    std::vector< edge* > batch2
+    std::vector< edge* > batch3
     
     bool step_all()
     {
@@ -280,28 +283,28 @@ private:
               //  case 0:
                     //++drc;
                     if (xi > 0) {
-                        batches[0].push_back(&m_edges[i_edge]);
+                        batch0.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                     //continue;  
               //  case 1:
                     //++drc;
                     if (xi + 1 < width) {
-                        batches[1].push_back(&m_edges[i_edge]);
+                        batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                    // continue;
              //   case 2:
                     //++drc;
                     if (yi > 0) {
-                        batches[2].push_back(&m_edges[i_edge]);
+                        batch2.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                    // continue;
              //   case 3:
                     //drc = 0;
                     if (yi + 1 < height) {
-                        batches[3].push_back(&m_edges[i_edge]);
+                        batch3.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                  //   break;
@@ -313,6 +316,10 @@ private:
                 ++yi;
             }
         }
+        batches.push_back(batch0);
+        batches.push_back(batch1);
+        batches.push_back(batch2);
+        batches.push_back(batch3);
         
       /*  for(const edge &e : m_edges){
                   todo.push_back( &e );
