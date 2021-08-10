@@ -73,7 +73,7 @@ private:
     
     int m_logLevel;
     
-    void log(int level, const char *msg, ...)
+    void log(int level, const char *msg, ...)    //log(1, "begin run");
     {
         if(level <= m_logLevel){
             char localBuffer[256];
@@ -301,7 +301,7 @@ private:
     //std::vector<std::vector<edge*> create_batches(){ 
            
         
-         Edge statistics
+       //  Edge statistics
         for (const edge &e: m_edges)
             active |= stats_edge(&e);
         
@@ -406,7 +406,7 @@ public:
         while(active){
             log(1, "step %u", m_step);
             
-            m_stats={m_step, 0,0,0, 0,0,0};
+            m_stats={m_step, 0,0,0, 0,0,0};//各个状态的起始值都为0 （node三个状态（idle，blocked，send），edge三个状态（idle，transit，deliver））
 
             // Run all the nodes
             active = step_all();
