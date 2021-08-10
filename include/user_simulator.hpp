@@ -252,18 +252,7 @@ private:
     }
      
     
-
     
-  /*  //Partition edge
-    std::vector<edge*> batches;
-    std::vector<edge*> todo
-    std::vector<edge*> batch;
-    std::set<node*> seen;
-    
-    for(i=0;i<sqrt(m_node.size);i++) 
-        for(j=0;j<sqrt(m_node.size);j++) 
-            a[i][j]=0.0;
-    */
     std::vector< std::vector<edge*> > batches;
     std::vector< edge* > batch0;
     std::vector< edge* > batch1;
@@ -279,37 +268,27 @@ private:
         int height = TGraph::graph_type.height;
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
-       //     switch(drc) {
-              //  case 0:
-                    //++drc;
+
                     if (xi > 0) {
                         batch0.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                    //continue;  
-              //  case 1:
-                    //++drc;
+
                     if (xi + 1 < width) {
                         batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                   // continue;
-             //   case 2:
-                    //++drc;
+
                     if (yi > 0) {
                         batch2.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                   // continue;
-             //   case 3:
-                    //drc = 0;
+
                     if (yi + 1 < height) {
                         batch3.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
-                 //   break;
-          //  }
-           // drc = 0;
+   
             if (xi + 1 < width) ++xi;
             else {
                 xi = 0;
@@ -320,30 +299,7 @@ private:
         batches.push_back(batch1);
         batches.push_back(batch2);
         batches.push_back(batch3);
-        
-      /*  for(const edge &e : m_edges){
-                  todo.push_back( &e );
-        }   
-            while(!todo.empty()){
-                            
-                   for(const edge &e : todo)
-                   {
-                    if(seen.contain( e->src ))
-                    {
-                   //skip
-                       }
-                    else
-                    {
-                   seen.insert( e->src);
-                   batch.push_back( &e );
-                   todo.remove(e);
-                       } 
-                    }
-           batches.push_back(batch);
-       }
-   }
-   
-   */    
+         
     /*
     for(int i = 0; i != batches.size(); ++i){
        // tbb::parallel_for(int j = 0; j < batches[i].size() ; ++j){
@@ -352,14 +308,12 @@ private:
       }, tbb::simple_partitioner());
     }
  */
-          for(int i = 0; i != batches.size(); ++i){
-       for(int j = 0; j < batches[i].size() ; ++j){
-      // tbb::parallel_for(0u, batches[i].size(), [&](int j) { 
+          for(unsigned i = 0; i != batches.size(); ++i){
+       for(unsigned j = 0; j < batches[i].size() ; ++j){
+      // tbb::parallel_for(0u, (unsigned)batches[i].size(), [&](unsigned j) { 
                active |= stats_edge(batches[i][j]);
       }
-          }
-    //std::vector<std::vector<edge*> create_batches(){ 
-           
+          } 
         
        //  Edge statistics
        // for (const edge &e: m_edges)
