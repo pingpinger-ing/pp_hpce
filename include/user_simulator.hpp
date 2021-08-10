@@ -262,7 +262,6 @@ private:
     
     bool step_all()
     {
-        std::cout<<m_edges.size()<<std::endl;
           log(2, "stepping edges");
           bool active=false;
          
@@ -300,8 +299,8 @@ private:
                 ++yi;
             }
         }
-        batches.push_back(batch0);
- //       batches.push_back(batch1);
+ //       batches.push_back(batch0);
+        batches.push_back(batch1);
  //       batches.push_back(batch2);
   //      batches.push_back(batch3);
          
