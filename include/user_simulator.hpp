@@ -1,6 +1,5 @@
 #ifndef simulator_hpp
 #define simulator_hpp
-#include user_heat.hpp
 
 #include <cstdint>
 #include <vector>
