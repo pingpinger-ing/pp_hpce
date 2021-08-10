@@ -15,11 +15,11 @@
 #include <tbb/parallel_for.h>
 #include <set>
 
-template<class TGraph>
+template<class TGraph> //模板类，TGraph==heat
 class Simulator
 {
 public:
-    typedef typename TGraph::graph_type graph_type;
+    typedef typename TGraph::graph_type graph_type; // heat.hpp下的graph_type类，给这个类定义一个对象
     typedef typename TGraph::properties_type properties_type;
     typedef typename TGraph::device_type device_type;
     typedef typename TGraph::message_type message_type;
@@ -80,7 +80,7 @@ private:
             char *globalBuffer=0;
             char *buffer=localBuffer;
             
-            va_list va;
+            va_list va;  //
             va_start(va, msg);
             int n=vsnprintf(buffer, sizeof(localBuffer), msg, va);
             va_end(va);
