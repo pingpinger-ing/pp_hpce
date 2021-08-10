@@ -270,32 +270,37 @@ private:
           log(2, "stepping edges");
           bool active=false;
           
-        int xi = 0, yi = 0;
-        for(const edge &e : m_edges){
-            switch(dct) {
+        int xi = 0, yi = 0, drc = 0;
+        for(i_edge = 0; i_edge < m_edges.size();){
+            switch(drc) {
                 case 0:
-                    ++dct;
+                    ++drc;
                     if (xi > 0) {
-                        batches[0].push_back(&e);
-                        continue;
-                    }     
+                        batches[0].push_back(m_edges[i_edge]);
+                        ++i_edge;
+                    }
+                    continue;  
                 case 1:
-                    ++dct;
+                    ++drc;
                     if (xi + 1 < graph_type.width) {
-                        batches[1].push_back(&e);
-                        continue;
+                        batches[1].push_back(m_edges[i_edge]);
+                        ++i_edge;
                     }
+                    continue;
                 case 2:
-                    ++dct;
+                    ++drc;
                     if (yi > 0) {
-                        batches[2].push_back(&e);
-                        continue;
+                        batches[2].push_back(m_edges[i_edge]);
+                        ++i_edge;
                     }
+                    continue;
                 case 3:
-                    dct = 0;
+                    drc = 0;
                     if (yi + 1 < graph_type.height) {
-                        batches[3].push_back(&e);
+                        batches[3].push_back(m_edges[i_edge]);
+                        ++i_edge
                     }
+                    break;
             }
             if (xi + 1 < width) ++xi;
             else {
