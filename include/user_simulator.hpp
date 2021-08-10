@@ -265,8 +265,8 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        int width = 127;
-        int height = 127;
+        int width = sqrt(m_nodes.size());
+        int height = sqrt(m_nodes.size());
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
 
