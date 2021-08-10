@@ -26,7 +26,7 @@ public:
     typedef typename TGraph::message_type message_type;
     typedef typename TGraph::channel_type channel_type;
     typedef typename TGraph::SupervisorDevice SupervisorDevice;
-    const graph_type *m_graph
+    const graph_type m_graph
 private:    
     struct node;
     struct edge;
