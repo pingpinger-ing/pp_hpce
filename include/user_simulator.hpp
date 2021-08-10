@@ -301,7 +301,7 @@ private:
                     drc = 0;
                     if (yi + 1 < height) {
                         batches[3].push_back(&m_edges[i_edge]);
-                        ++i_edge
+                        ++i_edge;
                     }
                     break;
             }
@@ -340,7 +340,7 @@ private:
        // tbb::parallel_for(int j = 0; j < batches[i].size() ; ++j){
        tbb::parallel_for(0u, batches[i].size(), [&](int j) { 
                active |= stats_edge(&batches[i][j]);
-      });
+      }, tbb::simple_partitioner());
     }
  
     //std::vector<std::vector<edge*> create_batches(){ 
