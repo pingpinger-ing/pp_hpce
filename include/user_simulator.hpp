@@ -14,6 +14,7 @@
 
 #include <tbb/parallel_for.h>
 #include <set>
+#include <cmath>
 
 template<class TGraph> //模板类，TGraph==heat
 class Simulator
@@ -263,7 +264,7 @@ private:
         for(j=0;j<sqrt(m_node.size);j++) 
             a[i][j]=0.0;
     */
-    std::vector<vector<edge*>> batches;
+    std::vector< std::vector<edge*> > batches;
     
     bool step_all()
     {
@@ -278,28 +279,28 @@ private:
                 case 0:
                     ++drc;
                     if (xi > 0) {
-                        batches[0].push_back(m_edges[i_edge]);
+                        batches[0].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                     continue;  
                 case 1:
                     ++drc;
                     if (xi + 1 < width) {
-                        batches[1].push_back(m_edges[i_edge]);
+                        batches[1].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                     continue;
                 case 2:
                     ++drc;
                     if (yi > 0) {
-                        batches[2].push_back(m_edges[i_edge]);
+                        batches[2].push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                     continue;
                 case 3:
                     drc = 0;
                     if (yi + 1 < height) {
-                        batches[3].push_back(m_edges[i_edge]);
+                        batches[3].push_back(&m_edges[i_edge]);
                         ++i_edge
                     }
                     break;
@@ -336,9 +337,10 @@ private:
    */    
     
     for(int i = 0; i != batches.size(); ++i){
-        tbb::parallel_for(edge &e : batches[i]){
-               active |= stats_edge(&e);
-      }
+       // tbb::parallel_for(int j = 0; j < batches[i].size() ; ++j){
+       tbb::parallel_for(0u, batches[i].size(), [&](int j) { 
+               active |= stats_edge(&batches[i][j]);
+      });
     }
  
     //std::vector<std::vector<edge*> create_batches(){ 
