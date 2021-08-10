@@ -1,5 +1,6 @@
 #ifndef simulator_hpp
 #define simulator_hpp
+#include user_heat.hpp
 
 #include <cstdint>
 #include <vector>
@@ -27,6 +28,7 @@ public:
     typedef typename TGraph::channel_type channel_type;
     typedef typename TGraph::SupervisorDevice SupervisorDevice;
     
+    typedef typename heat::graph_type graph_type;
     graph_type g;
 private:    
     struct node;
