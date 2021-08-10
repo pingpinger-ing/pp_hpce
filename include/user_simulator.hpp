@@ -264,8 +264,8 @@ private:
           log(2, "stepping edges");
           bool active=false;
          
-        int width = TGraph::graph_type.width;
-        int height = TGraph::graph_type.height;
+        int width = heat::graph_type.width;
+        int height = heat::graph_type.height;
         int xi = 0, yi = 0;
         for(int i_edge = 0; i_edge < m_edges.size();){
 
@@ -300,21 +300,21 @@ private:
         batches.push_back(batch2);
         batches.push_back(batch3);
          
-    /*
-    for(int i = 0; i != batches.size(); ++i){
-       // tbb::parallel_for(int j = 0; j < batches[i].size() ; ++j){
-       tbb::parallel_for(0u, batches[i].size(), [&](int j) { 
+    
+    for(unsigned i = 0; i != batches.size(); ++i){
+       tbb::parallel_for(0u,(unsigned)batches[i].size(), [&](unsigned j) { 
                active |= stats_edge(batches[i][j]);
       }, tbb::simple_partitioner());
     }
- */
+ 
+        /*
           for(unsigned i = 0; i != batches.size(); ++i){
        for(unsigned j = 0; j < batches[i].size() ; ++j){
       // tbb::parallel_for(0u, (unsigned)batches[i].size(), [&](unsigned j) { 
                active |= stats_edge(batches[i][j]);
       }
           } 
-        
+   */     
        //  Edge statistics
        // for (const edge &e: m_edges)
           //  active |= stats_edge(&e);
