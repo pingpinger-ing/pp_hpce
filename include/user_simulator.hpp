@@ -301,9 +301,9 @@ private:
             }
         }
         batches.push_back(batch0);
-        batches.push_back(batch1);
-        batches.push_back(batch2);
-        batches.push_back(batch3);
+ //       batches.push_back(batch1);
+ //       batches.push_back(batch2);
+  //      batches.push_back(batch3);
          
     
     for(unsigned i = 0; i != batches.size(); ++i){
@@ -312,13 +312,6 @@ private:
       }, tbb::simple_partitioner());
     }
  
-        /*
-          for(unsigned i = 0; i != batches.size(); ++i){
-       for(unsigned j = 0; j < batches[i].size() ; ++j){
-      // tbb::parallel_for(0u, (unsigned)batches[i].size(), [&](unsigned j) { 
-               active |= stats_edge(batches[i][j]);
-      }
-          } 
    */     
        //  Edge statistics
        // for (const edge &e: m_edges)
