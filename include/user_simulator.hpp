@@ -253,7 +253,7 @@ private:
     
 
     
-    //Partition edge
+  /*  //Partition edge
     std::vector<edge*> batches;
     std::vector<edge*> todo
     std::vector<edge*> batch;
@@ -262,14 +262,14 @@ private:
     for(i=0;i<sqrt(m_node.size);i++) 
         for(j=0;j<sqrt(m_node.size);j++) 
             a[i][j]=0.0;
-    
+    */
     
     bool step_all()
     {
           log(2, "stepping edges");
           bool active=false;
         
-        for(const edge &e : m_edges){
+      /*  for(const edge &e : m_edges){
                   todo.push_back( &e );
         }   
             while(!todo.empty()){
@@ -296,14 +296,14 @@ private:
         tbb::parallel_for(const edge &e : batch){
                active |= stats_edge(&e);
       }
-        
+     */   
  
     //std::vector<std::vector<edge*> create_batches(){ 
            
         
-        // Edge statistics
-        //for (const edge &e: m_edges)
-        //    active |= stats_edge(&e);
+         Edge statistics
+        for (const edge &e: m_edges)
+            active |= stats_edge(&e);
         
         
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
