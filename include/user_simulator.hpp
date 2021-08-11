@@ -82,7 +82,7 @@ private:
             char *globalBuffer=0;
             char *buffer=localBuffer;
             
-              va;  //
+            va_list va;
             va_start(va, msg);
             int n=vsnprintf(buffer, sizeof(localBuffer), msg, va);
             va_end(va);
