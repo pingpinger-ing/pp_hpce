@@ -155,6 +155,8 @@ private:
         return act;
         */
          bool act = false;
+         std::vector< std::vector<edge*> > batches_all;
+        batches_all = create_batches();
          
           for(unsigned i = 0; i != batches_all.size(); ++i){
          tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
@@ -369,8 +371,6 @@ private:
     
     bool step_all()
     {       
-        std::vector< std::vector<edge*> > batches_all;
-        batches_all = create_batches();
 
         log(2, "stepping edges");
         bool active=false;
