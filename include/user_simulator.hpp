@@ -304,15 +304,15 @@ private:
           std::vector<edge*> batch3;
     
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
-              int srcIndex = m_edges[i_index].srcindex;
-              int dstIndex = m_edges[i_index].dstindex;
+              int srcIndex = m_edges[i_edge].srcindex;
+              int dstIndex = m_edges[i_edge].dstindex;
 
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
                     batch0.push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch1.push_back(&m_edges[i_edge])
+                    batch1.push_back(&m_edges[i_edge]);
                   }
               }
               else {
@@ -320,7 +320,7 @@ private:
                     batch2.push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch3.push_back(&m_edges[i_edge])
+                    batch3.push_back(&m_edges[i_edge]);
                   }
               }        
         }            
@@ -436,8 +436,8 @@ public:
         e.messageStatus=0;
         m_edges.push_back(e);
         ///////////////
-        e.srcindex = srcindex;
-        e.dstindex = dstindex;
+        e.srcindex = srcIndex;
+        e.dstindex = dstIndex;
         ///////////////
         m_nodes.at(srcIndex).outgoing.push_back( &m_edges[edgeIndex] );
         m_nodes.at(dstIndex).incoming.push_back( &m_edges[edgeIndex] );
