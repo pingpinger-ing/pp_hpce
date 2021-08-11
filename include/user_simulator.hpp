@@ -309,18 +309,18 @@ private:
 
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
-                    batch0.push_back(const edge &m_edges[i_edge]);
+                    batch0.push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch1.push_back(const edge &m_edges[i_edge]);
+                    batch1.push_back(&m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
-                    batch2.push_back(const edge &m_edges[i_edge]);
+                    batch2.push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch3.push_back(const edge &m_edges[i_edge]);
+                    batch3.push_back(&m_edges[i_edge]);
                   }
               }        
         }            
@@ -342,6 +342,7 @@ private:
     {       
         std::vector< std::vector<edge*> > batches_all;
         batches_all = create_batches();
+        const edge batches_all[][];
         
         log(2, "stepping edges");
         bool active=false;
