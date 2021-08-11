@@ -350,9 +350,12 @@ private:
           log(2, "stepping edges");
           bool active=false;
         
-       for(unsigned i = 0; i != create_batches().size(); ++i){
-         tbb::parallel_for(0u,(unsigned)create_batches()[i].size(), [&](unsigned j) { 
-               active |= stats_edge(create_batches()[i][j]);
+       std::vector< std::vector<edge*> > batches_all;
+       batches_all = create_batches();
+        
+       for(unsigned i = 0; i != batches_all.size(); ++i){
+         tbb::parallel_for(0u,(unsigned)batches_all[i].size(), [&](unsigned j) { 
+               active |= stats_edge(batches_all[i][j]);
             }, tbb::auto_partitioner());
        }
         
