@@ -261,7 +261,7 @@ private:
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
         
-            for( e : m_edges){
+            for( edge &e : m_edges){
                 todo.push_back( &e );
             }
         
@@ -269,7 +269,7 @@ private:
                 std::vector<edge*> batch;
                 std::set<node*> seen;
                 
-                for( e : todo){
+                for( edge &e : todo){
                     int width = sqrt(m_nodes.size());
                     if( seen.find( e->node+1 )){
                     }
