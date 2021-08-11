@@ -182,9 +182,11 @@ private:
                 continue;
             }
         }
-        return act;
+  
             }, tbb::simple_partitioner());
           }     
+         
+               return act;
     }
     
         
