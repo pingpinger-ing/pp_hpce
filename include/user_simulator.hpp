@@ -39,8 +39,7 @@ private:
         std::vector<edge*> incoming;
         std::vector<edge*> outgoing;
         bool output;
-        
-        std::vector< std::vector<edge*> > batches_all;
+
     };
     
     struct edge
@@ -130,9 +129,8 @@ private:
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
-     bool update_node(unsigned index, node *n)
+ /*    bool update_node(unsigned index, node *n)
     {
-         /*
         bool act = false;
          
         for (unsigned i = 0; i != n->incoming.size(); i++) {
@@ -154,20 +152,23 @@ private:
                 continue;
             }
         }
-        return act;
-        */
-         bool act = false;
-         
-         node n1;
-         n1.batches_all = create_batches();
-         
-         for(unsigned i = 0; i != n1.batches_all.size(); ++i){
-         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)n1.batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
+        return act;    
+    }
+    
+   */
+    
+      bool update_node(unsigned index, node *n)
+    {
+        bool act = false;
+          
+        std::vector< std::vector<edge*> > batches_all;
+        batches_all = create_batches();  
+        
+        for(unsigned i = 0; i != batches_all.size(); ++i){
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
-               for (unsigned j = a; j != b; j++)
-               //stats_edge(batches_all[i][j]);
-                   {
-            edge *e = n->batches_all[i][j];
+               for (unsigned j = a; j != b; j++){
+            edge *e = batches_all[i][j];
             switch (e->messageStatus) {
             case 0:
                 continue;
@@ -185,14 +186,13 @@ private:
                 continue;
             }
         }
-  
+               
             }, tbb::simple_partitioner());
-          }     
-         
-               return act;
+          }           
+        return act;    
     }
-    
         
+    
     
     uint32_t stats_node(node *n)  // unsigned int 
     {
@@ -380,6 +380,19 @@ private:
         log(2, "stepping edges");
         bool active=false;
         
+  /*              
+        std::vector< std::vector<edge*> > batches_all;
+        batches_all = create_batches();
+        
+            
+        for(unsigned i = 0; i != batches_all.size(); ++i){
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
+               unsigned a = range.begin(), b = range.end();
+               for (unsigned j = a; j != b; j++)
+               stats_edge(batches_all[i][j]);
+            }, tbb::simple_partitioner());
+          }  
+      */  
        //  Edge statistics
         for (const edge &e: m_edges)
             active |= stats_edge(&e);
