@@ -261,7 +261,7 @@ private:
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
         
-            for(edge e : m_edges){
+            for( e : m_edges){
                 todo.push_back( &e );
             }
         
@@ -269,35 +269,35 @@ private:
                 std::vector<edge*> batch;
                 std::set<node*> seen;
                 
-                for( edge e : todo){
+                for( e : todo){
                     int width = sqrt(m_nodes.size());
-                    if( seen.contain ( e->node+1 )){
+                    if( seen.find( e->node+1 )){
                     }
                 else{
                        seen.insert( e->node+1 );
                 batch.push_back( &e );
-                todo.remove(e);
+                todo.erase(e);
                 }
-                  if( seen.contain ( e->node-1 )){
+                  if( seen.find( e->node-1 )){
                     }
                 else{
                        seen.insert( e->node-1 );
                 batch.push_back( &e );
-                todo.remove(e);
+                todo.erase(e);
                 }
-                  if( seen.contain ( e->node+width )){
+                  if( seen.find( e->node+width )){
                     }
                 else{
                        seen.insert( e->node+width);
                 batch.push_back( &e );
-                todo.remove(e);
+                todo.erase(e);
                 }
-                  if( seen.contain ( e->node-width )){
+                  if( seen.find( e->node-width )){
                     }
                 else{
                        seen.insert( e->node-width);
                 batch.push_back( &e );
-                todo.remove(e);
+                todo.erase(e);
                 }
             }
         batches.push_back(batch);
