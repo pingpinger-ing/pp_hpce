@@ -51,6 +51,9 @@ private:
         
         unsigned messageStatus; // 0->empty, 1->ready, 2->inflight
         message_type messageData;
+        
+        unsigned srcindex;
+        unsigned dstindex;
     };
     
     struct output
@@ -299,43 +302,27 @@ private:
           std::vector<edge*> batch1;
           std::vector<edge*> batch2;
           std::vector<edge*> batch3;
-        
-          int width = sqrt(m_nodes.size());
-          int height = sqrt(m_nodes.size());
     
-        
-          int xi = 0, yi = 0;
-          for(unsigned i_edge = 0; i_edge < m_edges.size();){
+          for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
+              int srcIndex = m_edges[i_index].srcindex;
+              int dstIndex = m_edges[i_index].dstindex;
 
-                    if (xi > 0 && i_edge < m_edges.size()) {
-                        batch0.push_back(&m_edges[i_edge]);
-                        ++i_edge;
-                    }
-                       
-
-                    if (xi + 1 < width && i_edge < m_edges.size()) {
-                        batch1.push_back(&m_edges[i_edge]);
-                        ++i_edge;
-                    }
-                        
-
-                    if (yi > 0 && i_edge < m_edges.size()) {
-                        batch2.push_back(&m_edges[i_edge]);
-                        ++i_edge;
-                    }
-                       
-
-                    if (yi + 1 < height && i_edge < m_edges.size()) {
-                        batch3.push_back(&m_edges[i_edge]);
-                        ++i_edge;
-                    }
-                       
-   
-            if (xi + 1 < width) ++xi;
-            else {
-                xi = 0;
-                ++yi;
-            }
+              if (srcIndex < dstIndex) {
+                  if (srcIndex + 1 == dstIndex) {
+                    batch0.push_back(&m_edges[i_edge]);
+                  }
+                  else {
+                    batch1.push_back(&m_edges[i_edge])
+                  }
+              }
+              else {
+                  if (srcIndex == dstIndex + 1) {
+                    batch2.push_back(&m_edges[i_edge]);
+                  }
+                  else {
+                    batch3.push_back(&m_edges[i_edge])
+                  }
+              }        
         }            
           batches.push_back(batch0);
           batches.push_back(batch1);
@@ -448,7 +435,10 @@ public:
         e.channel = channel;
         e.messageStatus=0;
         m_edges.push_back(e);
-        
+        ///////////////
+        e.srcindex = srcindex;
+        e.dstindex = dstindex;
+        ///////////////
         m_nodes.at(srcIndex).outgoing.push_back( &m_edges[edgeIndex] );
         m_nodes.at(dstIndex).incoming.push_back( &m_edges[edgeIndex] );
     }
