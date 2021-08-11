@@ -130,6 +130,7 @@ private:
   
      bool update_node(unsigned index, node *n)
     {
+         /*
         bool act = false;
          
         for (unsigned i = 0; i != n->incoming.size(); i++) {
@@ -152,9 +153,39 @@ private:
             }
         }
         return act;
+        */
+         bool act = false;
+         
+          for(unsigned i = 0; i != batches_all.size(); ++i){
+         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
+               unsigned a = range.begin(), b = range.end();
+               for (unsigned j = a; j != b; j++)
+               //stats_edge(batches_all[i][j]);
+                   {
+            edge *e = n->batches_all[i][j];
+            switch (e->messageStatus) {
+            case 0:
+                continue;
+            case 1:                // Deliver the message to the device                
+                TGraph::on_recv(
+                    &m_graph,
+                    &(e->channel),
+                    &(e->messageData),
+                    &(n->properties),
+                    &(n->state)
+                );
+            default:
+                e->messageStatus--;
+                act = true;
+                continue;
+            }
+        }
+        return act;
+            }, tbb::simple_partitioner());
+          }     
     }
     
-
+        
     
     uint32_t stats_node(node *n)  // unsigned int 
     {
@@ -343,14 +374,6 @@ private:
 
         log(2, "stepping edges");
         bool active=false;
-        
-         for(unsigned i = 0; i != batches_all.size(); ++i){
-         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
-               unsigned a = range.begin(), b = range.end();
-               for (unsigned j = a; j != b; j++)
-               stats_edge(batches_all[i][j]);
-            }, tbb::simple_partitioner());
-       }
         
        //  Edge statistics
         for (const edge &e: m_edges)
