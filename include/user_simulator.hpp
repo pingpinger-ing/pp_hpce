@@ -328,10 +328,10 @@ private:
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);
-          std::cout<<batch0.size()<<std::endl;
-         std::cout<<batch1.size()<<std::endl;
-         std::cout<<batch2.size()<<std::endl;
-         std::cout<<batch3.size()<<std::endl;
+       //  std::cout<<batch0.size()<<std::endl;
+       //  std::cout<<batch1.size()<<std::endl;
+       //  std::cout<<batch2.size()<<std::endl;
+       //  std::cout<<batch3.size()<<std::endl;
          
           return batches;
      }
@@ -341,13 +341,13 @@ private:
     bool step_all()
     {       
         std::vector< std::vector<edge*> > batches_all;
-        const batches_all = create_batches();
+        batches_all = create_batches();
         
         log(2, "stepping edges");
         bool active=false;
                
         for(unsigned i = 0; i != batches_all.size(); ++i){
-         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
+         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(const unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
                active |= stats_edge(batches_all[i][j]);
