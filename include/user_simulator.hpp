@@ -309,18 +309,18 @@ private:
 
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
-                    batch0.push_back(&m_edges[i_edge]);
+                    batch0.push_back(const edge &m_edges[i_edge]);
                   }
                   else {
-                    batch1.push_back(&m_edges[i_edge]);
+                    batch1.push_back(const edge &m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
-                    batch2.push_back(&m_edges[i_edge]);
+                    batch2.push_back(const edge &m_edges[i_edge]);
                   }
                   else {
-                    batch3.push_back(&m_edges[i_edge]);
+                    batch3.push_back(const edge &m_edges[i_edge]);
                   }
               }        
         }            
@@ -350,7 +350,7 @@ private:
          tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
-               active |= stats_edge(std::const edge batches_all[i][j]);
+               active |= stats_edge(batches_all[i][j]);
             }, tbb::simple_partitioner());
        }
         
