@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
         
         unsigned w=65, h=65;
         unsigned maxTime=64;
-        unsigned outputDeltaSpace=2;
+        unsigned outputDeltaSpace=2;//
         unsigned outputDeltaTime=8;
         int minHeat=-30000, maxHeat=+30000;
         
