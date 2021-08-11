@@ -303,8 +303,8 @@ private:
           std::vector< edge* > batch2;
           std::vector< edge* > batch3;
         
-         int width = sqrt(m_nodes.size());
-         int height = sqrt(m_nodes.size());
+       //  int width = sqrt(m_nodes.size());
+        // int height = sqrt(m_nodes.size());
         //  int width = 121;
         //  int height = 121;        
         
