@@ -290,14 +290,10 @@ private:
 }
                 
     */
-    
-    
-    bool step_all()
-    {
-          log(2, "stepping edges");
-          bool active=false;
-        
-          std::vector< std::vector<edge*> > batches;  
+            
+     std::vector< std::vector<edge*> > create_batches(){ 
+         
+          std::vector< std::vector<edge*> > batches;
           std::vector< edge* > batch0;
           std::vector< edge* > batch1;
           std::vector< edge* > batch2;
@@ -340,28 +336,30 @@ private:
                 xi = 0;
                 ++yi;
             }
-        }
-        
-             
+        }            
           batches.push_back(batch0);
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);
-        
          
+         return batches;
+     }
     
-    for(unsigned i = 0; i != batches.size(); ++i){
-       tbb::parallel_for(0u,(unsigned)batches[i].size(), [&](unsigned j) { 
-               active |= stats_edge(batches[i][j]);
-      }, tbb::auto_partitioner());
-    }
- 
-       
+    bool step_all()
+    {
+          log(2, "stepping edges");
+          bool active=false;
+        
+       for(unsigned i = 0; i != create_batches().size(); ++i){
+         tbb::parallel_for(0u,(unsigned)create_batches()[i].size(), [&](unsigned j) { 
+               active |= stats_edge(create_batches()[i][j]);
+            }, tbb::auto_partitioner());
+       }
+        
        //  Edge statistics
        // for (const edge &e: m_edges)
           //  active |= stats_edge(&e);
-        
-        
+                
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
