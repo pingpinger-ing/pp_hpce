@@ -361,7 +361,7 @@ private:
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
                active |= stats_edge(batches_all[i][j]);
-            }, simple_partitioner());
+            }, tbb::simple_partitioner());
        }
         
        //  Edge statistics
