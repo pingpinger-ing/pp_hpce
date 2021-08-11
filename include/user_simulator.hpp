@@ -312,25 +312,25 @@ private:
         for(unsigned i_edge = 0; i_edge < m_edges.size();){
 
                     if (xi > 0 && i_edge < m_edges.size()) {
-                        batch0.push_back(m_edges[i_edge]);
+                        batch0.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
 
                     if (xi + 1 < width && i_edge < m_edges.size()) {
-                        batch1.push_back(m_edges[i_edge]);
+                        batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                         
 
                     if (yi > 0 && i_edge < m_edges.size()) {
-                        batch2.push_back(m_edges[i_edge]);
+                        batch2.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
 
                     if (yi + 1 < height && i_edge < m_edges.size()) {
-                        batch3.push_back(m_edges[i_edge]);
+                        batch3.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
