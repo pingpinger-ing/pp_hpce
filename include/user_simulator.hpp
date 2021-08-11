@@ -341,7 +341,7 @@ private:
     bool step_all()
     {       
         std::vector< std::vector<edge*> > batches_all;
-        batches_all = create_batches();
+        const batches_all = create_batches();
         
         log(2, "stepping edges");
         bool active=false;
