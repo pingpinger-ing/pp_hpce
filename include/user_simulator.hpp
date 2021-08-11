@@ -271,31 +271,31 @@ private:
                 
                 for( edge &e : todo){
                     int width = sqrt(m_nodes.size());
-                    if( seen.find( e->node+1 )){
+                    if( seen.find( &e->node+1 )){
                     }
                 else{
-                       seen.insert( e->node+1 );
+                       seen.insert( &e->node+1 );
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( e->node-1 )){
+                  if( seen.find( &e->node-1 )){
                     }
                 else{
-                       seen.insert( e->node-1 );
+                       seen.insert( &e->node-1 );
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( e->node+width )){
+                  if( seen.find( &e->node+width )){
                     }
                 else{
-                       seen.insert( e->node+width);
+                       seen.insert( &e->node+width);
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( e->node-width )){
+                  if( seen.find( &e->node-width )){
                     }
                 else{
-                       seen.insert( e->node-width);
+                       seen.insert( &e->node-width);
                 batch.push_back( &e );
                 todo.erase(e);
                 }
