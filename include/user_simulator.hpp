@@ -256,7 +256,7 @@ private:
     
 
     
-    std::vector< vector<edge*> > create_batches()
+    std::vector< std::vector<edge*> > create_batches()
     {
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
@@ -358,12 +358,12 @@ private:
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);*/
-        create_batches();
+        
          
     
-    for(unsigned i = 0; i != batches.size(); ++i){
-       tbb::parallel_for(0u,(unsigned)batches[i].size(), [&](unsigned j) { 
-               active |= stats_edge(batches[i][j]);
+    for(unsigned i = 0; i != create_batches().size(); ++i){
+       tbb::parallel_for(0u,(unsigned)create_batches()[i].size(), [&](unsigned j) { 
+               active |= stats_edge(create_batches()[i][j]);
       }, tbb::simple_partitioner());
     }
  
