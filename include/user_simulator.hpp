@@ -342,7 +342,7 @@ private:
     {       
         std::vector< std::vector<edge*> > batches_all;
         batches_all = create_batches();
-        const edge batches_all[][];
+        const edge batches_all;
         
         log(2, "stepping edges");
         bool active=false;
