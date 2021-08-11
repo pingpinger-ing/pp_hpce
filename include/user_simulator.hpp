@@ -302,8 +302,9 @@ private:
         
           int width = sqrt(m_nodes.size());
           int height = sqrt(m_nodes.size());
-        //  int width = 121;
-        //  int height = 121;        
+         
+          std::cout<< width <<std::endl;
+          std::cout<< height <<std::endl;      
         
         int xi = 0, yi = 0;
         for(unsigned i_edge = 0; i_edge < m_edges.size();){
