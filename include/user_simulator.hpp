@@ -328,6 +328,10 @@ private:
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);
+          std::cout<<batch0.size()<<endl;
+         std::cout<<batch1.size()<<endl;
+         std::cout<<batch2.size()<<endl;
+         std::cout<<batch3.size()<<endl;
          
           return batches;
      }
