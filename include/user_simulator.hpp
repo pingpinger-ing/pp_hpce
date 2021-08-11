@@ -353,7 +353,7 @@ private:
     for(unsigned i = 0; i != batches.size(); ++i){
        tbb::parallel_for(0u,(unsigned)batches[i].size(), [&](unsigned j) { 
                active |= stats_edge(batches[i][j]);
-      }, tbb::simple_partitioner());
+      }
     }
  
        
