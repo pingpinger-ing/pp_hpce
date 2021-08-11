@@ -131,6 +131,7 @@ private:
      bool update_node(unsigned index, node *n)
     {
         bool act = false;
+         
         for (unsigned i = 0; i != n->incoming.size(); i++) {
             edge *e = n->incoming[i];
             switch (e->messageStatus) {
@@ -153,6 +154,7 @@ private:
         return act;
     }
     
+
     
     uint32_t stats_node(node *n)  // unsigned int 
     {
@@ -328,10 +330,6 @@ private:
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);
-       //  std::cout<<batch0.size()<<std::endl;
-       //  std::cout<<batch1.size()<<std::endl;
-       //  std::cout<<batch2.size()<<std::endl;
-       //  std::cout<<batch3.size()<<std::endl;
          
           return batches;
      }
@@ -342,23 +340,21 @@ private:
     {       
         std::vector< std::vector<edge*> > batches_all;
         batches_all = create_batches();
-        std::cout<<batches_all[0].size()<<std::endl;
-        std::cout<<batches_all[1].size()<<std::endl;
-        std::cout<<batches_all[2].size()<<std::endl;std::cout<<batches_all[3].size()<<std::endl;
+
         log(2, "stepping edges");
         bool active=false;
-               
-        for(unsigned i = 0; i != batches_all.size(); ++i){
+        
+         for(unsigned i = 0; i != batches_all.size(); ++i){
          tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
-               active |= stats_edge(batches_all[i][j]);
+               stats_edge(batches_all[i][j]);
             }, tbb::simple_partitioner());
        }
         
        //  Edge statistics
-       // for (const edge &e: m_edges)
-          //  active |= stats_edge(&e);
+        for (const edge &e: m_edges)
+            active |= stats_edge(&e);
                 
         tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
