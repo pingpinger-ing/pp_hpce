@@ -110,25 +110,25 @@ int main(int argc, char *argv[])
             );
         };
         
-        std::vector<int> edges_direction;
+       // std::vector<int> edges_direction;
 
         for(unsigned y=0; y<h; y++){
             for(unsigned x=0; x<w; x++){
                 if(x>0){
                     addChannel(x-1, y, x, y, otherWeight*65536); 
-                    edge_direction.push_back(0);
+                    //edge_direction.push_back(0);
                 }
                 if(x+1<w){
                     addChannel(x+1, y, x, y, otherWeight*65536); 
-                    edge_direction.push_back(1);
+                    //edge_direction.push_back(1);
                 }
                 if(y>0){
                     addChannel(x, y-1, x, y, otherWeight*65536); 
-                    edge_direction.push_back(2);
+                    //edge_direction.push_back(2);
                 }
                 if(y+1<h){
                     addChannel(x, y+1, x, y, otherWeight*65536);
-                    edge_direction.push_back(3);
+                    //edge_direction.push_back(3);
                 }
             }
         }        
