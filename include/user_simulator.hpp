@@ -157,8 +157,8 @@ private:
         return act;
         */
          bool act = false;
-         node n1;
-         n1.batches_all = create_batches();
+         
+         batches_all = create_batches();
          
           for(unsigned i = 0; i != batches_all.size(); ++i){
          tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
