@@ -82,7 +82,7 @@ private:
             char *globalBuffer=0;
             char *buffer=localBuffer;
             
-            va_list va;  //
+              va;  //
             va_start(va, msg);
             int n=vsnprintf(buffer, sizeof(localBuffer), msg, va);
             va_end(va);
@@ -256,48 +256,32 @@ private:
     
 
     
-    std::vector< std::vector<edge*> > create_batches()
+ /*   std::vector< std::vector<edge*> > create_batches()
     {
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
         
-            for( const edge &e : m_edges){
-                todo.push_back( &e );
+        for( i = 0; i != m_edges.size(), i++){
+                todo.push_back(&m_edges[i]);
             }
         
             while( !todo.empty()){
                 std::vector<edge*> batch;
                 std::set<node*> seen;
                 
-                for( const edge &e : todo){
+                edge *e;
+                node *n;
+                    
+                for( i = 0; i != todo.size(), i++){
                     int width = sqrt(m_nodes.size());
-                    if( seen.find( &(e->node+1) )){
+                    if( seen.find( e->(n+1) )){
+                        //skip
                     }
                 else{
-                       seen.insert( &(e->node+1) );
+                       seen.insert( e->(n+1) );
                 batch.push_back( &e );
                 todo.erase(e);
-                }
-                  if( seen.find( &(e->node-1) )){
-                    }
-                else{
-                       seen.insert( &(e->node-1) );
-                batch.push_back( &e );
-                todo.erase(e);
-                }
-                  if( seen.find( &(e->node+width) )){
-                    }
-                else{
-                       seen.insert( &(e->node+width));
-                batch.push_back( &e );
-                todo.erase(e);
-                }
-                  if( seen.find( &e->(node-width) )){
-                    }
-                else{
-                       seen.insert( &(e->node-width));
-                batch.push_back( &e );
-                todo.erase(e);
+                   
                 }
             }
         batches.push_back(batch);
@@ -305,59 +289,64 @@ private:
     return batches;
 }
                 
-    
+    */
     
     
     bool step_all()
     {
           log(2, "stepping edges");
           bool active=false;
-         
-       // int width = sqrt(m_nodes.size());
-        //int height = sqrt(m_nodes.size());
+        
+          std::vector< std::vector<edge*> > batches;  
+          std::vector< edge* > batch0;
+          std::vector< edge* > batch1;
+          std::vector< edge* > batch2;
+          std::vector< edge* > batch3;
+        
+         int width = sqrt(m_nodes.size());
+         int height = sqrt(m_nodes.size());
         //  int width = 121;
         //  int height = 121;        
         
-       /* int xi = 0, yi = 0;
+       // int xi = 0, yi = 0;
         for(unsigned i_edge = 0; i_edge < m_edges.size();){
 
-                    if (xi > 0 && i_edge < m_edges.size()) {
+                    if (edges_direction[i_edge] == 0) {
                         batch0.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
 
-                    if (xi + 1 < width && i_edge < m_edges.size()) {
+                    if (edges_direction[i_edge] == 1) {
                         batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                         
 
-                    if (yi > 0 && i_edge < m_edges.size()) {
+                    if (edges_direction[i_edge] == 2) {
                         batch2.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
 
-                    if (yi + 1 < height && i_edge < m_edges.size()) {
+                    if (edges_direction[i_edge] == 3) {
                         batch3.push_back(&m_edges[i_edge]);
                         ++i_edge;
                     }
                        
    
-            if (xi + 1 < width) ++xi;
+ /*           if (xi + 1 < width) ++xi;
             else {
                 xi = 0;
                 ++yi;
-            }
+            }*/
         }
         
-       */
-        
-  /*        batches.push_back(batch0);
+             
+          batches.push_back(batch0);
           batches.push_back(batch1);
           batches.push_back(batch2);
-          batches.push_back(batch3);*/
+          batches.push_back(batch3);
         
          
     
