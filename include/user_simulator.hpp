@@ -290,7 +290,8 @@ private:
 }
                 
     */
-            
+    
+    /*        
      std::vector< std::vector<edge*> > create_batches(){ 
          
           std::vector< std::vector<edge*> > batches;
@@ -344,13 +345,114 @@ private:
          
          return batches;
      }
+    */
+    
+    void create_batches(){
+        
+    int w = 121;
+    int h = w;
+    std::vector<int> m_edges0;
+    std::vector< std::vector<int> > m_edges_correct;
+    std::vector<int> m_edge00;
+    std::vector<int> m_edge01;
+    std::vector<int> m_edge02;
+    std::vector<int> m_edge03;
+    int save = 0;
+    for (unsigned y = 0; y < h; ++y) {
+        for (unsigned x = 0; x < w; ++x) {
+            if (x > 0) {
+                m_edges0.push_back(save);
+                m_edge00.push_back(save);
+                ++save;
+            }
+            if (x + 1 < w) {
+                m_edges0.push_back(save);
+                m_edge01.push_back(save);
+                ++save;
+            }
+            if (y > 0) {
+                m_edges0.push_back(save);
+                m_edge02.push_back(save);
+                ++save;
+            }
+            if (y + 1 < h) {
+                m_edges0.push_back(save);
+                m_edge03.push_back(save);
+                ++save;
+            }
+        }
+    }
+    m_edges_correct.push_back(m_edge00);
+    m_edges_correct.push_back(m_edge01);
+    m_edges_correct.push_back(m_edge02);
+    m_edges_correct.push_back(m_edge03);
+
+    std::vector< std::vector<int> > batches0;
+    std::vector<int> batch00;
+    std::vector<int> batch01;
+    std::vector<int> batch02;
+    std::vector<int> batch03;
+    int xi = 0, yi = 0;
+    for (unsigned i_edge = 0; i_edge < m_edges0.size();) {
+
+        if (xi > 0 && i_edge < m_edges0.size()) {
+            batch00.push_back(m_edges0[i_edge]);
+            ++i_edge;
+        }
+
+
+        if (xi + 1 < w && i_edge < m_edges0.size()) {
+            batch01.push_back(m_edges0[i_edge]);
+            ++i_edge;
+        }
+
+
+        if (yi > 0 && i_edge < m_edges0.size()) {
+            batch02.push_back(m_edges0[i_edge]);
+            ++i_edge;
+        }
+
+
+        if (yi + 1 < h && i_edge < m_edges0.size()) {
+            batch03.push_back(m_edges0[i_edge]);
+            ++i_edge;
+        }
+
+
+        if (xi + 1 < w) ++xi;
+        else {
+            xi = 0;
+            ++yi;
+        }
+    }
+
+    batches0.push_back(batch00);
+    batches0.push_back(batch01);
+    batches0.push_back(batch02);
+    batches0.push_back(batch03);
+
+    bool ifcorrect = true, ifequal = true;
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < batches0[i].size(); ++j) {
+            if (batches0[i][j] == m_edges_correct[i][j]) ifequal = true;
+            else ifequal = false;
+            ifcorrect = ifcorrect && ifequal;
+        }
+    }
+    std::cout << ifcorrect << std::endl;
+    std::cout << batches0.size() << 'X' << batches0[0].size() << std::endl;
+    }
+    
     
     bool step_all()
     {
+          create_batches();
+        
           log(2, "stepping edges");
           bool active=false;
         
-       std::vector< std::vector<edge*> > batches_all;
+          create_batches();
+    /*   std::vector< std::vector<edge*> > batches_all;
        batches_all = create_batches();
         
        for(unsigned i = 0; i != batches_all.size(); ++i){
@@ -359,7 +461,7 @@ private:
                for (unsigned j = a; j != b; j++)
                active |= stats_edge(batches_all[i][j]);
             }, simple_partitioner());
-       }
+       }*/
         
        //  Edge statistics
        // for (const edge &e: m_edges)
