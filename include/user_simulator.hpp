@@ -349,13 +349,13 @@ private:
     
     bool step_all()
     {       
-          log(2, "stepping edges");
-          bool active=false;
+        std::vector< std::vector<edge*> > batches_all;
+        batches_all = create_batches();
         
-          std::vector< std::vector<edge*> > batches_all;
-          batches_all = create_batches();
-        
-       for(unsigned i = 0; i != batches_all.size(); ++i){
+        log(2, "stepping edges");
+        bool active=false;
+               
+        for(unsigned i = 0; i != batches_all.size(); ++i){
          tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
