@@ -354,9 +354,11 @@ private:
        batches_all = create_batches();
         
        for(unsigned i = 0; i != batches_all.size(); ++i){
-         tbb::parallel_for(0u,(unsigned)batches_all[i].size(), [&](unsigned j) { 
+         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
+               unsigned a = range.begin(), b = range.end();
+               for (unsigned j = a; j != b; j++)
                active |= stats_edge(batches_all[i][j]);
-            }, tbb::auto_partitioner());
+            }, simple_partitioner());
        }
         
        //  Edge statistics
