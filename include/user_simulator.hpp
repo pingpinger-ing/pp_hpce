@@ -164,7 +164,7 @@ private:
                for (unsigned j = a; j != b; j++)
                //stats_edge(batches_all[i][j]);
                    {
-            edge *e = n->batches_all[i][j];
+            edge *e = batches_all[i][j];
             switch (e->messageStatus) {
             case 0:
                 continue;
