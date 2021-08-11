@@ -254,44 +254,96 @@ private:
      
     
     
-    std::vector< std::vector<edge*> > batches;
-    std::vector< edge* > batch0;
-    std::vector< edge* > batch1;
-    std::vector< edge* > batch2;
-    std::vector< edge* > batch3;
+
+    
+    std::vector< vector<edge*> > create_batches()
+    {
+            std::vector< std::vector<edge*> > batches;        
+            std::vector< edge* > todo;
+        
+            for(const edge &e : m_edges){
+                todo.push_back( &e );
+            }
+        
+            while( !todo.empty()){
+                std::vector<edge*> batch;
+                std:set<node*> seen;
+                
+                for(const edge &e : todo){
+                    int width = sqrt(m_nodes.size());
+                    if( seen.contain ( e->node+1 )){
+                    }
+                else{
+                       seen.insert( e->node+1 );
+                batch.push_back( &e );
+                todo.remove(e);
+                }
+                  if( seen.contain ( e->node-1 )){
+                    }
+                else{
+                       seen.insert( e->node-1 );
+                batch.push_back( &e );
+                todo.remove(e);
+                }
+                  if( seen.contain ( e->node+width )){
+                    }
+                else{
+                       seen.insert( e->node+width);
+                batch.push_back( &e );
+                todo.remove(e);
+                }
+                  if( seen.contain ( e->node-width )){
+                    }
+                else{
+                       seen.insert( e->node-width);
+                batch.push_back( &e );
+                todo.remove(e);
+                }
+            }
+        batches.push_back(batch);
+    }
+    return batches;
+}
+                
+    
+    
     
     bool step_all()
     {
           log(2, "stepping edges");
           bool active=false;
          
-        int width = sqrt(m_nodes.size());
-        int height = sqrt(m_nodes.size());
+       // int width = sqrt(m_nodes.size());
+        //int height = sqrt(m_nodes.size());
         //  int width = 121;
-        //  int height = 121;
+        //  int height = 121;        
         
-        int xi = 0, yi = 0;
+       /* int xi = 0, yi = 0;
         for(unsigned i_edge = 0; i_edge < m_edges.size();){
 
                     if (xi > 0 && i_edge < m_edges.size()) {
-                        batch0.push_back(&m_edges[i_edge]);  
+                        batch0.push_back(&m_edges[i_edge]);
+                        ++i_edge;
                     }
-                       ++i_edge;
+                       
 
                     if (xi + 1 < width && i_edge < m_edges.size()) {
-                        batch1.push_back(&m_edges[i_edge]);                        
-                    }
+                        batch1.push_back(&m_edges[i_edge]);
                         ++i_edge;
+                    }
+                        
 
                     if (yi > 0 && i_edge < m_edges.size()) {
-                        batch2.push_back(&m_edges[i_edge]);                      
+                        batch2.push_back(&m_edges[i_edge]);
+                        ++i_edge;
                     }
-                       ++i_edge;
+                       
 
                     if (yi + 1 < height && i_edge < m_edges.size()) {
-                        batch3.push_back(&m_edges[i_edge]);                        
+                        batch3.push_back(&m_edges[i_edge]);
+                        ++i_edge;
                     }
-                       ++i_edge;
+                       
    
             if (xi + 1 < width) ++xi;
             else {
@@ -299,10 +351,14 @@ private:
                 ++yi;
             }
         }
- //       batches.push_back(batch0);
-        batches.push_back(batch1);
- //       batches.push_back(batch2);
-  //      batches.push_back(batch3);
+        
+       */
+        
+  /*        batches.push_back(batch0);
+          batches.push_back(batch1);
+          batches.push_back(batch2);
+          batches.push_back(batch3);*/
+        create_batches();
          
     
     for(unsigned i = 0; i != batches.size(); ++i){
