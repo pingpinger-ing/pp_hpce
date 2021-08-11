@@ -261,15 +261,15 @@ private:
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
         
-            for(const edge &e : m_edges){
+            for(edge e : m_edges){
                 todo.push_back( &e );
             }
         
             while( !todo.empty()){
                 std::vector<edge*> batch;
-                std:set<node*> seen;
+                std::set<node*> seen;
                 
-                for(const edge &e : todo){
+                for( edge e : todo){
                     int width = sqrt(m_nodes.size());
                     if( seen.contain ( e->node+1 )){
                     }
