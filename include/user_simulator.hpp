@@ -26,7 +26,7 @@ public:
     typedef typename TGraph::message_type message_type;
     typedef typename TGraph::channel_type channel_type;
     typedef typename TGraph::SupervisorDevice SupervisorDevice;
-    // const graph_type *m_graph
+    
 private:    
     struct node;
     struct edge;
@@ -261,7 +261,7 @@ private:
             std::vector< std::vector<edge*> > batches;        
             std::vector< edge* > todo;
         
-            for( edge &e : m_edges){
+            for( const edge &e : m_edges){
                 todo.push_back( &e );
             }
         
@@ -269,33 +269,33 @@ private:
                 std::vector<edge*> batch;
                 std::set<node*> seen;
                 
-                for( edge &e : todo){
+                for( const edge &e : todo){
                     int width = sqrt(m_nodes.size());
-                    if( seen.find( &e->node+1 )){
+                    if( seen.find( &(e->node+1) )){
                     }
                 else{
-                       seen.insert( &e->node+1 );
+                       seen.insert( &(e->node+1) );
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( &e->node-1 )){
+                  if( seen.find( &(e->node-1) )){
                     }
                 else{
-                       seen.insert( &e->node-1 );
+                       seen.insert( &(e->node-1) );
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( &e->node+width )){
+                  if( seen.find( &(e->node+width) )){
                     }
                 else{
-                       seen.insert( &e->node+width);
+                       seen.insert( &(e->node+width));
                 batch.push_back( &e );
                 todo.erase(e);
                 }
-                  if( seen.find( &e->node-width )){
+                  if( seen.find( &e->(node-width) )){
                     }
                 else{
-                       seen.insert( &e->node-width);
+                       seen.insert( &(e->node-width));
                 batch.push_back( &e );
                 todo.erase(e);
                 }
