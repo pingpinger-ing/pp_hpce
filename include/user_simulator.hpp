@@ -137,7 +137,8 @@ private:
             edge *e = n->incoming[i];*/
             switch (e->messageStatus) {
             case 0:
-                continue;
+                //continue;
+                    break;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
@@ -149,7 +150,8 @@ private:
             default:
                 e->messageStatus--;
                 act = true;
-                continue;
+                //continue;
+                    break;
             }
         //}
         return act;    
