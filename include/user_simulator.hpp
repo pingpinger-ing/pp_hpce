@@ -129,12 +129,12 @@ private:
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
-     bool update_node(unsigned index, node *n)
+     bool update_node(unsigned index, node *n, edge *e)
     {
         bool act = false;
          
-        for (unsigned i = 0; i != n->incoming.size(); i++) {
-            edge *e = n->incoming[i];
+       /* for (unsigned i = 0; i != n->incoming.size(); i++) {
+            edge *e = n->incoming[i];*/
             switch (e->messageStatus) {
             case 0:
                 continue;
@@ -151,7 +151,7 @@ private:
                 act = true;
                 continue;
             }
-        }
+        //}
         return act;    
     }
     
@@ -389,7 +389,7 @@ private:
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
-                    update_node(batches_all[i][j]->srcindex, &m_nodes[batches_all[i][j]->srcindex]);
+                    update_node(batches_all[i][j]->srcindex, &m_nodes[batches_all[i][j]->srcindex], batches_all[i][j]);
             }, tbb::simple_partitioner());
           }  
         
