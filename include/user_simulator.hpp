@@ -129,7 +129,7 @@ private:
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
- /*    bool update_node(unsigned index, node *n)
+     bool update_node(unsigned index, node *n)
     {
         bool act = false;
          
@@ -155,8 +155,8 @@ private:
         return act;    
     }
     
-   */
-    
+   
+    /*
       bool update_node(unsigned index, node *n)
     {
         bool act = false;
@@ -191,7 +191,7 @@ private:
           }           
         return act;    
     }
-        
+        */
     
     
     uint32_t stats_node(node *n)  // unsigned int 
@@ -380,7 +380,7 @@ private:
         log(2, "stepping edges");
         bool active=false;
         
-  /*              
+                
         std::vector< std::vector<edge*> > batches_all;
         batches_all = create_batches();
         
@@ -389,19 +389,20 @@ private:
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
-               stats_edge(batches_all[i][j]);
+                    update_node(batches_all[i][j].srcindex, &m_nodes[batches_all[i][j].srcindex]);
             }, tbb::simple_partitioner());
           }  
-      */  
+        
        //  Edge statistics
         for (const edge &e: m_edges)
             active |= stats_edge(&e);
                 
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+    /*    tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
                 update_node(i, &m_nodes[i]);
         }, tbb::simple_partitioner());
+        */
         
       log(2, "stepping nodes");
         // Node statistics
