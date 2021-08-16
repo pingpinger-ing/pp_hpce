@@ -391,16 +391,13 @@ private:
           return batches;
      }
     
-      //  std::vector< std::vector<edge*> > batches_all =  create_batches();
+        std::vector< std::vector<edge*> > batches_all =  create_batches();
          
     bool step_all()
     {       
 
         log(2, "stepping edges");
         bool active=false;
-        
-        std::vector< std::vector<edge*> > batches_all;
-        batches_all =  create_batches();
         
         //std::cout<<batches_all[0].size()<<std::endl;
         //std::cout<<batches_all[1].size()<<std::endl;
