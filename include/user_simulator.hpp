@@ -384,10 +384,10 @@ private:
         log(2, "stepping edges");
         bool active=false;
         
-        std::cout<<batches_all[0].size()<<endl;
-        std::cout<<batches_all[1].size()<<endl;
-        std::cout<<batches_all[2].size()<<endl;
-        std::cout<<batches_all[3].size()<<endl;
+        std::cout<<batches_all[0].size()<<std::endl;
+        std::cout<<batches_all[1].size()<<std::endl;
+        std::cout<<batches_all[2].size()<<std::endl;
+        std::cout<<batches_all[3].size()<<std::endl;
         
         
         for(unsigned i = 0; i != batches_all.size(); ++i){
