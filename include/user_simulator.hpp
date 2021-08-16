@@ -358,21 +358,21 @@ private:
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
                     // batch0.push_back(&m_edges[i_edge]);
-                      batch[0].push_back(&m_edges[i_edge]);
+                      batches[0].push_back(&m_edges[i_edge]);
                   }
                   else {
                     // batch1.push_back(&m_edges[i_edge]);
-                      batch[1].push_back(&m_edges[i_edge]);
+                      batches[1].push_back(&m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
                     // batch2.push_back(&m_edges[i_edge]);
-                      batch[2].push_back(&m_edges[i_edge]);
+                      batches[2].push_back(&m_edges[i_edge]);
                   }
                   else {
                     // batch3.push_back(&m_edges[i_edge]);
-                      batch[3].push_back(&m_edges[i_edge]);
+                      batches[3].push_back(&m_edges[i_edge]);
                   }
               }        
         }            
