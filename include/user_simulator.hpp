@@ -335,11 +335,11 @@ private:
 }
                 
     */
-    
+     std::vector< std::vector<edge*> > batches_all;
             
-     std::vector< std::vector<edge*> > create_batches(){ 
+     void create_batches(){ 
          
-          std::vector< std::vector<edge*> > batches;
+          //std::vector< std::vector<edge*> > batches;
           /*
           std::vector<edge*> batch0;
           std::vector<edge*> batch1;
@@ -348,7 +348,7 @@ private:
           */
           
           for (int i = 0; i < 4; ++i) {
-              batches.push_back(std::vector< edge* > ());
+              batches_all.push_back(std::vector< edge* > ());
           }
     
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
@@ -358,21 +358,21 @@ private:
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
                     // batch0.push_back(&m_edges[i_edge]);
-                      batches[0].push_back(&m_edges[i_edge]);
+                      batches_all[0].push_back(&m_edges[i_edge]);
                   }
                   else {
                     // batch1.push_back(&m_edges[i_edge]);
-                      batches[1].push_back(&m_edges[i_edge]);
+                      batches_all[1].push_back(&m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
                     // batch2.push_back(&m_edges[i_edge]);
-                      batches[2].push_back(&m_edges[i_edge]);
+                      batches_all[2].push_back(&m_edges[i_edge]);
                   }
                   else {
                     // batch3.push_back(&m_edges[i_edge]);
-                      batches[3].push_back(&m_edges[i_edge]);
+                      batches_all[3].push_back(&m_edges[i_edge]);
                   }
               }        
         }            
@@ -388,10 +388,10 @@ private:
        // std::cout<<batches[2].size()<<std::endl;
        // std::cout<<batches[3].size()<<std::endl;
          
-          return batches;
+         // return batches;
      }
     
-        std::vector< std::vector<edge*> > batches_all =  create_batches();
+   
          
     bool step_all()
     {       
