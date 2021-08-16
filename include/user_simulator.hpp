@@ -489,7 +489,9 @@ public:
         unsigned srcIndex,
         unsigned dstIndex,
         unsigned delay,
-        const channel_type &channel
+        const channel_type &channel,
+        ///////
+        int a
     ){
         unsigned edgeIndex = m_edges.size();
         edge e;
