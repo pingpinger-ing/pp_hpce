@@ -399,10 +399,10 @@ private:
         log(2, "stepping edges");
         bool active=false;
         
-        //std::cout<<batches_all[0].size()<<std::endl;
-       // std::cout<<batches_all[1].size()<<std::endl;
-        //std::cout<<batches_all[2].size()<<std::endl;
-       // std::cout<<batches_all[3].size()<<std::endl;
+        std::cout<<batches_all[0].size()<<std::endl;
+        std::cout<<batches_all[1].size()<<std::endl;
+        std::cout<<batches_all[2].size()<<std::endl;
+       std::cout<<batches_all[3].size()<<std::endl;
         
         
         for(unsigned i = 0; i != batches_all.size(); ++i){
@@ -523,6 +523,8 @@ public:
             
             m_stats={m_step, 0,0,0, 0,0,0};//各个状态的起始值都为0 （node三个状态（idle，blocked，send），edge三个状态（idle，transit，deliver））
 
+            
+            create_batches();
             // Run all the nodes
             active = step_all();
             
