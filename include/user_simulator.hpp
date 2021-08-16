@@ -55,6 +55,7 @@ private:
         
         unsigned srcindex;
         unsigned dstindex;
+
     };
     
     struct output
@@ -123,7 +124,6 @@ private:
     
     std::ostream &m_statsDst;
     stats m_stats;
-   
         
     // Give a single node (i.e. a device) the chance to
     // send a message.
@@ -490,8 +490,7 @@ public:
         unsigned dstIndex,
         unsigned delay,
         const channel_type &channel,
-        ///////
-        int a
+
     ){
         unsigned edgeIndex = m_edges.size();
         edge e;
@@ -500,11 +499,9 @@ public:
         e.delay = delay;
         e.channel = channel;
         e.messageStatus=0;
-        m_edges.push_back(e);
-        ///////////////
         e.srcindex = srcIndex;
         e.dstindex = dstIndex;
-        ///////////////
+        m_edges.push_back(e);
         m_nodes.at(srcIndex).outgoing.push_back( &m_edges[edgeIndex] );
         m_nodes.at(dstIndex).incoming.push_back( &m_edges[edgeIndex] );
     }
