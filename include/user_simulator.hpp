@@ -348,7 +348,7 @@ private:
           */
           
           for (int i = 0; i < 4; ++i) {
-              batches.push_back(vector< edge* > ());
+              batches.push_back(std::vector< edge* > ());
           }
     
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
