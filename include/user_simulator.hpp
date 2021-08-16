@@ -374,10 +374,8 @@ private:
           return batches;
      }
     
-        std::vector< std::vector<edge*> > batches_all;
-        batches_all = create_batches();
-    
-    
+        std::vector< std::vector<edge*> > batches_all =  create_batches();
+         
     bool step_all()
     {       
 
