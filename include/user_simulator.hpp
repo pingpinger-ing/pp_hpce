@@ -340,10 +340,16 @@ private:
      std::vector< std::vector<edge*> > create_batches(){ 
          
           std::vector< std::vector<edge*> > batches;
+          /*
           std::vector<edge*> batch0;
           std::vector<edge*> batch1;
           std::vector<edge*> batch2;
           std::vector<edge*> batch3;
+          */
+          
+          for (int i = 0; i < 4; ++i) {
+              batches.push_back(vector< edge* > ());
+          }
     
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
@@ -351,30 +357,36 @@ private:
 
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
-                    batch0.push_back(&m_edges[i_edge]);
+                    // batch0.push_back(&m_edges[i_edge]);
+                      batch[0].push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch1.push_back(&m_edges[i_edge]);
+                    // batch1.push_back(&m_edges[i_edge]);
+                      batch[1].push_back(&m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
-                    batch2.push_back(&m_edges[i_edge]);
+                    // batch2.push_back(&m_edges[i_edge]);
+                      batch[2].push_back(&m_edges[i_edge]);
                   }
                   else {
-                    batch3.push_back(&m_edges[i_edge]);
+                    // batch3.push_back(&m_edges[i_edge]);
+                      batch[3].push_back(&m_edges[i_edge]);
                   }
               }        
         }            
+          /*
           batches.push_back(batch0);
           batches.push_back(batch1);
           batches.push_back(batch2);
           batches.push_back(batch3);
+          */
          
-        std::cout<<batch0.size()<<std::endl;
-        std::cout<<batch1.size()<<std::endl;
-        std::cout<<batch2.size()<<std::endl;
-        std::cout<<batch3.size()<<std::endl;
+        std::cout<<batches[0].size()<<std::endl;
+        std::cout<<batches[1].size()<<std::endl;
+        std::cout<<batches[2].size()<<std::endl;
+        std::cout<<batches[3].size()<<std::endl;
          
           return batches;
      }
