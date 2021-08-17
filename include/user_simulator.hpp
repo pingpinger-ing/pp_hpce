@@ -350,51 +350,33 @@ private:
           for (int i = 0; i < 4; ++i) {
               batches_all.push_back(std::vector< edge* > ());
           }
-         
-  
-         
-        tbb::parallel_for(0u, (unsigned)m_edges.size() - 1, [&](unsigned i_edge) {
+
+          tbb::parallel_for(0u, (unsigned)m_edges.size(), [&](unsigned i_edge) {
     
-         // for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
+          //for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
               int dstIndex = m_edges[i_edge].dstindex;
 
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
-                    // batch0.push_back(&m_edges[i_edge]);
                       batches_all[0].push_back(&m_edges[i_edge]);
                   }
                   else {
-                    // batch1.push_back(&m_edges[i_edge]);
                       batches_all[1].push_back(&m_edges[i_edge]);
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
-                    // batch2.push_back(&m_edges[i_edge]);
                       batches_all[2].push_back(&m_edges[i_edge]);
                   }
                   else {
-                    // batch3.push_back(&m_edges[i_edge]);
                       batches_all[3].push_back(&m_edges[i_edge]);
                   }
               }        
               
        // } //for 
              }, tbb::auto_partitioner()); // par_for
-          /*
-          batches.push_back(batch0);
-          batches.push_back(batch1);
-          batches.push_back(batch2);
-          batches.push_back(batch3);
-          */
-         
-        //std::cout<<batches[0].size()<<std::endl;
-       // std::cout<<batches[1].size()<<std::endl;
-       // std::cout<<batches[2].size()<<std::endl;
-       // std::cout<<batches[3].size()<<std::endl;
-         
-         // return batches;
+
      }
     
    
@@ -404,12 +386,6 @@ private:
 
         log(2, "stepping edges");
         bool active=false;
-        
-        //std::cout<<batches_all[0].size()<<std::endl;
-        //std::cout<<batches_all[1].size()<<std::endl;
-        //std::cout<<batches_all[2].size()<<std::endl;
-        //std::cout<<batches_all[3].size()<<std::endl;
-        
         
         for(unsigned i = 0; i != batches_all.size(); ++i){
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
