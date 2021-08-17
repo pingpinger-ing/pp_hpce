@@ -138,6 +138,7 @@ private:
             switch (e->messageStatus) {
             case 0:
                 //continue;
+                    m_stats.edgeIdleSteps++;
                     break;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
@@ -147,10 +148,13 @@ private:
                     &(n->properties),
                     &(n->state)
                 );
+                    m_stats.edgeDeliverSteps++;
             default:
+                m_stats.edgeTransitSteps++;
                 e->messageStatus--;
                 act = true;
                 //continue;
+                    
                     break;
             }
         //}
@@ -235,13 +239,13 @@ private:
     {
         switch (e->messageStatus) {
         case 0:
-            m_stats.edgeIdleSteps++;
+            //m_stats.edgeIdleSteps++;
             return false;
         case 1:
-            m_stats.edgeDeliverSteps++;
+           // m_stats.edgeDeliverSteps++;
             return true;
         default:
-            m_stats.edgeTransitSteps++;
+           // m_stats.edgeTransitSteps++;
             return true;
         }
     }
