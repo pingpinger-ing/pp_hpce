@@ -338,22 +338,12 @@ private:
      std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
-         
-          //std::vector< std::vector<edge*> > batches;
-          /*
-          std::vector<edge*> batch0;
-          std::vector<edge*> batch1;
-          std::vector<edge*> batch2;
-          std::vector<edge*> batch3;
-          */
-         
+
           for (int i = 0; i < 4; ++i) {
               batches_all.push_back(std::vector< edge* > ());
           }
 
-          tbb::parallel_for(0u, (unsigned)m_edges.size(), [&](unsigned i_edge) {
-    
-          //for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
+          for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
               int dstIndex = m_edges[i_edge].dstindex;
 
@@ -374,9 +364,7 @@ private:
                   }
               }        
               
-       // } //for 
-             }, tbb::auto_partitioner()); // par_for
-
+       } 
      }
     
    
