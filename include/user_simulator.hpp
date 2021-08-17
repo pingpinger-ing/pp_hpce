@@ -347,11 +347,10 @@ private:
           std::vector<edge*> batch3;
           */
          
-          tbb::parallel_for(0u, 4, [&](unsigned i) {
-         // for (int i = 0; i < 4; ++i) {
+          for (int i = 0; i < 4; ++i) {
               batches_all.push_back(std::vector< edge* > ());
-          //}
-          });
+          }
+         
   
          
         tbb::parallel_for(0u, (unsigned)m_edges.size(), [&](unsigned i_edge) {
