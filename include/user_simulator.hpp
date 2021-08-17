@@ -346,12 +346,17 @@ private:
           std::vector<edge*> batch2;
           std::vector<edge*> batch3;
           */
-          
-          for (int i = 0; i < 4; ++i) {
+         
+          tbb::parallel_for(0u, (unsigned)i->4, [&](unsigned i) {
+         // for (int i = 0; i < 4; ++i) {
               batches_all.push_back(std::vector< edge* > ());
-          }
+          //}
+          });
+  
+         
+        tbb::parallel_for(0u, (unsigned)i_edge->m_edges.size(), [&](unsigned i_edge) {
     
-          for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
+         // for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
               int dstIndex = m_edges[i_edge].dstindex;
 
@@ -375,7 +380,9 @@ private:
                       batches_all[3].push_back(&m_edges[i_edge]);
                   }
               }        
-        }            
+              
+       // } //for 
+             }); // par_for
           /*
           batches.push_back(batch0);
           batches.push_back(batch1);
