@@ -381,7 +381,7 @@ private:
               }        
               
        // } //for 
-             }); // par_for
+             }, tbb::auto_partitioner()); // par_for
           /*
           batches.push_back(batch0);
           batches.push_back(batch1);
