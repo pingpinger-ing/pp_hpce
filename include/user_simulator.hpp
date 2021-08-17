@@ -376,7 +376,7 @@ private:
         bool active=false;
         
         for(unsigned i = 0; i != batches_all.size(); ++i){
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 4096), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
                     update_node(batches_all[i][j]->dstindex, &m_nodes[batches_all[i][j]->dstindex], batches_all[i][j]);
