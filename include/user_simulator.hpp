@@ -353,7 +353,7 @@ private:
          
   
          
-        tbb::parallel_for(0u, (unsigned)m_edges.size(), [&](unsigned i_edge) {
+        tbb::parallel_for(0u, (unsigned)m_edges.size() - 1, [&](unsigned i_edge) {
     
          // for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
