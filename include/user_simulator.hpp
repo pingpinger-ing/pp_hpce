@@ -336,6 +336,8 @@ private:
 }
                 
     */
+    
+    // this is for rect topology
      std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
@@ -367,6 +369,55 @@ private:
               
        } 
      }
+    
+   
+    /* this is for hex topology
+     std::vector< std::vector<edge*> > batches_all;
+            
+     void create_batches(){ 
+
+          for (int i = 0; i < 6; ++i) {
+              batches_all.push_back(std::vector< edge* > ());
+          }
+
+          for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
+              int srcIndex = m_edges[i_edge].srcindex;
+              int dstIndex = m_edges[i_edge].dstindex;
+
+              if (srcIndex < dstIndex) {
+                  if (srcIndex + 1 == dstIndex) {
+                      batches_all[0].push_back(&m_edges[i_edge]);
+                  }
+                  elseif((dstIndex - srcIndex) % 2 == 0) {
+                      batches_all[1].push_back(&m_edges[i_edge]);
+                  }
+                  else {
+                      batches_all[2].push_back(&m_edges[i_edge]);
+                  }
+              }
+              else {
+                  if (srcIndex == dstIndex + 1) {
+                      batches_all[3].push_back(&m_edges[i_edge]);
+                  }
+                  elseif((srcIndex - dstIndex) % 2 == 0) {
+                      batches_all[4].push_back(&m_edges[i_edge]);
+                  }
+                  else{
+                      batches_all[5].push_back(&m_edges[i_edge]);
+                  }
+              }        
+              
+       } 
+     }
+    */
+    
+    /* this is for mesh topology
+    
+    
+    
+    
+    
+    */
     
    
          
