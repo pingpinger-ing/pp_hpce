@@ -137,7 +137,7 @@ private:
            // switch (e->messageStatus) 
             if (e->messageStatus == 0){
             //case 0:
-                  m_stats.edgeIdleSteps++;
+                 // m_stats.edgeIdleSteps++;
                   return 0x01;
                   //return false;
             }
@@ -150,13 +150,13 @@ private:
                     &(e->dst->properties),
                     &(e->dst->state)
                 );
-                    m_stats.edgeDeliverSteps++;
+                   // m_stats.edgeDeliverSteps++;
                     e->messageStatus--;
                     return 0x0100;
                     //return true;
            }              
                 e->messageStatus--;
-                m_stats.edgeTransitSteps++;
+               // m_stats.edgeTransitSteps++;
                 return 0x010000;
                 //return true;
     }
