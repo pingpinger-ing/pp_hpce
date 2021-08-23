@@ -476,14 +476,14 @@ private:
         
       log(2, "stepping nodes");
         // Node statistics
-        active |= stats_nodes() || active;  
+        active |= stats_nodes() ;  
         
-       for (node &n: m_nodes)
+   /*    for (node &n: m_nodes)
             if (n.output) {  
                 m_supervisor.onDeviceOutput(&(n.properties), &n.outgoing[0]->messageData);
                 n.output = false;
             }
-        
+     */   
         return active;
     }
     
@@ -577,12 +577,12 @@ public:
             active = step_all();
             
             // Flush any outputs from the queue to the supervisor
- /*         while(!m_outputs.empty()){
+          while(!m_outputs.empty()){
                 const output &o = m_outputs.front();
                 m_supervisor.onDeviceOutput(o.source, &o.output);
                 m_outputs.pop_front();
             }
-   */        
+           
             // Send statistics out
             m_statsDst<<m_stats.stepIndex<<", "<<m_stats.nodeIdleSteps<<", "<<m_stats.nodeBlockedSteps<<", "<<m_stats.nodeSendSteps;
             m_statsDst<<", "<<m_stats.edgeIdleSteps<<", "<<m_stats.edgeTransitSteps<<", "<<m_stats.edgeDeliverSteps<<"\n";
