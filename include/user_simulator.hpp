@@ -176,7 +176,7 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
+    void stats_edges(edge *e, unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
@@ -184,7 +184,7 @@ private:
             while (cnt--)
                 stats += stats_edge(e++);
             // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
-            *idle = stats & 0xff;
+            *idle_e = stats & 0xff;
             *delivered = (stats >> 8) & 0xff;
             *transit = (stats >> 16) & 0xff;
         } else {
@@ -194,21 +194,21 @@ private:
             // bsize的值为cnt / blocks（向上取整）(The value of bsize is cnt / blocks (rounded up))
             const unsigned bsize = (cnt + blocks - 1) / blocks;
             // 初始化向量(Initialization vector)
-            std::vector<unsigned> p_idle(blocks), p_delivered(blocks), p_transit(blocks);
-            tbb::parallel_for(0u, blocks, [=, &p_idle, &p_delivered, &p_transit](unsigned i) {
+            std::vector<unsigned> p_idle_e(blocks), p_delivered(blocks), p_transit(blocks);
+            tbb::parallel_for(0u, blocks, [=, &p_idle_e, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
+                stats_edges(e + i * bsize, a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
             });
-            unsigned v_idle = 0, v_delivered = 0, v_transit = 0;
+            unsigned v_idle_e = 0, v_delivered = 0, v_transit = 0;
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
             for (unsigned i = 0; i != blocks; i++) {
-                v_idle += p_idle[i];
+                v_idle_e += p_idle_e[i];
                 v_delivered += p_delivered[i];
                 v_transit += p_transit[i];
             }
             // 赋值
-            *idle = v_idle;
+            *idle_e = v_idle_e;
             *delivered = v_delivered;
             *transit = v_transit;
         }
@@ -220,8 +220,8 @@ private:
         
         unsigned idle, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges(batches_all[i][0], batches_all[i].size(), &idle, &delivered, &transit);
-        m_stats.edgeIdleSteps += idle;
+        stats_edges(batches_all[i][0], batches_all[i].size(), &idle_e, &delivered, &transit);
+        m_stats.edgeIdleSteps += idle_e;
         m_stats.edgeDeliverSteps += delivered;
         m_stats.edgeTransitSteps += transit;
         }
