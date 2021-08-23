@@ -577,12 +577,12 @@ public:
             active = step_all();
             
             // Flush any outputs from the queue to the supervisor
-          while(!m_outputs.empty()){
+ /*         while(!m_outputs.empty()){
                 const output &o = m_outputs.front();
                 m_supervisor.onDeviceOutput(o.source, &o.output);
                 m_outputs.pop_front();
             }
-           
+   */        
             // Send statistics out
             m_statsDst<<m_stats.stepIndex<<", "<<m_stats.nodeIdleSteps<<", "<<m_stats.nodeBlockedSteps<<", "<<m_stats.nodeSendSteps;
             m_statsDst<<", "<<m_stats.edgeIdleSteps<<", "<<m_stats.edgeTransitSteps<<", "<<m_stats.edgeDeliverSteps<<"\n";
