@@ -54,8 +54,8 @@ private:
         unsigned messageStatus; // 0->empty, 1->ready, 2->inflight
         message_type messageData;
         
-        unsigned srcindex;
-        unsigned dstindex;
+       // unsigned srcindex;
+      //  unsigned dstindex;
 
     };
     
@@ -560,8 +560,8 @@ public:
         e.delay = delay;
         e.channel = channel;
         e.messageStatus=0;
-        e.srcindex = srcIndex;
-        e.dstindex = dstIndex;
+       // e.srcindex = srcIndex;
+       // e.dstindex = dstIndex;
         m_edges.push_back(e);
         m_nodes.at(srcIndex).outgoing.push_back( &m_edges[edgeIndex] );
         m_nodes.at(dstIndex).incoming.push_back( &m_edges[edgeIndex] );
