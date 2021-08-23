@@ -1,3 +1,4 @@
+/*
 #ifndef simulator_hpp
 #define simulator_hpp
 
@@ -15,6 +16,7 @@
 #include <tbb/parallel_for.h>
 #include <set>
 #include <cmath>
+
 
 template<class TGraph> //模板类，TGraph==heat
 class Simulator
@@ -133,12 +135,12 @@ private:
     {
         bool act = false;
          
-       /* for (unsigned i = 0; i != n->incoming.size(); i++) {
-            edge *e = n->incoming[i];*/
+        for (unsigned i = 0; i != n->incoming.size(); i++) {
+            edge *e = n->incoming[i];
             switch (e->messageStatus) {
             case 0:
-                //continue;
-                    break;
+                continue;
+              //  break;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
@@ -150,9 +152,9 @@ private:
             default:
                 e->messageStatus--;
                 act = true;
-                //continue;
+                continue;
                     
-                    break;
+              // break;
             }
         //}
         return act;    
@@ -231,6 +233,8 @@ private:
         m_stats.nodeSendSteps++;
         return true;
     }
+   
+         
     
     bool stats_edge(const edge *e)
     {
@@ -338,7 +342,7 @@ private:
     */
     
     // this is for rect topology
-     std::vector< std::vector<edge*> > batches_all;
+    std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
 
@@ -419,15 +423,8 @@ private:
     
     */
     
-   
-         
-    bool step_all()
-    {       
-
-        log(2, "stepping edges");
-        bool active=false;
-        
-        for(unsigned i = 0; i != batches_all.size(); ++i){
+  
+     for(unsigned i = 0; i != batches_all.size(); ++i){
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
@@ -435,16 +432,26 @@ private:
             }, tbb::simple_partitioner());
           }  
         
+    
+    
+         
+    bool step_all()
+    {       
+
+        log(2, "stepping edges");
+        bool active=false;
+        
+       
        //  Edge statistics
-        for (const edge &e: m_edges)
+        for (const edge &e: m_edges)  
             active |= stats_edge(&e);
                 
-    /*    tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
             unsigned s = range.begin(), e = range.end();
             for (unsigned i = s; i != e; i++)
                 update_node(i, &m_nodes[i]);
         }, tbb::simple_partitioner());
-        */
+        
         
       log(2, "stepping nodes");
         // Node statistics
@@ -565,4 +572,4 @@ public:
 };
 
 #endif
-
+*/
