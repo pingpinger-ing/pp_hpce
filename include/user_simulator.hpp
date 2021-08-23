@@ -158,18 +158,7 @@ private:
             }  
     }
       
-    bool stats_edges()
-    {
-        
-        unsigned idle, delivered, transit;
-        for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
-        }
-        m_stats.edgeIdleSteps += idle;
-        m_stats.edgeDeliverSteps += delivered;
-        m_stats.edgeTransitSteps += transit;
-        return delivered || transit;
-    }
+
     
      /*   for(unsigned i = 0; i != batches_all.size(); ++i){
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
@@ -221,6 +210,24 @@ private:
             *transit = v_transit;
         }
     }
+    
+    
+        bool stats_edges()
+    {
+        
+        unsigned idle, delivered, transit;
+        for(unsigned i = 0; i != batches_all.size(); ++i){
+        stats_edges(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
+        }
+        m_stats.edgeIdleSteps += idle;
+        m_stats.edgeDeliverSteps += delivered;
+        m_stats.edgeTransitSteps += transit;
+        return delivered || transit;
+    }
+    
+    
+    
+    
  
     uint32_t stats_node(node *n)  // unsigned int 
     {
