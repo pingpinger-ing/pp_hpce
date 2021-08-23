@@ -375,7 +375,7 @@ private:
   */
     
     // this is for rect topology
-    std::vector< std::vector<edge*> > batches_all;
+ /*   std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
 
@@ -406,7 +406,7 @@ private:
               
        } 
      }
-    
+    */
    
     /* this is for hex topology
      std::vector< std::vector<edge*> > batches_all;
@@ -457,7 +457,7 @@ private:
     
     
   
-     for(unsigned i = 0; i != batches_all.size(); ++i){
+/*     for(unsigned i = 0; i != batches_all.size(); ++i){
         tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
                unsigned a = range.begin(), b = range.end();
                for (unsigned j = a; j != b; j++)
@@ -465,7 +465,7 @@ private:
             }, tbb::simple_partitioner());
           }  
         
-    
+ */   
     
          
     bool step_all()
@@ -578,7 +578,7 @@ public:
         
         reset();
         
-        create_batches();
+        //create_batches();
         
         while(active){
             log(1, "step %u", m_step);
