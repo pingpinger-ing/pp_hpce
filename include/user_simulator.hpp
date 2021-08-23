@@ -136,9 +136,9 @@ private:
     {         
             switch (e->messageStatus) {
             case 0:
-                  return 0x01;
                   m_stats.edgeIdleSteps++;
-                  return false;
+                  return 0x01;
+                  //return false;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
@@ -147,15 +147,15 @@ private:
                     &(e->dst->properties),
                     &(e->dst->state)
                 );
-                    return 0x0100;
                     m_stats.edgeDeliverSteps++;
-                     e->messageStatus--;
-                    return true;
-            default:
-                return 0x010000;
+                    e->messageStatus--;
+                    return 0x0100;
+ ]                  //return true;
+            default:                
                 e->messageStatus--;
                 m_stats.edgeTransitSteps++;
-                return true;
+                return 0x010000;
+                //return true;
             }  
     }
       
