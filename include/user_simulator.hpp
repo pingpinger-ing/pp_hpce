@@ -173,7 +173,7 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
+    void stats_edges_all(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
@@ -217,7 +217,7 @@ private:
         
         unsigned idle, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
+        stats_edges_all(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
         }
         m_stats.edgeIdleSteps += idle;
         m_stats.edgeDeliverSteps += delivered;
