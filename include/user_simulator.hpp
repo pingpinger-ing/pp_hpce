@@ -380,15 +380,15 @@ private:
                   }
                   else {
                       batches_all[1].push_back(&m_edges[i_edge]);
-                      std::cout << "分区2"<< std::endl; 
-                      std::cout << srcIndex << dstIndex << std::endl; 
+                      //std::cout << "分区2"<< std::endl; 
+                      //std::cout << srcIndex << dstIndex << std::endl; 
                   }
               }
               else {
                   if (srcIndex == dstIndex + 1) {
                       batches_all[2].push_back(&m_edges[i_edge]);
-                     // std::cout << "分区3"<< std::endl; 
-                      //std::cout << srcIndex << dstIndex << std::endl;
+                      std::cout << "分区3"<< std::endl; 
+                      std::cout << srcIndex << dstIndex << std::endl;
                   }
                   else {
                       batches_all[3].push_back(&m_edges[i_edge]);
