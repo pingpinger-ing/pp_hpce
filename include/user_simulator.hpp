@@ -134,12 +134,15 @@ private:
   
      uint32_t stats_edge(edge *e)
     {         
-            switch (e->messageStatus) {
-            case 0:
+           // switch (e->messageStatus) 
+            if (e->messageStatus == 0){
+            //case 0:
                   m_stats.edgeIdleSteps++;
                   return 0x01;
-                  return false;
-            case 1:                // Deliver the message to the device                
+                  //return false;
+            }
+            //case 1:
+           if (e->messageStatus == 1){// Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
                     &(e->channel),
@@ -150,12 +153,12 @@ private:
                     m_stats.edgeDeliverSteps++;
                     e->messageStatus--;
                     return 0x0100;
-                    return true;
-            default:                
+                    //return true;
+     }              
                 e->messageStatus--;
                 m_stats.edgeTransitSteps++;
                 return 0x010000;
-                return true;
+                //return true;
             }  
     }
       
