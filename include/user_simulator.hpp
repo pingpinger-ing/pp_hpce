@@ -158,7 +158,7 @@ private:
             }  
     }
       
-    bool stats_edge()
+    bool stats_edges()
     {
         
         unsigned idle, delivered, transit;
