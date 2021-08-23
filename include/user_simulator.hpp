@@ -154,12 +154,11 @@ private:
                     e->messageStatus--;
                     return 0x0100;
                     //return true;
-     }              
+           }              
                 e->messageStatus--;
                 m_stats.edgeTransitSteps++;
                 return 0x010000;
                 //return true;
-            }  
     }
       
 
