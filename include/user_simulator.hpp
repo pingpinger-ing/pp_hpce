@@ -130,16 +130,13 @@ private:
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
-/*     bool update_node(unsigned index, node *n, edge *e)
+     bool update_edge(unsigned index, edge *e)
     {
         bool act = false;
          
-        for (unsigned i = 0; i != n->incoming.size(); i++) {
-            edge *e = n->incoming[i];
             switch (e->messageStatus) {
             case 0:
-                continue;
-              //  break;
+                  break;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
@@ -150,18 +147,15 @@ private:
                 );
             default:
                 e->messageStatus--;
-                act = true;
-                continue;
-                    
-              // break;
+                act = true;        
+                break;
             }
-        //}
         return act;    
     }
-    */
+  
     
     
-      bool update_node(unsigned index, node *n)
+  /*    bool update_node(unsigned index, node *n)
     {
         bool act = false;
          
@@ -187,46 +181,6 @@ private:
               // break;
             }
         }
-        return act;    
-    }
-    
-    
-    
-    
-   
-    /*
-      bool update_node(unsigned index, node *n)
-    {
-        bool act = false;
-          
-        std::vector< std::vector<edge*> > batches_all;
-        batches_all = create_batches();  
-        
-        for(unsigned i = 0; i != batches_all.size(); ++i){
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 512), [&](const tbb::blocked_range<unsigned>& range) { 
-               unsigned a = range.begin(), b = range.end();
-               for (unsigned j = a; j != b; j++){
-            edge *e = batches_all[i][j];
-            switch (e->messageStatus) {
-            case 0:
-                continue;
-            case 1:                // Deliver the message to the device                
-                TGraph::on_recv(
-                    &m_graph,
-                    &(e->channel),
-                    &(e->messageData),
-                    &(n->properties),
-                    &(n->state)
-                );
-            default:
-                e->messageStatus--;
-                act = true;
-                continue;
-            }
-        }
-               
-            }, tbb::simple_partitioner());
-          }           
         return act;    
     }
     
@@ -476,13 +430,16 @@ private:
         
        
        //  Edge statistics
-        for (const edge &e: m_edges)  
-            active |= stats_edge(&e);
+        
+        active |= stats_nodes(); 
+       
+        //for (const edge &e: m_edges)  
+         //   active |= stats_edge(&e);
                 
        // tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
            // unsigned s = range.begin(), e = range.end();
-            for (unsigned i = 0; i != m_nodes.size(); i++)
-                update_node(i, &m_nodes[i]);
+           // for (unsigned i = 0; i != m_nodes.size(); i++)
+              //  update_edge(i, &m_nodes[i]);
        // }, tbb::simple_partitioner());
         
         
@@ -589,12 +546,12 @@ public:
             active = step_all();
             
             // Flush any outputs from the queue to the supervisor
-            while(!m_outputs.empty()){
+          while(!m_outputs.empty()){
                 const output &o = m_outputs.front();
                 m_supervisor.onDeviceOutput(o.source, &o.output);
                 m_outputs.pop_front();
             }
-            
+           
             // Send statistics out
             m_statsDst<<m_stats.stepIndex<<", "<<m_stats.nodeIdleSteps<<", "<<m_stats.nodeBlockedSteps<<", "<<m_stats.nodeSendSteps;
             m_statsDst<<", "<<m_stats.edgeIdleSteps<<", "<<m_stats.edgeTransitSteps<<", "<<m_stats.edgeDeliverSteps<<"\n";
