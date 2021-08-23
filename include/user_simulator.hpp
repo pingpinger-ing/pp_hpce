@@ -184,8 +184,9 @@ private:
             // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
             while (cnt--){
              stats += stats_edge(batches_all[en][pointer]);
+             std::cout<<batches_all[en][pointer]->srcindex<<batches_all[en][pointer]->dstindex<<std::endl; 
              ++pointer;
-            // std::cout<<e->srcindex<<e->dstindex<<std::endl;            
+                       
             }
                 //std::cout<<"新分区"<<std::endl;
             // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
