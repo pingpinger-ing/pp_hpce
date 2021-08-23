@@ -54,8 +54,8 @@ private:
         unsigned messageStatus; // 0->empty, 1->ready, 2->inflight
         message_type messageData;
         
-       // unsigned srcindex;
-      //  unsigned dstindex;
+        unsigned srcindex;
+        unsigned dstindex;
 
     };
     
@@ -125,67 +125,103 @@ private:
     
     std::ostream &m_statsDst;
     stats m_stats;
+    
+    std::vector< std::vector<edge*> > batches_all;
         
     // Give a single node (i.e. a device) the chance to
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
-     bool update_edge(unsigned index, edge *e)
-    {
-        bool act = false;
-         
+     uint32_t stats_edge(edge *e)
+    {         
             switch (e->messageStatus) {
             case 0:
-                  break;
+                  return 0x01;
+                  m_stats.edgeIdleSteps++;
+                  return false;
             case 1:                // Deliver the message to the device                
                 TGraph::on_recv(
                     &m_graph,
                     &(e->channel),
                     &(e->messageData),
-                    &(n->properties),
-                    &(n->state)
+                    &(e->dst->properties),
+                    &(e->dst->state)
                 );
+                    return 0x0100;
+                    m_stats.edgeDeliverSteps++;
+                    return true;
             default:
+                0x010000;
                 e->messageStatus--;
-                act = true;        
-                break;
-            }
-        return act;    
+                m_stats.edgeTransitSteps++;
+                return true;
+            }  
     }
-  
-    
-    
-  /*    bool update_node(unsigned index, node *n)
+      
+    bool stats_edge()
     {
-        bool act = false;
-         
-        for (unsigned i = 0; i != n->incoming.size(); i++) {
-            edge *e = n->incoming[i];
-            switch (e->messageStatus) {
-            case 0:
-                continue;
-              //  break;
-            case 1:                // Deliver the message to the device                
-                TGraph::on_recv(
-                    &m_graph,
-                    &(e->channel),
-                    &(e->messageData),
-                    &(n->properties),
-                    &(n->state)
-                );
-            default:
-                e->messageStatus--;
-                act = true;
-                continue;
-                    
-              // break;
-            }
+        
+        unsigned idle, delivered, transit;
+        for(unsigned i = 0; i != batches_all.size(); ++i){
+        stats_edges(batches_all[i].data(), batches_all[i].size(), &idle, &delivered, &transit);
         }
-        return act;    
+        m_stats.edgeIdleSteps += idle;
+        m_stats.edgeDeliverSteps += delivered;
+        m_stats.edgeTransitSteps += transit;
+        return delivered || transit;
     }
     
-  */  
+     /*   for(unsigned i = 0; i != batches_all.size(); ++i){
+        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
+               unsigned a = range.begin(), b = range.end();
+               for (unsigned j = a; j != b; j++)
+                    update_node(batches_all[i][j]->dstindex, &m_nodes[batches_all[i][j]->dstindex], batches_all[i][j]);
+            }, tbb::simple_partitioner());
+          }  
+*/    
     
+    
+#define SEQ_SIZE    64u
+#define MR_SIZE     64u
+
+    void stats_edges(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
+    {
+        if (cnt <= SEQ_SIZE) {
+            uint32_t stats = 0;
+            // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
+            while (cnt--)
+                stats += stats_edge(e++);
+            // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
+            *idle = stats & 0xff;
+            *delivered = (stats >> 8) & 0xff;
+            *transit = (stats >> 16) & 0xff;
+        } else {
+            // 若cnt大于SEQ_SIZE(If cnt is greater than SEQ_SIZE)
+            // blocks的值为cnt / SEQ_SIZE（向上取整）与MR_SIZE中的较小值(The value of blocks is the smaller of cnt / SEQ_SIZE (rounded up) and MR_SIZE)
+            const unsigned blocks = std::min((cnt + SEQ_SIZE - 1) / SEQ_SIZE, MR_SIZE);
+            // bsize的值为cnt / blocks（向上取整）(The value of bsize is cnt / blocks (rounded up))
+            const unsigned bsize = (cnt + blocks - 1) / blocks;
+            // 初始化向量(Initialization vector)
+            std::vector<unsigned> p_idle(blocks), p_delivered(blocks), p_transit(blocks);
+            tbb::parallel_for(0u, blocks, [=, &p_idle, &p_delivered, &p_transit](unsigned i) {
+                unsigned s = i * bsize;
+                unsigned a = std::min((i + 1) * bsize, cnt);
+                stats_edges(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
+            });
+            unsigned v_idle = 0, v_delivered = 0, v_transit = 0;
+            // v的值为blocks个p相加(The value of v is the sum of blocks and p)
+            for (unsigned i = 0; i != blocks; i++) {
+                v_idle += p_idle[i];
+                v_delivered += p_delivered[i];
+                v_transit += p_transit[i];
+            }
+            // 赋值
+            *idle = v_idle;
+            *delivered = v_delivered;
+            *transit = v_transit;
+        }
+    }
+ 
     uint32_t stats_node(node *n)  // unsigned int 
     {
         if(!TGraph::ready_to_send(&m_graph, &(n->properties), &(n->state)) ){
@@ -222,21 +258,7 @@ private:
     }
    
          
-    
-    bool stats_edge(const edge *e)
-    {
-        switch (e->messageStatus) {
-        case 0:
-            m_stats.edgeIdleSteps++;
-            return false;
-        case 1:
-            m_stats.edgeDeliverSteps++;
-            return true;
-        default:
-            m_stats.edgeTransitSteps++;
-            return true;
-        }
-    }
+
     
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
@@ -329,7 +351,6 @@ private:
   */
     
     // this is for rect topology
- /*   std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
 
@@ -360,7 +381,7 @@ private:
               
        } 
      }
-    */
+    
    
     /* this is for hex topology
      std::vector< std::vector<edge*> > batches_all;
@@ -431,7 +452,7 @@ private:
        
        //  Edge statistics
         
-        active |= stats_nodes(); 
+        active |= stats_edges(); 
        
         //for (const edge &e: m_edges)  
          //   active |= stats_edge(&e);
@@ -517,8 +538,8 @@ public:
         e.delay = delay;
         e.channel = channel;
         e.messageStatus=0;
-       // e.srcindex = srcIndex;
-       // e.dstindex = dstIndex;
+        e.srcindex = srcIndex;
+        e.dstindex = dstIndex;
         m_edges.push_back(e);
         m_nodes.at(srcIndex).outgoing.push_back( &m_edges[edgeIndex] );
         m_nodes.at(dstIndex).incoming.push_back( &m_edges[edgeIndex] );
