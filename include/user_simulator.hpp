@@ -173,7 +173,7 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges_all(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
+    void stats_edges(edge *e, unsigned cnt, unsigned *idle, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
@@ -195,7 +195,7 @@ private:
             tbb::parallel_for(0u, blocks, [=, &p_idle, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges_all(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
+                stats_edges(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
             });
             unsigned v_idle = 0, v_delivered = 0, v_transit = 0;
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
@@ -217,7 +217,7 @@ private:
         
         unsigned idle, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges_all(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
+        stats_edges(batches_all[i][0], batches_all[i].size(), &idle, &delivered, &transit);
         }
         m_stats.edgeIdleSteps += idle;
         m_stats.edgeDeliverSteps += delivered;
