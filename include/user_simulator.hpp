@@ -375,6 +375,7 @@ private:
               if (srcIndex < dstIndex) {
                   if (srcIndex + 1 == dstIndex) {
                       batches_all[0].push_back(&m_edges[i_edge]);
+                      std::cout << srcIndex << dstIndex << std::endl; 
                   }
                   else {
                       batches_all[1].push_back(&m_edges[i_edge]);
