@@ -218,10 +218,10 @@ private:
         unsigned idle, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
         stats_edges(batches_all[i][0], batches_all[i].size(), &idle, &delivered, &transit);
-        }
         m_stats.edgeIdleSteps += idle;
         m_stats.edgeDeliverSteps += delivered;
         m_stats.edgeTransitSteps += transit;
+        }
         return delivered || transit;
     }
     
