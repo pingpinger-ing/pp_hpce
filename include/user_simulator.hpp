@@ -236,15 +236,15 @@ private:
     {
         if(!TGraph::ready_to_send(&m_graph, &(n->properties), &(n->state)) ){
             return 0x01;
-            m_stats.nodeIdleSteps++;
-            return false; // Device doesn't want to send
+           // m_stats.nodeIdleSteps++;
+         //   return false; // Device doesn't want to send
         }
         
     for(unsigned i=0; i < n->outgoing.size(); i++){
             if( n->outgoing[i]->messageStatus>0 ){
                 return 0x0100;
-                m_stats.nodeBlockedSteps++;
-                return true; // One of the outputs is full, so we are blocked
+              //  m_stats.nodeBlockedSteps++;
+              //  return true; // One of the outputs is full, so we are blocked
             }
         }
      message_type message;
@@ -263,8 +263,8 @@ private:
             n->outgoing[i]->messageStatus = 1 + n->outgoing[i]->delay; // How long until it is ready?
         }
         return 0x010000;
-        m_stats.nodeSendSteps++;
-        return true;
+      //  m_stats.nodeSendSteps++;
+       // return true;
     }
    
          
@@ -279,7 +279,7 @@ private:
             uint32_t stats = 0;
             // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
             while (cnt--)
-                stats += stats_node(n++);
+                stats += stats_node(n++);      
             // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
             *idle = stats & 0xff;
             *blocked = (stats >> 8) & 0xff;
@@ -392,8 +392,8 @@ private:
                   }
                   else {
                       batches_all[3].push_back(&m_edges[i_edge]);
-                      std::cout << "分区4"<< std::endl; 
-                      std::cout << srcIndex << dstIndex << std::endl;
+                   //   std::cout << "分区4"<< std::endl; 
+                    //  std::cout << srcIndex << dstIndex << std::endl;
                   }
               }        
               
