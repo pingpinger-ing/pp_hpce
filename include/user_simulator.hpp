@@ -181,8 +181,11 @@ private:
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
             // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
-            while (cnt--)
+            while (cnt--){
                 stats += stats_edge(e++);
+             std::cout<<e.srcindex<<e.dstindex<<std::endl;            
+            }
+                std::cout<<"新分区"<<std::endl;
             // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
             *idle_e = stats & 0xff;
             *delivered = (stats >> 8) & 0xff;
