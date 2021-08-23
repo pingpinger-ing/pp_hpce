@@ -195,7 +195,7 @@ private:
             tbb::parallel_for(0u, blocks, [=, &p_idle, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
+                stats_edges_all(e + i * bsize, a - s, &p_idle[i], &p_delivered[i], &p_transit[i]);
             });
             unsigned v_idle = 0, v_delivered = 0, v_transit = 0;
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
