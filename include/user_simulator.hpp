@@ -176,7 +176,7 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges(unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
+    void stats_edges(unsigned en, unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
@@ -203,7 +203,7 @@ private:
             tbb::parallel_for(0u, blocks, [=, &p_idle_e, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges(a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
+                stats_edges(en, a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
             });   
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
             unsigned v_idle_e = 0, v_delivered = 0, v_transit = 0;   
