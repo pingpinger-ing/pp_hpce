@@ -1,4 +1,3 @@
-/*
 #ifndef simulator_hpp
 #define simulator_hpp
 
@@ -131,7 +130,7 @@ private:
     // send a message.
     // \retval Return true if the device is blocked or sends. False if it is idle.
   
-     bool update_node(unsigned index, node *n, edge *e)
+/*     bool update_node(unsigned index, node *n, edge *e)
     {
         bool act = false;
          
@@ -159,6 +158,40 @@ private:
         //}
         return act;    
     }
+    */
+    
+    
+      bool update_node(unsigned index, node *n)
+    {
+        bool act = false;
+         
+        for (unsigned i = 0; i != n->incoming.size(); i++) {
+            edge *e = n->incoming[i];
+            switch (e->messageStatus) {
+            case 0:
+                continue;
+              //  break;
+            case 1:                // Deliver the message to the device                
+                TGraph::on_recv(
+                    &m_graph,
+                    &(e->channel),
+                    &(e->messageData),
+                    &(n->properties),
+                    &(n->state)
+                );
+            default:
+                e->messageStatus--;
+                act = true;
+                continue;
+                    
+              // break;
+            }
+        //}
+        return act;    
+    }
+    
+    
+    
     
    
     /*
@@ -196,8 +229,8 @@ private:
           }           
         return act;    
     }
-        */
     
+  */  
     
     uint32_t stats_node(node *n)  // unsigned int 
     {
@@ -339,7 +372,7 @@ private:
     return batches;
 }
                 
-    */
+  */
     
     // this is for rect topology
     std::vector< std::vector<edge*> > batches_all;
@@ -418,10 +451,10 @@ private:
     /* this is for mesh topology
     
     
-    
-    
-    
     */
+    
+    
+    
     
   
      for(unsigned i = 0; i != batches_all.size(); ++i){
@@ -446,11 +479,11 @@ private:
         for (const edge &e: m_edges)  
             active |= stats_edge(&e);
                 
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
-            unsigned s = range.begin(), e = range.end();
-            for (unsigned i = s; i != e; i++)
+       // tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
+           // unsigned s = range.begin(), e = range.end();
+            for (unsigned i = 0 i != m_nodes.size(); i++)
                 update_node(i, &m_nodes[i]);
-        }, tbb::simple_partitioner());
+       // }, tbb::simple_partitioner());
         
         
       log(2, "stepping nodes");
@@ -572,4 +605,4 @@ public:
 };
 
 #endif
-*/
+
