@@ -476,7 +476,7 @@ private:
         
       log(2, "stepping nodes");
         // Node statistics
-        active |= stats_nodes();  
+        active |= stats_nodes() || active;  
         
        for (node &n: m_nodes)
             if (n.output) {  
