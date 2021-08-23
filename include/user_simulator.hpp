@@ -563,7 +563,7 @@ public:
         
         reset();
         
-        //create_batches();
+        create_batches();
         
         while(active){
             log(1, "step %u", m_step);
