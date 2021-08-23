@@ -176,19 +176,17 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges(unsigned en, unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
+    void stats_edges(unsigned en, unsigned pointer, unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
-            uint32_t pointer = 0;
             // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
             while (cnt--){
              stats += stats_edge(batches_all[en][pointer]);
-             std::cout<<batches_all[en][pointer]->srcindex<<batches_all[en][pointer]->dstindex<<std::endl; 
-             ++pointer;
-                       
+            // std::cout<<batches_all[en][pointer]->srcindex<<batches_all[en][pointer]->dstindex<<std::endl; 
+             ++pointer;                      
             }
-            std::cout<<"新分区"<<std::endl;
+           // std::cout<<"新分区"<<std::endl;
             // stats低24位，0到7位表示idle，8到15位表示blocked，16到23位表示send(The low 24 bits of stats, 0 to 7 bits represent idle, 8 to 15 bits represent blocked, and 16 to 23 bits represent send)
             *idle_e = stats & 0xff;
             *delivered = (stats >> 8) & 0xff;
@@ -204,7 +202,7 @@ private:
             tbb::parallel_for(0u, blocks, [=, &p_idle_e, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges(en, a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
+                stats_edges(en, pointer + s, a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
             });   
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
             unsigned v_idle_e = 0, v_delivered = 0, v_transit = 0;   
@@ -227,7 +225,7 @@ private:
         
         unsigned idle_e, delivered, transit;
         for(unsigned en = 0; en != batches_all.size(); ++en){
-        stats_edges(en, batches_all[en].size(), &idle_e, &delivered, &transit);
+        stats_edges(en, 0, batches_all[en].size(), &idle_e, &delivered, &transit);
         m_stats.edgeIdleSteps += idle_e;
         m_stats.edgeDeliverSteps += delivered;
         m_stats.edgeTransitSteps += transit;
