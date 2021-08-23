@@ -151,7 +151,7 @@ private:
                     m_stats.edgeDeliverSteps++;
                     return true;
             default:
-                0x010000;
+                return 0x010000;
                 e->messageStatus--;
                 m_stats.edgeTransitSteps++;
                 return true;
