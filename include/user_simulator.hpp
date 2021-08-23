@@ -218,7 +218,7 @@ private:
         bool stats_edges()
     {
         
-        unsigned idle, delivered, transit;
+        unsigned idle_e, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
         stats_edges(batches_all[i][0], batches_all[i].size(), &idle_e, &delivered, &transit);
         m_stats.edgeIdleSteps += idle_e;
