@@ -163,7 +163,7 @@ private:
         
         unsigned idle, delivered, transit;
         for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges(batches_all[i].data(), batches_all[i].size(), &idle, &delivered, &transit);
+        stats_edges(batches_all[i], batches_all[i].size(), &idle, &delivered, &transit);
         }
         m_stats.edgeIdleSteps += idle;
         m_stats.edgeDeliverSteps += delivered;
