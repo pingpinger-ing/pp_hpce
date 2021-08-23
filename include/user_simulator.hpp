@@ -176,13 +176,15 @@ private:
 #define SEQ_SIZE    64u
 #define MR_SIZE     64u
 
-    void stats_edges(edge *e, unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
+    void stats_edges(unsigned cnt, unsigned *idle_e, unsigned *delivered, unsigned *transit)
     {
         if (cnt <= SEQ_SIZE) {
             uint32_t stats = 0;
+            uint32_t pointer = 0;
             // stats：从n开始的cnt个stats_node之和(stats: the sum of cnt stats_nodes starting from n)
             while (cnt--){
-                stats += stats_edge(e++);
+             stats += stats_edge(batches_all[en][pointer]);
+             ++pointer;
              std::cout<<e->srcindex<<e->dstindex<<std::endl;            
             }
                 std::cout<<"新分区"<<std::endl;
@@ -197,19 +199,20 @@ private:
             // bsize的值为cnt / blocks（向上取整）(The value of bsize is cnt / blocks (rounded up))
             const unsigned bsize = (cnt + blocks - 1) / blocks;
             // 初始化向量(Initialization vector)
-            std::vector<unsigned> p_idle_e(blocks), p_delivered(blocks), p_transit(blocks);
+            std::vector<unsigned> p_idle_e(blocks), p_delivered(blocks), p_transit(blocks);      
             tbb::parallel_for(0u, blocks, [=, &p_idle_e, &p_delivered, &p_transit](unsigned i) {
                 unsigned s = i * bsize;
                 unsigned a = std::min((i + 1) * bsize, cnt);
-                stats_edges(e + i * bsize, a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
-            });
-            unsigned v_idle_e = 0, v_delivered = 0, v_transit = 0;
+                stats_edges(a - s, &p_idle_e[i], &p_delivered[i], &p_transit[i]);
+            });   
             // v的值为blocks个p相加(The value of v is the sum of blocks and p)
+            unsigned v_idle_e = 0, v_delivered = 0, v_transit = 0;   
             for (unsigned i = 0; i != blocks; i++) {
                 v_idle_e += p_idle_e[i];
                 v_delivered += p_delivered[i];
                 v_transit += p_transit[i];
             }
+           
             // 赋值
             *idle_e = v_idle_e;
             *delivered = v_delivered;
@@ -222,8 +225,8 @@ private:
     {
         
         unsigned idle_e, delivered, transit;
-        for(unsigned i = 0; i != batches_all.size(); ++i){
-        stats_edges(batches_all[i][0], batches_all[i].size(), &idle_e, &delivered, &transit);
+        for(unsigned en = 0; en != batches_all.size(); ++en){
+        stats_edges(en, batches_all[en].size(), &idle_e, &delivered, &transit);
         m_stats.edgeIdleSteps += idle_e;
         m_stats.edgeDeliverSteps += delivered;
         m_stats.edgeTransitSteps += transit;
