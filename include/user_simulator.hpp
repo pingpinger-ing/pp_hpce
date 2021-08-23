@@ -225,7 +225,7 @@ private:
         m_stats.edgeDeliverSteps += delivered;
         m_stats.edgeTransitSteps += transit;
         }
-        return delivered || transit;
+        return m_stats.edgeDeliverSteps || m_stats.edgeTransitSteps;
     }
     
     
