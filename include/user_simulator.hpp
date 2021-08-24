@@ -419,6 +419,7 @@ private:
               int dstIndex =  m_edges[i_edge].srcindex;
 
               if (srcIndex < dstIndex) {
+                  std::cout << 1<<std::endl;
                   if ((dstIndex - srcIndex) % 64 == 0) {
                       batches_all[0].push_back(&m_edges[i_edge]);
                       std::cout<< m_edges[i_edge].srcindex << 00 <<  m_edges[i_edge].srcindex<< std:: endl;
