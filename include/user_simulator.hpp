@@ -407,7 +407,6 @@ private:
     */
    
     // this is for hex topology
-     std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
 
