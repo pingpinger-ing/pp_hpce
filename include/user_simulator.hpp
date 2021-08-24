@@ -366,7 +366,7 @@ private:
   */
     
     // this is for rect topology
-            
+    /*        
      void create_batches(){ 
 
           for (int i = 0; i < 4; ++i) {
@@ -404,9 +404,9 @@ private:
               
        } 
      }
-    
+    */
    
-    /* this is for hex topology
+    // this is for hex topology
      std::vector< std::vector<edge*> > batches_all;
             
      void create_batches(){ 
@@ -420,10 +420,10 @@ private:
               int dstIndex = m_edges[i_edge].dstindex;
 
               if (srcIndex < dstIndex) {
-                  if (srcIndex + 1 == dstIndex) {
+                  if ((dstIndex - srcIndex) % 64 == 0) {
                       batches_all[0].push_back(&m_edges[i_edge]);
                   }
-                  elseif((dstIndex - srcIndex) % 2 == 0) {
+                  elseif((dstIndex - srcIndex) % 32 == 0) {
                       batches_all[1].push_back(&m_edges[i_edge]);
                   }
                   else {
@@ -431,10 +431,10 @@ private:
                   }
               }
               else {
-                  if (srcIndex == dstIndex + 1) {
+                  if ((srcIndex - dstIndex) % 64 == 0) {
                       batches_all[3].push_back(&m_edges[i_edge]);
                   }
-                  elseif((srcIndex - dstIndex) % 2 == 0) {
+                  elseif((srcIndex - dstIndex) % 32 == 0) {
                       batches_all[4].push_back(&m_edges[i_edge]);
                   }
                   else{
@@ -444,7 +444,7 @@ private:
               
        } 
      }
-    */
+    
     
     /* this is for mesh topology
     
