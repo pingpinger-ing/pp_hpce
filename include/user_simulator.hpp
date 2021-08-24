@@ -416,7 +416,7 @@ private:
 
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
-              int dstIndex =  m_edges[i_edge].srcindex
+              int dstIndex =  m_edges[i_edge].srcindex;
 
               if (srcIndex < dstIndex) {
                   if ((dstIndex - srcIndex) % 64 == 0) {
