@@ -416,11 +416,12 @@ private:
 
           for(unsigned i_edge = 0; i_edge < m_edges.size(); ++i_edge){
               int srcIndex = m_edges[i_edge].srcindex;
-              int dstIndex = m_edges[i_edge].dstindex;
+              int dstIndex =  m_edges[i_edge].srcindex
 
               if (srcIndex < dstIndex) {
                   if ((dstIndex - srcIndex) % 64 == 0) {
                       batches_all[0].push_back(&m_edges[i_edge]);
+                      std::cout<< m_edges[i_edge].srcindex << 00 <<  m_edges[i_edge].srcindex<< std:: endl;
                   }
                   else if((dstIndex - srcIndex) % 32 == 0) {
                       batches_all[1].push_back(&m_edges[i_edge]);
