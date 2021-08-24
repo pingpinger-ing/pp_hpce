@@ -409,7 +409,7 @@ private:
     // this is for hex topology
             
      void create_batches(){ 
-
+          std::cout << 1<<std::endl;
           for (int i = 0; i < 6; ++i) {
               batches_all.push_back(std::vector< edge* > ());
           }
@@ -419,8 +419,8 @@ private:
               int dstIndex =  m_edges[i_edge].srcindex;
 
               if (srcIndex < dstIndex) {
-                  std::cout << 1<<std::endl;
-                  if ((dstIndex - srcIndex) % 64 == 0) {
+                  
+                  if ((dstIndex - srcIndex) % 65 == 0) {
                       batches_all[0].push_back(&m_edges[i_edge]);
                       std::cout<< m_edges[i_edge].srcindex << 00 <<  m_edges[i_edge].srcindex<< std:: endl;
                   }
@@ -432,7 +432,7 @@ private:
                   }
               }
               else {
-                  if ((srcIndex - dstIndex) % 64  == 0) {
+                  if ((srcIndex - dstIndex) % 65  == 0) {
                       batches_all[3].push_back(&m_edges[i_edge]);
                   }
                   else if((srcIndex - dstIndex) % 32 == 0) {
