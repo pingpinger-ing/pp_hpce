@@ -420,10 +420,10 @@ private:
               int dstIndex = m_edges[i_edge].dstindex;
 
               if (srcIndex < dstIndex) {
-                  if ((dstIndex - srcIndex) % 64 == 0) {
+                  if ((dstIndex - srcIndex) / 64 == 1) {
                       batches_all[0].push_back(&m_edges[i_edge]);
                   }
-                  elseif((dstIndex - srcIndex) % 32 == 0) {
+                  elseif((dstIndex - srcIndex) / 32 == 1) {
                       batches_all[1].push_back(&m_edges[i_edge]);
                   }
                   else {
@@ -431,10 +431,10 @@ private:
                   }
               }
               else {
-                  if ((srcIndex - dstIndex) % 64 == 0) {
+                  if ((srcIndex - dstIndex) / 64 == 1) {
                       batches_all[3].push_back(&m_edges[i_edge]);
                   }
-                  elseif((srcIndex - dstIndex) % 32 == 0) {
+                  elseif((srcIndex - dstIndex) / 32 == 1) {
                       batches_all[4].push_back(&m_edges[i_edge]);
                   }
                   else{
