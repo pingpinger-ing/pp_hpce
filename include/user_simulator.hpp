@@ -15,6 +15,7 @@
 #include <tbb/parallel_for.h>
 #include <set>
 #include <cmath>
+#include <list>
 
 
 template<class TGraph> //模板类，TGraph==heat
