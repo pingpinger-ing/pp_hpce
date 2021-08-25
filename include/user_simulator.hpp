@@ -454,7 +454,7 @@ private:
 
         
 // DFS algorithm
- void DFS(int vertex, std::vector< std::vector<int> >* adjLists, int count) {
+ void DFS(int vertex, std::vector< std::vector<int> > adjLists, int count) {
    
   visited[vertex] = true;
   std::vector< std::vector<int> > adjList = adjLists[vertex];
@@ -463,7 +463,7 @@ private:
   for ( i = adjList.begin(); i != adjList.end(); ++i)
     if (!visited[*i]){
         for (unsigned j = 0; j!=m_edges.size(); j++){
-            if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == i){
+            if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
                adjLists[vertex].erase(i);
             }
@@ -482,7 +482,7 @@ void  create_batches(){
     for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
             unsigned src = i;
             unsigned dest = m_nodes[i].outgoing[j]->dstindex;
-            adjLists[src].push_front(dest);          
+            adjLists[src].push_back(dest);          
             }
         }
     
