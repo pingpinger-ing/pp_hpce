@@ -451,7 +451,7 @@ private:
      
  
  std::vector<node> *todo;
- list<int> *adjLists;
+ std::list<int> *adjLists;
  adjLists = new list<int>[m_nodes.size()];
  bool visited = new bool[m_nodes.size()];    
     
