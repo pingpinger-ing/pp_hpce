@@ -452,8 +452,7 @@ private:
      
  
  std::vector<node> *todo;
- std::list<int> *adjLists;
- adjLists = new list<int>[m_nodes.size()];
+ std::list<int> *adjLists = new list<int>[m_nodes.size()];
  bool visited = new bool[m_nodes.size()];    
     
  int count = 0;
@@ -465,7 +464,7 @@ private:
   std::list<int> adjList = adjLists[vertex];
     
   std::list<int>::iterator i;
-  for (unsigned i = adjList.begin(); i != adjList.end(); ++i)
+  for ( i = adjList.begin(); i != adjList.end(); ++i)
     if (!visited[*i]){
         for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == i){
@@ -493,7 +492,7 @@ void  create_batches(){
                count++;   
            }
     }
-    
+}
     
          
     bool step_all()
