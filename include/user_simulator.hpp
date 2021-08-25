@@ -450,25 +450,24 @@ private:
     
     //this is for mesh topology
      
- 
+ /*
 
         
 // DFS algorithm
  void DFS(int vertex, std::vector< std::vector<int> > adjLists, int count,std::vector<bool> visited) {
    
-  visited[vertex] = true;
-  std::vector< std::vector<int> > adjList = adjLists[vertex];
+  
+  std::vector<int> adjList = adjLists[vertex];
     
-  std::list<int>::iterator i;
-  for ( i = adjList.begin(); i != adjList.end(); ++i)
-    if (!visited[*i]){
+  for ( int i = 0; i != adjLists[vertex].size; ++i)
+    if (adjLists[vertex][i] != -1){
         for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
                adjLists[vertex].erase(i);
             }
         }      
-      DFS(*i, adjLists, count, visited);       
+      DFS(adjLists[vertex][i], adjLists, count, visited);       
 }
  }
     
@@ -493,6 +492,71 @@ void  create_batches(){
            }
     }
 }
+    */
+    
+class Graph 
+{
+public:
+    map<int, bool> visited;
+    map<int, list<int>> adj;
+  
+    // function to add an edge to graph
+    void addEdge(int v, int w);
+  
+    // DFS traversal of the vertices
+    // reachable from v
+    void DFS(int v);
+};
+  
+void Graph::addEdge(int v, int w)
+{
+    adj[v].push_back(w); // Add w to v’s list.
+}
+  
+void Graph::DFS(int v, int count)
+{
+    // Mark the current node as visited and
+    // print it
+    visited[v] = true;
+  
+    // Recur for all the vertices adjacent
+    // to this vertex
+    list<int>::iterator i;
+    for (i = adj[v].begin(); i != adj[v].end(); ++i)
+        if (!visited[*i]){
+             for (unsigned j = 0; j!=m_edges.size(); j++){
+            if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
+               batches_all[count].push_back(&m_edges[j]);
+               adjLists[v].erase(*i);
+            }
+        }      
+            DFS(*i, count);
+        }
+}
+  
+// Driver code
+create_batches(){
+    int count = 0;
+    // Create a graph given in the above diagram
+    Graph g;
+    for(unsigned i = 0; i != m_nodes.size(); i++){
+    for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
+            unsigned src = i;
+            unsigned dest = m_nodes[i].outgoing[j]->dstindex;
+            g.addEdge[src].push_back(dest);          
+            }
+        }
+       for (unsigned i = 0; i != m_nodes.size(); i++) {
+           for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
+               g.DFS(i, count); 
+               count++;   
+           }
+    }
+  
+}
+    
+    
+    
     
          
     bool step_all()
