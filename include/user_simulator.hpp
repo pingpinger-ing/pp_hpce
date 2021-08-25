@@ -407,7 +407,7 @@ private:
     */
    
     // this is for hex topology
-            
+    /*        
      void create_batches(){ 
          
           for (int i = 0; i < 6; ++i) {
@@ -445,26 +445,54 @@ private:
               
        } 
      }
-    
-    
-    /* this is for mesh topology
-    
-    
     */
     
+    //this is for mesh topology
+     
+ 
+ std::vector<node> *todo;
+ list<int> *adjLists;
+ adjLists = new list<int>[m_nodes.size()];
+ bool visited = new bool[m_nodes.size()];    
     
+ int count = 0;
     
+// DFS algorithm
+ void DFS(int vertex) {
     
-  
-/*     for(unsigned i = 0; i != batches_all.size(); ++i){
-        tbb::parallel_for(tbb::blocked_range<unsigned>(0,(unsigned)batches_all[i].size(), 1024), [&](const tbb::blocked_range<unsigned>& range) { 
-               unsigned a = range.begin(), b = range.end();
-               for (unsigned j = a; j != b; j++)
-                    update_node(batches_all[i][j]->dstindex, &m_nodes[batches_all[i][j]->dstindex], batches_all[i][j]);
-            }, tbb::simple_partitioner());
-          }  
-        
- */   
+  visited[vertex] = true;
+  list<int> adjList = adjLists[vertex];
+    
+  list<int>::iterator i;
+  for (unsigned i = adjList.begin(); i != adjList.end(); ++i)
+    if (!visited[*i]){
+        for (unsigned j = 0; j!=m_edges.size(); j++){
+            if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == i){
+               batches_all[count].push_back(&m_edges[j]);
+               adjLists[vertex].erase(i);
+            }
+        }      
+      DFS(*i);       
+}
+ }
+    
+void  create_batches(){
+        //intialize the graph
+    for(unsigned i = 0; i != m_nodes.size(); i++){
+    for (unsigned j = 0; j != m_nodes[i]->outcoming.size(); j++) {
+            unsigned src = i;
+            unsigned dest = m_nodes[i]->outcoming->dst;
+            adjLists[src].push_front(dest);          
+            }
+        }
+    
+        for (unsigned i = 0; i != m_nodes.size(); i++) {
+           for (unsigned j = 0; j != m_nodes[i]->outcoming.size(); j++){
+               DFS(i); 
+               count++;   
+           }
+    }
+    
     
          
     bool step_all()
@@ -477,27 +505,12 @@ private:
        //  Edge statistics
         
         active |= stats_edges(); 
-       
-        //for (const edge &e: m_edges)  
-         //   active |= stats_edge(&e);
-                
-       // tbb::parallel_for(tbb::blocked_range<unsigned>(0, m_nodes.size(), 512), [&](const tbb::blocked_range<unsigned>& range) {
-           // unsigned s = range.begin(), e = range.end();
-           // for (unsigned i = 0; i != m_nodes.size(); i++)
-              //  update_edge(i, &m_nodes[i]);
-       // }, tbb::simple_partitioner());
         
         
       log(2, "stepping nodes");
         // Node statistics
         active |= stats_nodes() ;  
         
-   /*    for (node &n: m_nodes)
-            if (n.output) {  
-                m_supervisor.onDeviceOutput(&(n.properties), &n.outgoing[0]->messageData);
-                n.output = false;
-            }
-     */   
         return active;
     }
     
