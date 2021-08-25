@@ -495,27 +495,16 @@ void  create_batches(){
 }
     */
     
-class G 
+
+    
+void addEdge(int v, int w)
 {
-public:
-    map<int, bool> visited;
-    map<int, list<int>> adj;
-  
-    // function to add an edge to graph
-    void addEdge(int v, int w);
-  
-    // DFS traversal of the vertices
-    // reachable from v
-    void DFS(int v);
-};
-  
-void G::addEdge(int v, int w)
-{
-    adj[v].push_back(w); // Add w to v’s list.
+    // Add w to v’s list.
 }
   
-void G::DFS(int v, int count)
+void DFS(int v, int count, std::map<int, list<int>> adj )
 {
+    std::map<int, bool> visited;
     // Mark the current node as visited and
     // print it
     visited[v] = true;
@@ -528,28 +517,29 @@ void G::DFS(int v, int count)
              for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
-               adjLists[v].erase(*i);
+               adj[v].erase(*i);
             }
         }      
-            DFS(*i, count);
+            DFS(*i, count, adj);
         }
 }
   
 // Driver code
 void create_batches(){
+ 
+    std::map<int, list<int>> adj;
     int count = 0;
     // Create a graph given in the above diagram
-    G g;
     for(unsigned i = 0; i != m_nodes.size(); i++){
     for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
             unsigned src = i;
             unsigned dest = m_nodes[i].outgoing[j]->dstindex;
-            g.addEdge(src, dest);          
+            adj[src].push_back(dest);          
             }
         }
        for (unsigned i = 0; i != m_nodes.size(); i++) {
            for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
-               g.DFS(i, count); 
+               DFS(i, count, adj); 
                count++;   
            }
     }
