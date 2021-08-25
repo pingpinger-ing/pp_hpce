@@ -502,7 +502,7 @@ void addEdge(int v, int w)
     // Add w to v’s list.
 }
   
-void DFS(int v, int count, std::map<int, list<int> > adj )
+void DFS(int v, int count, std::map< int, std::list<int> > adj )
 {
     std::map<int, bool> visited;
     // Mark the current node as visited and
@@ -527,7 +527,7 @@ void DFS(int v, int count, std::map<int, list<int> > adj )
 // Driver code
 void create_batches(){
  
-    std::map<int, std::list<int> > adj;
+    std::map< int, std::list<int> > adj;
     int count = 0;
     // Create a graph given in the above diagram
     for(int i = 0; i != m_nodes.size(); i++){
