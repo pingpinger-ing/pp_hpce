@@ -453,7 +453,7 @@ private:
  
  std::vector<node> *todo;
  std::list<int> *adjLists;
- bool visited = new bool[m_nodes.size()];    
+ vector<bool> visited(m_nodes.size()
     
  int count = 0;
     
@@ -479,15 +479,15 @@ private:
 void  create_batches(){
         //intialize the graph
     for(unsigned i = 0; i != m_nodes.size(); i++){
-    for (unsigned j = 0; j != m_nodes[i].outcoming.size(); j++) {
+    for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
             unsigned src = i;
-            unsigned dest = m_nodes[i].outcoming->dstindex;
+            unsigned dest = m_nodes[i].outgoing->dstindex;
             adjLists[src].push_front(dest);          
             }
         }
     
         for (unsigned i = 0; i != m_nodes.size(); i++) {
-           for (unsigned j = 0; j != m_nodes[i].outcoming.size(); j++){
+           for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
                DFS(i); 
                count++;   
            }
