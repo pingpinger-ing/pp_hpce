@@ -454,10 +454,10 @@ private:
 
         
 // DFS algorithm
- void DFS(int vertex, std::vector< std::vector<int>* > adjLists, int count,std::vector<bool> visited) {
+ void DFS(int vertex, std::vector< std::vector<int> > adjLists, int count,std::vector<bool> visited) {
    
   visited[vertex] = true;
-  std::vector< std::vector<int>* > adjList = adjLists[vertex];
+  std::vector< std::vector<int> > adjList = adjLists[vertex];
     
   std::list<int>::iterator i;
   for ( i = adjList.begin(); i != adjList.end(); ++i)
@@ -468,13 +468,13 @@ private:
                adjLists[vertex].erase(i);
             }
         }      
-      DFS(*i);       
+      DFS(*i, adjLists, count, visited);       
 }
  }
     
 void  create_batches(){
     
- std::vector< std::vector<int>* > adjLists;
+ std::vector< std::vector<int> > adjLists;
  std::vector<bool> visited(m_nodes.size());
         //intialize the graph
     int count = 0;
