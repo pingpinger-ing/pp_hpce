@@ -461,9 +461,9 @@ private:
  void DFS(int vertex) {
     
   visited[vertex] = true;
-  list<int> adjList = adjLists[vertex];
+  std::list<int> adjList = adjLists[vertex];
     
-  list<int>::iterator i;
+  std::list<int>::iterator i;
   for (unsigned i = adjList.begin(); i != adjList.end(); ++i)
     if (!visited[*i]){
         for (unsigned j = 0; j!=m_edges.size(); j++){
