@@ -16,6 +16,7 @@
 #include <set>
 #include <cmath>
 #include <list>
+#include <map>
 
 
 template<class TGraph> //模板类，TGraph==heat
@@ -494,7 +495,7 @@ void  create_batches(){
 }
     */
     
-class Graph 
+class G 
 {
 public:
     map<int, bool> visited;
@@ -508,12 +509,12 @@ public:
     void DFS(int v);
 };
   
-void Graph::addEdge(int v, int w)
+void G::addEdge(int v, int w)
 {
     adj[v].push_back(w); // Add w to v’s list.
 }
   
-void Graph::DFS(int v, int count)
+void G::DFS(int v, int count)
 {
     // Mark the current node as visited and
     // print it
@@ -535,15 +536,15 @@ void Graph::DFS(int v, int count)
 }
   
 // Driver code
-create_batches(){
+void create_batches(){
     int count = 0;
     // Create a graph given in the above diagram
-    Graph g;
+    G g;
     for(unsigned i = 0; i != m_nodes.size(); i++){
     for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
             unsigned src = i;
             unsigned dest = m_nodes[i].outgoing[j]->dstindex;
-            g.addEdge[src].push_back(dest);          
+            g.addEdge(src, dest);          
             }
         }
        for (unsigned i = 0; i != m_nodes.size(); i++) {
