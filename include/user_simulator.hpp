@@ -609,6 +609,7 @@ void DFS(int v)
     // to this vertex
    // std::list<int>::iterator i;
     for (int i = 0; i != adj[v].size(); i++){
+        std::cout<<count;
         if (!visited_nodes[adj[v][i]]){
             if (visited_edges[v][i]) continue;
             else visited_edges[v][i] = true;
@@ -644,7 +645,7 @@ void create_batches(){
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);          
             }
-            std::cout<<visited_edges[i].size();
+            // std::cout<<visited_edges[i].size();
         }
     
   
@@ -657,7 +658,7 @@ void create_batches(){
                   visited_edges[a][b] = false;
                 }
             }
-            // DFS(i);
+            DFS(i);
         } 
     } 
     
