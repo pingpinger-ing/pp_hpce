@@ -511,6 +511,7 @@ void create_batches(){
 }
 */
 
+    /*
 //this is for mesh topology
 
 std::vector< std::vector<int> > adj;
@@ -590,8 +591,72 @@ void create_batches(){
             DFS(i);
         } 
     } 
+*/
 
+std::map< std::list<int> > adj;
+std::map< std::list<int> > visited_edges;
+std::vector<int> visited_nodes;    
+std::vector<edge*> batch;
+int count = 0;
 
+void DFS(int v)
+{   
+
+     // Mark the current node as visited 
+    visited_nodes[v] = true;
+      
+    // Recur for all the vertices adjacent
+    // to this vertex
+   // std::list<int>::iterator i;
+    for (int i = 0; i != adj[v].size(); i++){
+        if (!visited_nodes[adj[v][i]]){
+            if (visited_edges[v][i]) continue;
+            else visited_edges[v][i] = true;
+            // Find this edge in m_edges
+            for (unsigned j = 0; j!=m_edges.size(); j++){
+                if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
+                    batches_all[count].push_back(&m_edges[j]); 
+                    std::cout<<batches_all[count].size()<<std::endl; 
+                    break;
+                }
+            }  
+            DFS(adj[v][i]);
+        }
+    }
+    if (batches_all[count].size()) ++count;
+    
+}
+  
+// Driver code 
+void create_batches(){    
+    
+   for (int i = 0; i < 5000; ++i) {
+          batches_all.push_back(std::vector< edge* > ());
+          }   
+    
+    // Create a graph given in the above diagram
+        for(int i = 0; i != m_nodes.size(); i++){
+            for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
+                int dest = m_nodes[i].outgoing[j]->dstindex;       
+                adj[i].push_back(dest);
+                visited_edges[i].push_back(false);          
+            }
+        }
+    
+    std::cout<<"hjkfhksjhf"<<std::endl;
+    for(int i = 0; i != m_nodes.size(); i++)
+        for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
+            //for(int a = 0; a != visited_nodes.size(); a++)
+                for(int a = 0; a != 909; a++)
+                {
+                  visited_nodes[a] = false;
+                for(int b = 0; b != visited_edges[a].size(); b++) {
+                  visited_edges[a][b] = false;
+                }
+            }
+            DFS(i);
+        } 
+    } 
     
     
     
