@@ -653,7 +653,7 @@ void create_batches(){
                 {
                   visited_nodes[a] = false;
                 for(int b = 0; b != visited_edges[a].size(); b++) {
-                  visited_edges[a][b] = false;
+                  visited_edges[a][b] = true;
                   std::cout << visited_edges[a][b];
                 }
             }
