@@ -510,6 +510,7 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
     
      // Mark the current node as visited 
     visited[v] = true;
+    std::cout<<v<<std::endl;
       
     // Recur for all the vertices adjacent
     // to this vertex
@@ -519,7 +520,6 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
-               //adj[v].erase(i);
             }
           }               
             DFS(*i, adj, batches_all, count);
