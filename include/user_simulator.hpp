@@ -449,6 +449,7 @@ private:
      }
     */
     
+/*
 //this is for mesh topology
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
@@ -470,15 +471,15 @@ void DFS(int v)
        ++count;
     }
     for (int i = 0; i != adj[v].size(); i++){
-        if (!visited[adj[v](i)]){
+        if (!visited[adj[v][i]]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
-            if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v](i)]){
+            if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]]){
                batches_all[count].push_back(&m_edges[j]); 
                adj[v].erase(i);
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
-            DFS(adj[v](i));
+            DFS(adj[v][i]);
         }
    }
 }
@@ -508,8 +509,71 @@ void create_batches(){
          DFS(i);
         } 
 }
+*/
 
+//this is for mesh topology
+std::vector< std::vector< int > > adj(m_nodes.size(), std::vector < int >);
+std::vector< std::vector< bool > > visited_edges(m_nodes.size(), std::vector < int >);
+std::vector< bool > visited_nodes[m_nodes.size()] = {0};
+std::vector< edge* > batch;
+int count = 0;
+std::map< int, bool > empty_map;
+  
+void DFS(int v)
+{   
  
+     // Mark the current node as visited 
+    visited_nodes[v] = true;
+      
+    // Recur for all the vertices adjacent
+    // to this vertex
+   // std::list<int>::iterator i;
+    for (int i = 0; i != adj[v].size(); i++){
+        if (!visited_nodes[adj[v][i]]){
+            if (visited_edges[v][i]) continue;
+            else visted_edges[v][i] = true;
+            // Find this edge in m_edges
+            for (unsigned j = 0; j!=m_edges.size(); j++){
+                if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]]){
+                    batches_all[count].push_back(&m_edges[j]); 
+                    std::cout<<batches_all[count].size()<<std::endl; 
+                    break;
+                }
+            }  
+            DFS(adj[v][i]);
+        }
+    }
+    if (batches_all[count].size()) ++count;
+}
+  
+// Driver code
+void create_batches(){
+    
+   for (int i = 0; i < m_nodes.size(); ++i) {
+          batches_all.push_back(std::vector< edge* > ());
+          }
+    
+    // Create a graph given in the above diagram
+        for(int i = 0; i != m_nodes.size(); i++){
+            for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
+                int src = i;
+                int dest = m_nodes[i].outgoing[j]->dstindex;
+                adj[src].push_back(dest);
+                visited_edges[src].push_back(false);
+            }
+        }
+    for(int i = 0; i != m_nodes.size(); i++)
+        for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
+            for(int a = 0; a != visited_nodes.size(); a++)
+            {
+                visited_nodes[a] = false;
+                for(int b = 0; b != visited_edges.size(); ++b) {
+                    visited_edges[a][b] = false;
+                }
+            }
+            DFS(i);
+        } 
+    } 
 
 
     
