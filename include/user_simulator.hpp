@@ -513,7 +513,7 @@ void create_batches(){
 
 //this is for mesh topology
 int size_node = m_nodes.size();
-std::vector< std::vector<int> > adj(size_node, std::vector<int>);
+std::vector< std::vector<int> > adj(size_node, std::vector<int>(1000, 0));
 std::vector< std::vector<bool> > visited_edges(size_node, std::vector<int>);
 std::vector<bool> visited_nodes[size_node] = {0};
 std::vector<edge*> batch;
