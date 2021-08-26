@@ -467,6 +467,7 @@ void DFS(int v)
 
     if (adj[v].size() == 0){
        ++count;
+       return;
     }
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
         if (!visited[*i]){
@@ -474,7 +475,7 @@ void DFS(int v)
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]); 
                adj[v].erase(i);
-               std::cout<<batches_all[count].size()<<std::endl;
+               std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
             DFS(*i);
@@ -494,7 +495,8 @@ void create_batches(){
     for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
             int src = i;
             int dest = m_nodes[i].outgoing[j]->dstindex;
-            adj[src].push_back(dest);          
+            adj[src].push_back(dest);
+            std::cout<<src<< <<dest<<std::endl; 
             }
         }
     for(int i = 0; i != m_nodes.size(); i++)
