@@ -475,11 +475,11 @@ void DFS(int v)
                batches_all[count].push_back(&m_edges[j]);
                std::list<int>::iterator i1;  
                i1 = i;  
-               adj[v].erase[i1];
+               adj[v].erase(i1);
                std::cout<<batches_all[count].size()<<std::endl;
             }
           }  
-            DFS(*i, adj);
+            DFS(*i);
         }
   
 }
@@ -499,8 +499,8 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-    for(i = 0; i != m_nodes.size(), i++)
-        for( j = 0, j != m_nodes[i].outgoing->size(); j++)
+    for(int i = 0; i != m_nodes.size(), i++)
+        for(int j = 0, j != m_nodes[i].outgoing->size(); j++)
          visited.clear();
          DFS(i);
          
