@@ -622,7 +622,7 @@ void DFS(int v)
                     std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
                     break;
                 }
-                if (j == m_edges.size()) std::cout << "Have not find! ";
+                if (j == m_edges.size() - 1) std::cout << "Have not find! ";
             } 
             std::cout << "Finish! " << std::endl;
             DFS(adj[v][i]);
