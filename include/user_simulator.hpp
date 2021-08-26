@@ -457,7 +457,7 @@ std::vector< edge* > batch;
 void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<edge*> > batches_all, int count)
 {   
  
-    std::cout<<batches_all.size();
+    //std::cout<<batches_all.size();
     if(adj[v].size() == 0 || visited[v] == true){    
        ++count;
     }
