@@ -562,10 +562,10 @@ void create_batches(){
           batches_all.push_back(std::vector< edge* > ());
           }
     
-    for (int i = 0; i < 909; ++i) {
+    for (int i = 0; i < m_nodes.size(); i++) {
           visited_edges.push_back(std::vector<int> ());
           }
-    for (int i = 0; i < 909; ++i) {
+    for (int i = 0; i < m_nodes.size(); i++) {
          adj.push_back(std::vector<int> ());
           }
     
@@ -583,7 +583,7 @@ void create_batches(){
                 visited_edges[i].push_back(false);
                 //std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
-             std::cout<<adj[i][1]<<visited_edges[i][1]<<std::endl;
+            // std::cout<<adj[i][1]<<visited_edges[i][1]<<std::endl;
         }
            // visited_edges[i].push_back(visited_edge);
            // visited_edge.clear();
