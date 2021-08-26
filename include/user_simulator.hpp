@@ -573,7 +573,7 @@ void create_batches(){
                 adj[i].push_back(0);
                 visited_edges[i].push_back(false);
                 }
-              //  std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
+              std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
         }
     std::cout<<"hjkfhksjhf"<<std::endl;
