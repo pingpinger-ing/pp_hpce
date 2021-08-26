@@ -527,7 +527,7 @@ void DFS(int v, std::map< int, std::list<int> > adj)
                adj[v].erase(i);
             }
           }               
-            DFS(*i, adj, 0);
+            DFS(*i, adj);
         }
 }
   
