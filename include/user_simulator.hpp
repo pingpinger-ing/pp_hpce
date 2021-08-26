@@ -736,8 +736,10 @@ public:
     }
     
     void addChannel(
-        unsigned srcIndex,
-        unsigned dstIndex,
+     //   unsigned srcIndex,
+      //  unsigned dstIndex,
+          int srcIndex,
+          int dstIndex,
         unsigned delay,
         const channel_type &channel
     ){
