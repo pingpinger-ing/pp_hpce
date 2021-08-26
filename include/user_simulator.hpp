@@ -589,6 +589,8 @@ void create_batches(){
            // one_node_adj.clear();
             //std::cout<<dest<<std::endl;
         }
+    
+    std::cout<<"ss";
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
                     std::cout<<"hl";
