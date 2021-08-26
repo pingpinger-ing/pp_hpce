@@ -500,13 +500,14 @@ std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
 std::vector< edge* > batch;
   
-void DFS(int v, std::map< int, std::list<int> > adj , bool flag)
+void DFS(int v, std::map< int, std::list<int> > adj)
 {
     // Mark the current node as visited and
     // print it
-    if(flag){
+    
+  /*  if(flag){
             visited.clear();   
-    }
+    }*/
     
     if(adj[v].size() == 0 || visited[v] == true){    
        batches_all.push_back(batch);
@@ -525,8 +526,7 @@ void DFS(int v, std::map< int, std::list<int> > adj , bool flag)
                batch.push_back(&m_edges[j]);
                adj[v].erase(i);
             }
-          }      
-          
+          }               
             DFS(*i, adj, 0);
         }
 }
@@ -542,7 +542,7 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-         DFS(0, adj, 1);
+         DFS(0, adj);
   /*     for (unsigned i = 0; i != m_nodes.size(); i++) {
            for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
                DFS(i, adj, 1); 
