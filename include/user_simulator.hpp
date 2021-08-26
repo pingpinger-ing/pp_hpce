@@ -496,7 +496,7 @@ void create_batches(){
             int src = i;
             int dest = m_nodes[i].outgoing[j]->dstindex;
             adj[src].push_back(dest);
-            std::cout<<src<< <<dest<<std::endl; 
+            std::cout<<src<<" "<<dest<<std::endl; 
             }
         }
     for(int i = 0; i != m_nodes.size(); i++)
