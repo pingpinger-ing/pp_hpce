@@ -469,8 +469,8 @@ void DFS(int v)
     if (adj[v].size() == 0){
        ++count;
     }
-    for (i = 0; i != adj[v].size(); i++){
-        if (!visited[*i]){
+    for (int i = 0; i != adj[v].size(); i++){
+        if (!visited[adj[v][i]]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]){
                batches_all[count].push_back(&m_edges[j]); 
