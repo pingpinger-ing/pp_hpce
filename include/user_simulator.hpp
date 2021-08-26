@@ -518,7 +518,7 @@ void DFS(int v, std::map< int, std::list<int> > adj)
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batch.push_back(&m_edges[j]);
-               adj[v].erase(i);
+               //adj[v].erase(i);
             }
           }               
             DFS(*i, adj);
