@@ -512,10 +512,14 @@ void create_batches(){
 */
 
 //this is for mesh topology
-int size_node = m_nodes.size();
-std::vector< std::vector<int> > adj(size_node, std::vector<int>(1000, 0));
-std::vector< std::vector<bool> > visited_edges(size_node, std::vector<int>);
-std::vector<bool> visited_nodes[size_node] = {0};
+/*
+std::vector< std::vector<int> > adj(909, std::vector<int>);
+std::vector< std::vector<bool> > visited_edges(909, std::vector<int>);
+std::vector<bool> visited_nodes[909] = {0};
+*/
+std::vector< std::vector<int> > adj;
+std::vector< std::vector<bool> > visited_edges;
+std::vector<bool> visited_nodes[909] = {0};
 std::vector<edge*> batch;
 int count = 0;
 std::map< int, bool > empty_map;
@@ -553,15 +557,25 @@ void create_batches(){
    for (int i = 0; i < m_nodes.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }
+    std::vector<int> visited_edge;
+    std::vector<int> one_node_adj;
     
     // Create a graph given in the above diagram
         for(int i = 0; i != m_nodes.size(); i++){
             for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
                 int src = i;
                 int dest = m_nodes[i].outgoing[j]->dstindex;
+                /*
                 adj[src].push_back(dest);
                 visited_edges[src].push_back(false);
+                */
+                one_node_adj.push_back(dest);
+                visited_edge.push_back(false);
             }
+            visited_edges.push_back();
+            visited_edge.clear();
+            adj.push_back();
+            one_node_adj.clear();
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
