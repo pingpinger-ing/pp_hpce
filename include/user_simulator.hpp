@@ -498,22 +498,17 @@ void  create_batches(){
     
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
-std::vector< edge* > batch;
+std::vector< edge* > batch；
   
 void DFS(int v, std::map< int, std::list<int> > adj)
-{
-    // Mark the current node as visited and
-    // print it
-    
-  /*  if(flag){
-            visited.clear();   
-    }*/
-    
+{   
+    batch.reserve(5000);
     if(adj[v].size() == 0 || visited[v] == true){    
        batches_all.push_back(batch);
        batch.clear();       
     }
     
+     // Mark the current node as visited 
     visited[v] = true;
       
     // Recur for all the vertices adjacent
@@ -543,12 +538,6 @@ void create_batches(){
             }
         }
          DFS(0, adj);
-  /*     for (unsigned i = 0; i != m_nodes.size(); i++) {
-           for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
-               DFS(i, adj, 1); 
-           }
-    }*/
-  
 }
     
     
