@@ -498,7 +498,7 @@ void  create_batches(){
     
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
-std::vector< edge* > batch；
+std::vector< edge* > batch;
   
 void DFS(int v, std::map< int, std::list<int> > adj)
 {   
