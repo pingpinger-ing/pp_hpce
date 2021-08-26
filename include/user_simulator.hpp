@@ -485,8 +485,8 @@ void create_batches(){
     
    for (int i = 0; i < m_nodes.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
+       std::cout<<batches_all[i].size();
           }
-   std::cout<< batches_all.size();
     
     // Create a graph given in the above diagram
     for(int i = 0; i != m_nodes.size(); i++){
