@@ -578,7 +578,7 @@ void create_batches(){
                 //visited_edge.push_back(false);
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);
-                std::cout<<adj[i][j]<<visited_edge[i][j]<<std::endl;
+                std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
            // visited_edges[i].push_back(visited_edge);
            // visited_edge.clear();
