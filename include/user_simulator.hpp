@@ -457,7 +457,7 @@ std::vector< edge* > batch;
 void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<edge*> > batches_all, int count)
 {   
  
-    
+    batches_all.size();
     if(adj[v].size() == 0 || visited[v] == true){    
        ++count;
     }
@@ -473,7 +473,7 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
-               std::cout<<batches_all[count].size()<<std::endl;
+               //std::cout<<batches_all[count].size()<<std::endl;
             }
           }               
             DFS(*i, adj, batches_all, count);
@@ -486,6 +486,7 @@ void create_batches(){
    for (int i = 0; i < m_nodes.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }
+    batches_all.size();
     
     // Create a graph given in the above diagram
     for(int i = 0; i != m_nodes.size(); i++){
