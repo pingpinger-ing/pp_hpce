@@ -502,11 +502,11 @@ std::vector< edge* > batch;
   
 void DFS(int v, std::map< int, std::list<int> > adj)
 {   
-  /*  if(adj[v].size() == 0 || visited[v] == true){    
+    if(adj[v].size() == 0 || visited[v] == true){    
        batches_all.push_back(batch);
        batch.clear();       
     }
-    */
+    
      // Mark the current node as visited 
     visited[v] = true;
       
@@ -518,7 +518,7 @@ void DFS(int v, std::map< int, std::list<int> > adj)
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batch.push_back(&m_edges[j]);
-              // adj[v].pop_front();
+               adj[v].erase(*i);
             }
           }               
             DFS(*i, adj);
