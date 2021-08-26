@@ -615,6 +615,7 @@ void DFS(int v)
             if (visited_edges[v][i]) continue;
             else visited_edges[v][i] = true;
             std::cout << "Keep going... ";
+            std::cout << std::endl << "src: " << v << " dst: " << adj[v][i] << std::endl;
             // Find this edge in m_edges
             for (int j = 0; j!=m_edges.size(); j++){
                 if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
