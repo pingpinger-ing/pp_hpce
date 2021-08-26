@@ -555,7 +555,7 @@ void DFS(int v)
 // Driver code
 void create_batches(){    
     
-   for (int i = 0; i < m_nodes.size(); ++i) {
+   for (int i = 0; i < 5000; ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }
     std::vector<int> visited_edge;
