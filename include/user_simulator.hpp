@@ -464,7 +464,7 @@ void DFS(int v, std::map< int, std::list<int> > adj)
     // Recur for all the vertices adjacent
     // to this vertex
     std::list<int>::iterator i;
-    if (visited[*adj[v].begin] == true){
+    if (visited[*adj[v].begin()] == true){
        ++count;
     }
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
