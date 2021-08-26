@@ -498,28 +498,36 @@ void  create_batches(){
     
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
+std::vector< edge* > batch;
   
-void DFS(int v, int count, std::map< int, std::list<int> > adj , bool flag)
+void DFS(int v, std::map< int, std::list<int> > adj , bool flag)
 {
     // Mark the current node as visited and
     // print it
     if(flag){
             visited.clear();   
     }
+    
+    if(adj[v].size() == 0 || visited[v] == true){    
+       batches_all.push_back(batch);
+       batch.clear();       
+    }
+    
     visited[v] = true;
-  
+      
     // Recur for all the vertices adjacent
     // to this vertex
     std::list<int>::iterator i;
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
         if (!visited[*i]){
-             for (unsigned j = 0; j!=m_edges.size(); j++){
+          for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
-               batches_all[count].push_back(&m_edges[j]);
+               batch.push_back(&m_edges[j]);
                adj[v].erase(i);
             }
-        }      
-            DFS(*i, count, adj, 0);
+          }      
+          
+            DFS(*i, adj, 0)
         }
 }
   
@@ -537,8 +545,7 @@ void create_batches(){
         }
        for (unsigned i = 0; i != m_nodes.size(); i++) {
            for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
-               DFS(i, count, adj, 1);
-               count++;   
+               DFS(i, adj, 1); 
            }
     }
   
