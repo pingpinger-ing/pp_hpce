@@ -454,6 +454,7 @@ std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
 std::vector< edge* > batch;
 int count = 0;
+std::map< int, bool > empty_map;
   
 void DFS(int v)
 {   
@@ -467,14 +468,13 @@ void DFS(int v)
 
     if (adj[v].size() == 0){
        ++count;
-       return;
     }
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]); 
-               adj[v].erase(i);
+               adj[v].erase(m_edges[j].dstindex);
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
@@ -496,16 +496,20 @@ void create_batches(){
             int src = i;
             int dest = m_nodes[i].outgoing[j]->dstindex;
             adj[src].push_back(dest);
-            std::cout<<src<<" "<<dest<<std::endl; 
             }
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-         visited.erase(visited.begin(),visited.end());
+         visited.swap(empty_map);
+         visited.clear();
+         count++;
          DFS(i);
         } 
 }
-    
+
+ 
+
+
     
     
     
