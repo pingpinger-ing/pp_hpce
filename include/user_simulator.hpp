@@ -542,11 +542,12 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-       for (unsigned i = 0; i != m_nodes.size(); i++) {
+         DFS(i, adj, 1);
+  /*     for (unsigned i = 0; i != m_nodes.size(); i++) {
            for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
                DFS(i, adj, 1); 
            }
-    }
+    }*/
   
 }
     
