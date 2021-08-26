@@ -527,14 +527,13 @@ void DFS(int v, std::map< int, std::list<int> > adj , bool flag)
             }
           }      
           
-            DFS(*i, adj, 0)
+            DFS(*i, adj, 0);
         }
 }
   
 // Driver code
 void create_batches(){
- 
-    int count = 0;
+
     // Create a graph given in the above diagram
     for(int i = 0; i != m_nodes.size(); i++){
     for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
