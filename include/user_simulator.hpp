@@ -531,7 +531,7 @@ void DFS(int v)
     for (int i = 0; i != adj[v].size(); i++){
         if (!visited_nodes[adj[v][i]]){
             if (visited_edges[v][i]) continue;
-            else visted_edges[v][i] = true;
+            else visited_edges[v][i] = true;
             // Find this edge in m_edges
             for (unsigned j = 0; j!=m_edges.size(); j++){
                 if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]]){
