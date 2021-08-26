@@ -478,7 +478,7 @@ void DFS(int v)
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
-            DFS(visited[adj[v][i]]);
+            DFS(adj[v][i]);
         }
    }
 }
