@@ -475,7 +475,7 @@ void DFS(int v, std::map< int, std::list<int> > adj)
                std::cout<<batches_all[count].size()<<std::endl;
             }
           }  
-            DFS(*i, adj, count);
+            DFS(*i, adj);
         }
   
 }
