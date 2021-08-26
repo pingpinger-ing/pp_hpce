@@ -644,6 +644,7 @@ void create_batches(){
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);          
             }
+            std::cout<<visited_edges[i].size();
         }
     
   
@@ -653,8 +654,7 @@ void create_batches(){
                 {
                   visited_nodes[a] = false;
                 for(int b = 0; b != visited_edges[a].size(); b++) {
-                  visited_edges[a][b] = true;
-                  std::cout << visited_edges[a][b];
+                  visited_edges[a][b] = false;
                 }
             }
             // DFS(i);
