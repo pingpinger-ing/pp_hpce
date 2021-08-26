@@ -502,12 +502,11 @@ std::vector< edge* > batch;
   
 void DFS(int v, std::map< int, std::list<int> > adj)
 {   
-    batch.reserve(5000);
-    if(adj[v].size() == 0 || visited[v] == true){    
+  /*  if(adj[v].size() == 0 || visited[v] == true){    
        batches_all.push_back(batch);
        batch.clear();       
     }
-    
+    */
      // Mark the current node as visited 
     visited[v] = true;
       
