@@ -457,10 +457,6 @@ std::vector< edge* > batch;
 void DFS(int v, std::map< int, std::list<int> > adj, int count)
 {   
  
-    if(adj[v].size() == 0 || visited[v] == true){    
-       ++count;
-    }
-    
      // Mark the current node as visited 
     visited[v] = true;
       
@@ -473,11 +469,12 @@ void DFS(int v, std::map< int, std::list<int> > adj, int count)
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
                std::cout<<batches_all[count].size()<<std::endl;
-               adj[v].erase(i);
+               //adj[v].erase(i);
             }
           }               
             DFS(*i, adj, count);
         }
+     ++count;
 }
   
 // Driver code
