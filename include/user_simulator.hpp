@@ -453,8 +453,9 @@ private:
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
 std::vector< edge* > batch;
+int count = 0;
   
-void DFS(int v, std::map< int, std::list<int> > adj, int count)
+void DFS(int v, std::map< int, std::list<int> > adj)
 {   
  
      // Mark the current node as visited 
@@ -463,18 +464,20 @@ void DFS(int v, std::map< int, std::list<int> > adj, int count)
     // Recur for all the vertices adjacent
     // to this vertex
     std::list<int>::iterator i;
+    if (adj[v].begin == true){
+       ++count;
+    }
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
                std::cout<<batches_all[count].size()<<std::endl;
-               //adj[v].erase(i);
             }
-          }               
+          }  
             DFS(*i, adj, count);
         }
-     ++count;
+  
 }
   
 // Driver code
@@ -492,7 +495,7 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-         DFS(0, adj, 0);
+         DFS(0, adj);
 }
     
     
