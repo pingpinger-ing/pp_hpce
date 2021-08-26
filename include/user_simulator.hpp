@@ -464,7 +464,7 @@ void DFS(int v)
       
     // Recur for all the vertices adjacent
     // to this vertex
-    std::list<int>::iterator i;
+   // std::list<int>::iterator i;
 
     if (adj[v].size() == 0){
        ++count;
