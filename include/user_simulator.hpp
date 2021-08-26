@@ -566,18 +566,19 @@ void create_batches(){
          adj.push_back(std::vector<int> ());
           }
     
-    std::vector<int> visited_edge;
-    std::vector<int> one_node_adj;
+    //std::vector<int> visited_edge;
+    //std::vector<int> one_node_adj;
     
     // Create a graph given in the above diagram
         for(int i = 0; i != m_nodes.size(); i++){
             for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
-                int src = i;
+                //int src = i;
                 int dest = m_nodes[i].outgoing[j]->dstindex;       
                 //one_node_adj.push_back(dest);
                 //visited_edge.push_back(false);
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);
+                std::cout<<adj[i][j]<<visited_edge[i][j]<<std::endl;
             }
            // visited_edges[i].push_back(visited_edge);
            // visited_edge.clear();
@@ -591,7 +592,7 @@ void create_batches(){
                 for(int a = 0; a != 909; a++)
             {
                 visited_nodes[a] = false;
-                for(int b = 0; b != visited_edges[a].size(); ++b) {
+                for(int b = 0; b != visited_edges[a] .size(); ++b) {
                     visited_edges[a][b] = false;
                 }
             }
