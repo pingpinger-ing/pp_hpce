@@ -539,7 +539,7 @@ void DFS(int v)
             else visited_edges[v][i] = true;
             // Find this edge in m_edges
             for (unsigned j = 0; j!=m_edges.size(); j++){
-                if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]]){
+                if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
                     batches_all[count].push_back(&m_edges[j]); 
                     std::cout<<batches_all[count].size()<<std::endl; 
                     break;
