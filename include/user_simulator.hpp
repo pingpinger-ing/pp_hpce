@@ -500,11 +500,12 @@ std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
 std::vector< edge* > batch;
   
-void DFS(int v, std::map< int, std::list<int> > adj)
+void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<edge*> > batches_all, int count)
 {   
+ 
+    
     if(adj[v].size() == 0 || visited[v] == true){    
-       batches_all.push_back(batch);
-       batch.clear();       
+       ++count;
     }
     
      // Mark the current node as visited 
@@ -517,17 +518,21 @@ void DFS(int v, std::map< int, std::list<int> > adj)
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
-               batch.push_back(&m_edges[j]);
+               batches_all[count].push_back(&m_edges[j]);
                //adj[v].erase(i);
             }
           }               
-            DFS(*i, adj);
+            DFS(*i, adj, batches_all, count);
         }
 }
   
 // Driver code
 void create_batches(){
-
+    
+   for (int i = 0; i < m_nodes.size(); ++i) {
+          batches_all.push_back(std::vector< edge* > ());
+          }
+    
     // Create a graph given in the above diagram
     for(int i = 0; i != m_nodes.size(); i++){
     for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
@@ -536,7 +541,7 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-         DFS(0, adj);
+         DFS(0, adj, batches_all, 0);
 }
     
     
