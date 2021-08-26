@@ -572,9 +572,9 @@ void create_batches(){
                 one_node_adj.push_back(dest);
                 visited_edge.push_back(false);
             }
-            visited_edges.push_back();
+            visited_edges.push_back(visited_edge);
             visited_edge.clear();
-            adj.push_back();
+            adj.push_back(one_node_adj);
             one_node_adj.clear();
         }
     for(int i = 0; i != m_nodes.size(); i++)
