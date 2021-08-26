@@ -504,7 +504,7 @@ void DFS(int v, int count, std::map< int, std::list<int> > adj , bool flag)
     // Mark the current node as visited and
     // print it
     if(flag){
-            vistied.clear();   
+            visited.clear();   
     }
     visited[v] = true;
   
