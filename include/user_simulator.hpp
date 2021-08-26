@@ -576,7 +576,7 @@ void create_batches(){
               //  std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
         }
-    
+    std::cout<<"hjkfhksjhf"<<std::endl;
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
             //for(int a = 0; a != visited_nodes.size(); a++)
