@@ -512,9 +512,9 @@ void create_batches(){
 */
 
 //this is for mesh topology
-std::vector< std::vector< int > > adj(m_nodes.size(), std::vector < int >);
-std::vector< std::vector< bool > > visited_edges(m_nodes.size(), std::vector < int >);
-std::vector< bool > visited_nodes[m_nodes.size()] = {0};
+std::vector< std::vector< int > > adj(909, std::vector < int >);
+std::vector< std::vector< bool > > visited_edges(909, std::vector < int >);
+std::vector< bool > visited_nodes[909] = {0};
 std::vector< edge* > batch;
 int count = 0;
 std::map< int, bool > empty_map;
