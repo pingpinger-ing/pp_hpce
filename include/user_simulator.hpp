@@ -500,10 +500,10 @@ void create_batches(){
             }
         }
     for(int i = 0; i != m_nodes.size(); i++)
-        for(int j = 0, j != m_nodes[i].outgoing->size(); j++)
+        for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
          visited.clear();
          DFS(i);
-         
+        } 
 }
     
     
