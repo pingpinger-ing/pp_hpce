@@ -474,7 +474,7 @@ void DFS(int v)
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]); 
-               adj[v].erase(&m_edges[j].dstindex);
+               adj[v].erase(m_edges[j].dstindex);
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
