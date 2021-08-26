@@ -583,21 +583,19 @@ void create_batches(){
                 visited_edges[i].push_back(false);
                 //std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
+             std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
+        }
            // visited_edges[i].push_back(visited_edge);
            // visited_edge.clear();
            // adj[i].push_back(one_node_adj);
            // one_node_adj.clear();
             //std::cout<<dest<<std::endl;
-        }
     
-    std::cout<<"ss";
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
-                    std::cout<<"hl";
             //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
                 {
-                    std::cout<<"hhll";
                   visited_nodes[a] = false;
                 for(int b = 0; b != visited_edges[a].size(); b++) {
                   visited_edges[a][b] = false;
