@@ -512,18 +512,12 @@ void create_batches(){
 */
 
 //this is for mesh topology
-/*
-std::vector< std::vector<int> > adj(909, std::vector<int>);
-std::vector< std::vector<bool> > visited_edges(909, std::vector<int>);
-std::vector<bool> visited_nodes[909] = {0};
-*/
+
 std::vector< std::vector<int> > adj;
 std::vector< std::vector<int> > visited_edges;
-//std::vector<bool> visited_nodes(909);
 std::vector<int> visited_nodes;    
 std::vector<edge*> batch;
 int count = 0;
-//std::map< int, bool > empty_map;
 
 void DFS(int v)
 {   
@@ -575,21 +569,13 @@ void create_batches(){
     // Create a graph given in the above diagram
         for(int i = 0; i != m_nodes.size(); i++){
             for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
-                //int src = i;
+                int src = i;
                 int dest = m_nodes[i].outgoing[j]->dstindex;       
-                //one_node_adj.push_back(dest);
-                //visited_edge.push_back(false);
-                adj[i].push_back(dest);
-                visited_edges[i].push_back(false);
-                std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
+                adj[src].push_back(dest);
+                visited_edges[src].push_back(false);
+              //  std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
-            // std::cout<<adj[i][1]<<visited_edges[i][1]<<std::endl;
         }
-           // visited_edges[i].push_back(visited_edge);
-           // visited_edge.clear();
-           // adj[i].push_back(one_node_adj);
-           // one_node_adj.clear();
-            //std::cout<<dest<<std::endl;
     
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
