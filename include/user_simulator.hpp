@@ -527,7 +527,9 @@ int count = 0;
 
 void DFS(int v)
 {   
- 
+  if (adj[v].size() == 0){
+       ++count;
+    }
      // Mark the current node as visited 
     visited_nodes[v] = true;
       
@@ -549,7 +551,8 @@ void DFS(int v)
             DFS(adj[v][i]);
         }
     }
-    if (batches_all[count].size()) ++count;
+    //if (batches_all[count].size()) ++count;
+    
 }
   
 // Driver code
@@ -578,7 +581,7 @@ void create_batches(){
                 //visited_edge.push_back(false);
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);
-                std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
+                //std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
            // visited_edges[i].push_back(visited_edge);
            // visited_edge.clear();
@@ -591,9 +594,10 @@ void create_batches(){
             //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
             {
-                visited_nodes[a] = false;
-                for(int b = 0; b != visited_edges[a] .size(); ++b) {
-                    visited_edges[a][b] = false;
+                  visited_nodes[a] = false;
+                for(int b = 0; b != visited_edges[a].size(); ++b) {
+                  visited_edges[a][b] = false;
+                    std::cout<<"hhlh"<<std::endl;
                 }
             }
             DFS(i);
