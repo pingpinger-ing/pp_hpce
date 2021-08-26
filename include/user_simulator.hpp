@@ -593,8 +593,8 @@ void create_batches(){
     } 
 */
 
-std::map< int, std::list<int> > adj;
-std::map< int, std::list<int> > visited_edges;
+std::map< int, std::vector<int> > adj;
+std::map< int, std::vector<int> > visited_edges;
 std::vector<int> visited_nodes;    
 std::vector<edge*> batch;
 int count = 0;
