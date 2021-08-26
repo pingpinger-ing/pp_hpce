@@ -558,6 +558,13 @@ void create_batches(){
    for (int i = 0; i < 5000; ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }
+    for (int i = 0; i < 909; ++i) {
+          visited_edges.push_back(std::vector< int > ());
+          }
+    for (int i = 0; i < 909; ++i) {
+         adj.push_back(std::vector< int > ());
+          }
+    
     std::vector<int> visited_edge;
     std::vector<int> one_node_adj;
     
