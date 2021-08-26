@@ -449,53 +449,7 @@ private:
      }
     */
     
-    //this is for mesh topology
-     
- /*
-
-        
-// DFS algorithm
- void DFS(int vertex, std::vector< std::vector<int> > adjLists, int count,std::vector<bool> visited) {
-   
-  
-  std::vector<int> adjList = adjLists[vertex];
-    
-  for ( int i = 0; i != adjLists[vertex].size; ++i)
-    if (adjLists[vertex][i] != -1){
-        for (unsigned j = 0; j!=m_edges.size(); j++){
-            if(m_edges[j].srcindex == vertex && m_edges[j].dstindex == *i){
-               batches_all[count].push_back(&m_edges[j]);
-               adjLists[vertex].erase(i);
-            }
-        }      
-      DFS(adjLists[vertex][i], adjLists, count, visited);       
-}
- }
-    
-void  create_batches(){
-    
- std::vector< std::vector<int> > adjLists;
- std::vector<bool> visited(m_nodes.size());
-        //intialize the graph
-    int count = 0;
-    for(unsigned i = 0; i != m_nodes.size(); i++){
-    for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++) {
-            unsigned src = i;
-            unsigned dest = m_nodes[i].outgoing[j]->dstindex;
-            adjLists[src].push_back(dest);          
-            }
-        }
-    
-        for (unsigned i = 0; i != m_nodes.size(); i++) {
-           for (unsigned j = 0; j != m_nodes[i].outgoing.size(); j++){
-               DFS(i, adjLists, count, visited); 
-               count++;   
-           }
-    }
-}
-    */
-    
-    
+//this is for mesh topology
 std::map< int, std::list<int> > adj;
 std::map<int, bool> visited;
 std::vector< edge* > batch;
@@ -510,7 +464,6 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
     
      // Mark the current node as visited 
     visited[v] = true;
-    std::cout<<v<<std::endl;
       
     // Recur for all the vertices adjacent
     // to this vertex
@@ -519,8 +472,8 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
-                std::cout<<"zhuzhzuhzuzhuzhuzhz"<<std::endl;
                batches_all[count].push_back(&m_edges[j]);
+               std::cout<<batches_all[count].size()<<std::endl;
             }
           }               
             DFS(*i, adj, batches_all, count);
