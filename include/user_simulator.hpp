@@ -519,7 +519,7 @@ void DFS(int v, std::map< int, std::list<int> > adj, std::vector< std::vector<ed
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
-                std::cout<<"zhuzhzuhzuzhuzhuzhz"<<endl;
+                std::cout<<"zhuzhzuhzuzhuzhuzhz"<<std::endl;
                batches_all[count].push_back(&m_edges[j]);
             }
           }               
