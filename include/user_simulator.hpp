@@ -521,9 +521,7 @@ int count = 0;
 
 void DFS(int v)
 {   
-  if (adj[v].size() == 0){
-       ++count;
-    }
+
      // Mark the current node as visited 
     visited_nodes[v] = true;
       
@@ -545,7 +543,7 @@ void DFS(int v)
             DFS(adj[v][i]);
         }
     }
-    //if (batches_all[count].size()) ++count;
+    if (batches_all[count].size()) ++count;
     
 }
   
@@ -554,25 +552,27 @@ void create_batches(){
     
    for (int i = 0; i < 5000; ++i) {
           batches_all.push_back(std::vector< edge* > ());
-          }
-    
-    for (int i = 0; i < m_nodes.size(); i++) {
+          }    
+   for (int i = 0; i < m_nodes.size(); i++) {
           visited_edges.push_back(std::vector<int> ());
           }
-    for (int i = 0; i < m_nodes.size(); i++) {
+   for (int i = 0; i < m_nodes.size(); i++) {
          adj.push_back(std::vector<int> ());
           }
     
-    //std::vector<int> visited_edge;
-    //std::vector<int> one_node_adj;
     
     // Create a graph given in the above diagram
         for(int i = 0; i != m_nodes.size(); i++){
-            for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
-                int src = i;
+            for (int j = 0; j != 10; j++) {
+                if(j < m_nodes[i].outgoing.size()){
                 int dest = m_nodes[i].outgoing[j]->dstindex;       
-                adj[src].push_back(dest);
-                visited_edges[src].push_back(false);
+                adj[i].push_back(dest);
+                visited_edges[i].push_back(false);
+                }
+                else{
+                adj[i].push_back(0);
+                visited_edges[i].push_back(false);
+                }
               //  std::cout<<adj[i][j]<<visited_edges[i][j]<<std::endl;
             }
         }
