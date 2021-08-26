@@ -499,7 +499,7 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-    for(int i = 0; i != m_nodes.size(), i++)
+    for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0, j != m_nodes[i].outgoing->size(); j++)
          visited.clear();
          DFS(i);
