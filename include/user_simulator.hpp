@@ -469,18 +469,17 @@ void DFS(int v)
     if (adj[v].size() == 0){
        ++count;
     }
-    for (i = adj[v].begin(); i != adj[v].end(); ++i)
-        if (!visited[*i]){
+    for (i = 0; i != adj[v].size(); i++){
+        if (!visited[adj[v][i]]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
-            if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
+            if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]){
                batches_all[count].push_back(&m_edges[j]); 
-               adj[v].erase(i++);
+               adj[v].erase(i);
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
             DFS(*i);
         }
-  
 }
   
 // Driver code
