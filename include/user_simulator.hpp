@@ -609,6 +609,7 @@ void DFS(int v)
     // to this vertex
    // std::list<int>::iterator i;
     for (int i = 0; i != adj[v].size(); i++){
+        std::cout << adj[v].size() << endl;
         if (!visited_nodes[adj[v][i]]){
             if (visited_edges[v][i]) continue;
             else visited_edges[v][i] = true;
