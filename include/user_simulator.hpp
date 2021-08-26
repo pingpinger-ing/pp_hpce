@@ -611,6 +611,7 @@ void DFS(int v)
     for (int i = 0; i != adj[v].size(); i++){
         std::cout << adj[v].size() << ":" << i << std::endl;
         if (!visited_nodes[adj[v][i]]){
+            std::cout << "I'm here! " << std::endl;
             if (visited_edges[v][i]) continue;
             else visited_edges[v][i] = true;
             // Find this edge in m_edges
