@@ -580,7 +580,7 @@ void create_batches(){
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-            \\for(int a = 0; a != visited_nodes.size(); a++)
+            //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
             {
                 visited_nodes[a] = false;
