@@ -494,7 +494,7 @@ void create_batches(){
             adj[src].push_back(dest);          
             }
         }
-         DFS(0, adj, batches_all, 0);
+         DFS(0, adj, 0);
 }
     
     
