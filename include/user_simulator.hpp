@@ -617,7 +617,7 @@ void DFS(int v)
             std::cout << "Keep going... ";
             // Find this edge in m_edges
             for (int j = 0; j!=m_edges.size(); j++){
-                if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
+                if(m_edges[j].srcindex-1 == v && m_edges[j].dstindex-1 == visited_nodes[adj[v][i]]){
                     batches_all[count].push_back(&m_edges[j]); 
                     std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
                     break;
@@ -736,10 +736,8 @@ public:
     }
     
     void addChannel(
-     //   unsigned srcIndex,
-      //  unsigned dstIndex,
-          int srcIndex,
-          int dstIndex,
+        unsigned srcIndex,
+        unsigned dstIndex,
         unsigned delay,
         const channel_type &channel
     ){
