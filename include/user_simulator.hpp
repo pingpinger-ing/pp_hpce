@@ -478,9 +478,9 @@ void DFS(int v)
                std::cout<<batches_all[count].size()<<std::endl; 
             }
           }  
-            DFS(*i);
+            DFS(visited[adj[v][i]);
         }
-                                                                          }
+   }
 }
   
 // Driver code
