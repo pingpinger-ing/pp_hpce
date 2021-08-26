@@ -557,7 +557,7 @@ void create_batches(){
    for (int i = 0; i < m_nodes.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }
-    std::vector<int> visited_edge;
+    std::vector<bool> visited_edge;
     std::vector<int> one_node_adj;
     
     // Create a graph given in the above diagram
