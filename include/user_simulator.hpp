@@ -590,14 +590,15 @@ void create_batches(){
             //std::cout<<dest<<std::endl;
         }
     for(int i = 0; i != m_nodes.size(); i++)
-        for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
+        for(int j = 0; j != m_nodes[i].outgoing.size(); j++){            
+                    std::cout<<"hl";
             //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
-            {
+                {
+                    std::cout<<"hhll";
                   visited_nodes[a] = false;
-                for(int b = 0; b != visited_edges[a].size(); ++b) {
+                for(int b = 0; b != visited_edges[a].size(); b++) {
                   visited_edges[a][b] = false;
-                    std::cout<<"hhlh"<<std::endl;
                 }
             }
             DFS(i);
