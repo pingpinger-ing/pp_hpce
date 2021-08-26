@@ -472,7 +472,7 @@ void DFS(int v, std::map< int, std::list<int> > adj, int count)
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
                batches_all[count].push_back(&m_edges[j]);
-               //std::cout<<batches_all[count].size()<<std::endl;
+               std::cout<<batches_all[count].size()<<std::endl;
             }
           }               
             DFS(*i, adj, count);
