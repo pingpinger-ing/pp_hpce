@@ -650,7 +650,6 @@ void create_batches(){
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);          
             }
-            // std::cout<<visited_edges[i].size();
         }
 
   
@@ -668,6 +667,7 @@ void create_batches(){
             DFS(i);
         } 
     } 
+}
     
     
     
