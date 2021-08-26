@@ -512,13 +512,14 @@ void create_batches(){
 */
 
 //this is for mesh topology
-std::vector< std::vector<int> > adj(909, std::vector<int>);
-std::vector< std::vector<bool> > visited_edges(909, std::vector<int>);
-std::vector<bool> visited_nodes[909] = {0};
+int size_node = m_nodes.size();
+std::vector< std::vector<int> > adj(size_node, std::vector<int>);
+std::vector< std::vector<bool> > visited_edges(size_node, std::vector<int>);
+std::vector<bool> visited_nodes[size_node] = {0};
 std::vector<edge*> batch;
 int count = 0;
 std::map< int, bool > empty_map;
-  
+
 void DFS(int v)
 {   
  
@@ -547,7 +548,7 @@ void DFS(int v)
 }
   
 // Driver code
-void create_batches(){
+void create_batches(){    
     
    for (int i = 0; i < m_nodes.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
