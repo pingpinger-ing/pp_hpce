@@ -465,17 +465,15 @@ void DFS(int v)
     // to this vertex
     std::list<int>::iterator i;
 
-    if (adj[v].size() == 0 || visited[*adj[v].begin()] == true){
+    if (adj[v].size() == 0){
        ++count;
     }
     for (i = adj[v].begin(); i != adj[v].end(); ++i)
         if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == *i){
-               batches_all[count].push_back(&m_edges[j]);
-               std::list<int>::iterator i1;  
-               i1 = i;  
-               adj[v].erase(i1);
+               batches_all[count].push_back(&m_edges[j]); 
+               adj[v].erase(i);
                std::cout<<batches_all[count].size()<<std::endl;
             }
           }  
@@ -501,7 +499,7 @@ void create_batches(){
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-         visited.clear();
+         visited[].clear();
          DFS(i);
         } 
 }
