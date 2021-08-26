@@ -633,6 +633,9 @@ void create_batches(){
    for (int i = 0; i < 5000; ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }   
+    for (int i = 0; i < 909; ++i){
+          visited_nodes.push_back(false);
+    }
     
     // Create a graph given in the above diagram
         for(int i = 0; i != m_nodes.size(); i++){
@@ -643,17 +646,14 @@ void create_batches(){
             }
         }
     
+  
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){   
-              std::cout<<"hjkfhksjhf3"<<std::endl;
-            //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
                 {
-                  visited_nodes.push_back(false);
-                      std::cout<<"hjkfhksjhf1"<<std::endl;
+                  visited_nodes[a] = false;
                 for(int b = 0; b != visited_edges[a].size(); b++) {
                   visited_edges[a][b] = false;
-                      std::cout<<"hjkfhksjhf2"<<std::endl;
                 }
             }
             DFS(i);
