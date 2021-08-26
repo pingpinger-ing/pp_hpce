@@ -519,8 +519,8 @@ std::vector<bool> visited_nodes[909] = {0};
 */
 std::vector< std::vector<int> > adj;
 std::vector< std::vector<int> > visited_edges;
-//std::vector<bool> visited_nodes[909] = {false};
-std::vector<int> visited_nodes(909);    
+//std::vector<bool> visited_nodes(909);
+std::vector<int> visited_nodes;    
 std::vector<edge*> batch;
 int count = 0;
 //std::map< int, bool > empty_map;
@@ -580,7 +580,8 @@ void create_batches(){
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-            for(int a = 0; a != visited_nodes.size(); a++)
+            \\for(int a = 0; a != visited_nodes.size(); a++)
+                for(int a = 0; a != 909; a++)
             {
                 visited_nodes[a] = false;
                 for(int b = 0; b != visited_edges.size(); ++b) {
