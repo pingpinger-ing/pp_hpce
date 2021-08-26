@@ -559,10 +559,10 @@ void create_batches(){
           batches_all.push_back(std::vector< edge* > ());
           }
     for (int i = 0; i < 909; ++i) {
-          visited_edges.push_back(std::vector< int > ());
+          visited_edges.push_back(std::vector< int* > ());
           }
     for (int i = 0; i < 909; ++i) {
-         adj.push_back(std::vector< int > ());
+         adj.push_back(std::vector< int* > ());
           }
     
     std::vector<int> visited_edge;
