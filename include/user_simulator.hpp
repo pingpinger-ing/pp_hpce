@@ -500,9 +500,10 @@ void create_batches(){
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-         visited.swap(empty_map);
-         std::cout<<i<<" "<<j<<std::endl;
-         visited.clear();
+         for(int a = 0; a != visited.size; a++)
+         {
+         visited[a] = false;
+         }
          count++;
          DFS(i);
         } 
