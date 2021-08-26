@@ -56,8 +56,8 @@ private:
         unsigned messageStatus; // 0->empty, 1->ready, 2->inflight
         message_type messageData;
         
-        unsigned srcindex;
-        unsigned dstindex;
+        int srcindex;
+        int dstindex;
 
     };
     
@@ -616,7 +616,7 @@ void DFS(int v)
             else visited_edges[v][i] = true;
             std::cout << "Keep going... ";
             // Find this edge in m_edges
-            for (unsigned j = 0; j!=m_edges.size(); j++){
+            for (int j = 0; j!=m_edges.size(); j++){
                 if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
                     batches_all[count].push_back(&m_edges[j]); 
                     std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
