@@ -616,7 +616,7 @@ void DFS(int v)
             for (unsigned j = 0; j!=m_edges.size(); j++){
                 if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited_nodes[adj[v][i]]){
                     batches_all[count].push_back(&m_edges[j]); 
-                    std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endlk;;
+                    std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
                     break;
                 }
             }  
