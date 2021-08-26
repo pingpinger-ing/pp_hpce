@@ -519,7 +519,7 @@ std::vector<bool> visited_nodes[909] = {0};
 */
 std::vector< std::vector<int> > adj;
 std::vector< std::vector<bool> > visited_edges;
-std::vector<bool> visited_nodes[909] = {0};
+std::vector<bool> visited_nodes[909] = {false};
 std::vector<edge*> batch;
 int count = 0;
 std::map< int, bool > empty_map;
