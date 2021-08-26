@@ -470,7 +470,7 @@ void DFS(int v)
        ++count;
     }
     for (i = 0; i != adj[v].size(); i++){
-        if (!visited[adj[v][i]]){
+        if (!visited[*i]){
           for (unsigned j = 0; j!=m_edges.size(); j++){
             if(m_edges[j].srcindex == v && m_edges[j].dstindex == visited[adj[v][i]){
                batches_all[count].push_back(&m_edges[j]); 
@@ -480,6 +480,7 @@ void DFS(int v)
           }  
             DFS(*i);
         }
+                                                                          }
 }
   
 // Driver code
