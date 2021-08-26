@@ -574,20 +574,20 @@ void create_batches(){
             for (int j = 0; j != m_nodes[i].outgoing.size(); j++) {
                 int src = i;
                 int dest = m_nodes[i].outgoing[j]->dstindex;       
-                \\one_node_adj.push_back(dest);
-                \\visited_edge.push_back(false);
+                //one_node_adj.push_back(dest);
+                //visited_edge.push_back(false);
                 adj[i].push_back(dest);
                 visited_edges[i].push_back(false);
             }
-           \\ visited_edges[i].push_back(visited_edge);
-           \\ visited_edge.clear();
-           \\ adj[i].push_back(one_node_adj);
-           \\ one_node_adj.clear();
-            \\std::cout<<dest<<std::endl;
+           // visited_edges[i].push_back(visited_edge);
+           // visited_edge.clear();
+           // adj[i].push_back(one_node_adj);
+           // one_node_adj.clear();
+            //std::cout<<dest<<std::endl;
         }
     for(int i = 0; i != m_nodes.size(); i++)
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){
-            \\for(int a = 0; a != visited_nodes.size(); a++)
+            //for(int a = 0; a != visited_nodes.size(); a++)
                 for(int a = 0; a != 909; a++)
             {
                 visited_nodes[a] = false;
