@@ -489,11 +489,11 @@ void DFS(int v)
                 if (j == m_edges.size() - 1) std::cout << "Have not find! size:" << m_edges.size() << " ";
             } 
             std::cout << "Finish! " << std::endl;
-            std::cout << "the first" << batches_all[count].size()<< std::endl;
             DFS(adj[v][i]);
         }
     }
     if (batches_all[count].size()) ++count;
+    std::cout << "the first" << batches_all[0].size()<< std::endl;
     
 }
   
