@@ -521,11 +521,7 @@ void create_batches(){
                 for(int a = 0; a != 909; a++)
                 {
                   visited_nodes[a] = false;
-                /*
-                for(int b = 0; b != visited_edges[a].size(); b++) {
-                  visited_edges[a][b] = false;
-                }
-                */
+    
             }
             DFS(i);
         } 
