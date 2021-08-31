@@ -18,6 +18,8 @@
 #include <list>
 #include <map>
 
+#include "tbb/task_scheduler_init.h"
+
 
 template<class TGraph> //模板类，TGraph==heat
 class Simulator
@@ -764,6 +766,7 @@ public:
 
     void run()
     {
+        
         log(1, "begin run");
         
         bool active=true;
@@ -773,6 +776,7 @@ public:
         create_batches();
         
         while(active){
+            tbb::task_scheduler_init init(1);
             log(1, "step %u", m_step);
             
             m_stats={m_step, 0,0,0, 0,0,0};//各个状态的起始值都为0 （node三个状态（idle，blocked，send），edge三个状态（idle，transit，deliver））
