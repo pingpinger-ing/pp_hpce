@@ -472,7 +472,7 @@ void DFS(int v)
     // to this vertex
    // std::list<int>::iterator i;
     for (int i = 0; i != adj[v].size(); i++){
-        std::cout << adj[v].size() << ":" << i << std::endl;
+        // std::cout << adj[v].size() << ":" << i << std::endl;
         if (!visited_nodes[adj[v][i]]){
             // std::cout << "I'm here! ";
             if (visited_edges[v][i]) continue;
@@ -486,14 +486,14 @@ void DFS(int v)
                     // std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
                     break;
                 }
-                if (j == m_edges.size() - 1) std::cout << "Have not find! size:" << m_edges.size() << " ";
+                // if (j == m_edges.size() - 1) std::cout << "Have not find! size:" << m_edges.size() << " ";
             } 
             // std::cout << "Finish! " << std::endl;
             DFS(adj[v][i]);
         }
     }
     if (batches_all[count].size()) {
-        std::cout << "the first" << batches_all[count].size()<< std::endl;
+        std::cout << count << " : " << batches_all[count].size()<< std::endl;
         ++count;
     }
     
