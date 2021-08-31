@@ -474,26 +474,28 @@ void DFS(int v)
     for (int i = 0; i != adj[v].size(); i++){
         std::cout << adj[v].size() << ":" << i << std::endl;
         if (!visited_nodes[adj[v][i]]){
-            std::cout << "I'm here! ";
+            // std::cout << "I'm here! ";
             if (visited_edges[v][i]) continue;
             else visited_edges[v][i] = true;
-            std::cout << "Keep going... ";
-            std::cout << std::endl << "src: " << v << " dst: " << adj[v][i] << std::endl;
+            // std::cout << "Keep going... ";
+            // std::cout << std::endl << "src: " << v << " dst: " << adj[v][i] << std::endl;
             // Find this edge in m_edges
             for (int j = 0; j!=m_edges.size(); j++){
                 if(m_edges[j].srcindex == v && m_edges[j].dstindex == adj[v][i]){
                     batches_all[count].push_back(&m_edges[j]); 
-                    std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
+                    // std::cout << " (" << count << "," << batches_all[count].size() << ")" << std::endl;
                     break;
                 }
                 if (j == m_edges.size() - 1) std::cout << "Have not find! size:" << m_edges.size() << " ";
             } 
-            std::cout << "Finish! " << std::endl;
+            // std::cout << "Finish! " << std::endl;
             DFS(adj[v][i]);
         }
     }
-    if (batches_all[count].size()) ++count;
-    std::cout << "the first" << batches_all[0].size()<< std::endl;
+    if (batches_all[count].size()) {
+        std::cout << "the first" << batches_all[count].size()<< std::endl;
+        ++count;
+    }
     
 }
   
