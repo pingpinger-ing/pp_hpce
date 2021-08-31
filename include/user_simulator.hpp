@@ -489,6 +489,7 @@ void DFS(int v)
                 if (j == m_edges.size() - 1) std::cout << "Have not find! size:" << m_edges.size() << " ";
             } 
             std::cout << "Finish! " << std::endl;
+            std::cout << "the first" << batches_all[count].size()<< std::endl;
             DFS(adj[v][i]);
         }
     }
@@ -521,7 +522,6 @@ void create_batches(){
                 for(int a = 0; a != 909; a++)
                 {
                   visited_nodes[a] = false;
-    
             }
             DFS(i);
         } 
