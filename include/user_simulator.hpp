@@ -18,7 +18,6 @@
 #include <list>
 #include <map>
 
-#include "tbb/task_scheduler_init.h"
 
 
 template<class TGraph> //模板类，TGraph==heat
@@ -368,6 +367,7 @@ private:
 }
                 
   */
+    /*
     
     // this is for rect topology
        
@@ -408,7 +408,7 @@ private:
               
        } 
      }
-    
+    */
    
     // this is for hex topology
     /*        
@@ -454,7 +454,7 @@ private:
 
   
 
-    /*
+    
 
 std::map< int, std::vector<int> > adj;
 std::map< int, std::vector<int> > visited_edges;
@@ -528,7 +528,7 @@ void create_batches(){
     } 
 }
     
-    */
+    
     
          
     bool step_all()
@@ -633,7 +633,7 @@ public:
         create_batches();
         
         while(active){
-            //tbb::task_scheduler_init init(8);
+            
             log(1, "step %u", m_step);
             
             m_stats={m_step, 0,0,0, 0,0,0};//各个状态的起始值都为0 （node三个状态（idle，blocked，send），edge三个状态（idle，transit，deliver））
