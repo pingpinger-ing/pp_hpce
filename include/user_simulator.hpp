@@ -502,10 +502,10 @@ void DFS(int v)
 // Driver code 
 void create_batches(){    
     
-   for (int i = 0; i < 5000; ++i) {
+   for (int i = 0; i < m_edges.size(); ++i) {
           batches_all.push_back(std::vector< edge* > ());
           }   
-    for (int i = 0; i < 909; ++i){
+    for (int i = 0; i < m_nodes.size(); ++i){
           visited_nodes.push_back(false);
     }
     
@@ -521,7 +521,7 @@ void create_batches(){
   
     for(int i = 0; i != m_nodes.size(); i++){
         for(int j = 0; j != m_nodes[i].outgoing.size(); j++){   
-                for(int a = 0; a != 909; a++)
+                for(int a = 0; a != m_nodes.size(); a++)
                 {
                   visited_nodes[a] = false;
             }
