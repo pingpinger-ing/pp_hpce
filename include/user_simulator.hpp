@@ -493,7 +493,7 @@ void DFS(int v)
         }
     }
     if (batches_all[count].size()) {
-        std::cout << count << " : " << batches_all[count].size()<< std::endl;
+       // std::cout << count << " : " << batches_all[count].size()<< std::endl;
         ++count;
     }
     
