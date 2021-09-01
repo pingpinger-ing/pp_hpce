@@ -367,7 +367,7 @@ private:
 }
                 
   */
-    /*
+    
     
     // this is for rect topology
        
@@ -408,7 +408,7 @@ private:
               
        } 
      }
-    */
+    
    
     // this is for hex topology
     /*        
@@ -453,7 +453,7 @@ private:
      
 
   
-
+/*
     
 
 std::map< int, std::vector<int> > adj;
@@ -529,7 +529,7 @@ void create_batches(){
         } 
     } 
 }
-    
+   */ 
     
     
          
